@@ -4,8 +4,6 @@
 date
 
 source ~/.nvm/nvm.sh
-nvm install lts
-nvm use lts
 
 # Navigate to the project directory
 cd ~/source/angulareighteen/
