@@ -1369,15 +1369,20 @@
   resolved "https://registry.yarnpkg.com/@esbuild/win32-x64/-/win32-x64-0.25.9.tgz#585624dc829cfb6e7c0aa6c3ca7d7e6daa87e34f"
   integrity sha512-PPOl1mi6lpLNQxnGoyAfschAodRFYXJ+9fs6WHXz7CSWKbOqiMZsubC+BQsVKuul+3vKLuwTHsS2c2y9EoKwxQ==
 
+"@inquirer/ansi@^1.0.0":
+  version "1.0.0"
+  resolved "https://registry.yarnpkg.com/@inquirer/ansi/-/ansi-1.0.0.tgz#29525c673caf36c12e719712830705b9c31f0462"
+  integrity sha512-JWaTfCxI1eTmJ1BIv86vUfjVatOdxwD0DAVKYevY8SazeUUZtW+tNbsdejVO1GYE0GXJW1N1ahmiC3TFd+7wZA==
+
 "@inquirer/checkbox@^4.2.1":
-  version "4.2.3"
-  resolved "https://registry.yarnpkg.com/@inquirer/checkbox/-/checkbox-4.2.3.tgz#6ee1a0c18b37681e5264742780f0c1eccb4c6cf2"
-  integrity sha512-fofxXo8QuLPL33i4MQimo3jY2zI3ODMA5+Iiz+q6Q0EIwG98Ghe8tVV5xuggkrT9WgIEN4Ch0g+ftMHPgmTI8Q==
+  version "4.2.4"
+  resolved "https://registry.yarnpkg.com/@inquirer/checkbox/-/checkbox-4.2.4.tgz#efa6f280477a0821c610e502b1c80f167f17ba2e"
+  integrity sha512-2n9Vgf4HSciFq8ttKXk+qy+GsyTXPV1An6QAwe/8bkbbqvG4VW1I/ZY1pNu2rf+h9bdzMLPbRSfcNxkHBy/Ydw==
   dependencies:
-    "@inquirer/core" "^10.2.1"
+    "@inquirer/ansi" "^1.0.0"
+    "@inquirer/core" "^10.2.2"
     "@inquirer/figures" "^1.0.13"
     "@inquirer/type" "^3.0.8"
-    ansi-escapes "^4.3.2"
     yoctocolors-cjs "^2.1.2"
 
 "@inquirer/confirm@5.1.14":
@@ -1389,21 +1394,21 @@
     "@inquirer/type" "^3.0.8"
 
 "@inquirer/confirm@^5.1.14":
-  version "5.1.17"
-  resolved "https://registry.yarnpkg.com/@inquirer/confirm/-/confirm-5.1.17.tgz#e7b7be84363ff4cbb02274dceb2b2f4791814f93"
-  integrity sha512-TUVe8/C2v3Lo+kjYeV7d1FEqQKQ1Y9Dprb5BzpCTZ+2QDRXWUEnuDwSmmgns9Jh4qNJk9PhPFt2Kqn7+ufBIUA==
+  version "5.1.18"
+  resolved "https://registry.yarnpkg.com/@inquirer/confirm/-/confirm-5.1.18.tgz#0b76e5082d834c0e3528023705b867fc1222d535"
+  integrity sha512-MilmWOzHa3Ks11tzvuAmFoAd/wRuaP3SwlT1IZhyMke31FKLxPiuDWcGXhU+PKveNOpAc4axzAgrgxuIJJRmLw==
   dependencies:
-    "@inquirer/core" "^10.2.1"
+    "@inquirer/core" "^10.2.2"
     "@inquirer/type" "^3.0.8"
 
-"@inquirer/core@^10.1.15", "@inquirer/core@^10.2.1":
-  version "10.2.1"
-  resolved "https://registry.yarnpkg.com/@inquirer/core/-/core-10.2.1.tgz#c1ae235a939df1a7246fb501826602594319a37d"
-  integrity sha512-0483gRX+R+2DMQS+0KhLWxh0B4vFSAEEWX6UktuvB7SHEVMbqG0Fz9+nnlMoNHP3yNeLmROndhTWdRR7HAsy2g==
+"@inquirer/core@^10.1.15", "@inquirer/core@^10.2.2":
+  version "10.2.2"
+  resolved "https://registry.yarnpkg.com/@inquirer/core/-/core-10.2.2.tgz#d31eb50ba0c76b26e7703c2c0d1d0518144c23ab"
+  integrity sha512-yXq/4QUnk4sHMtmbd7irwiepjB8jXU0kkFRL4nr/aDBA2mDz13cMakEWdDwX3eSCTkk03kwcndD1zfRAIlELxA==
   dependencies:
+    "@inquirer/ansi" "^1.0.0"
     "@inquirer/figures" "^1.0.13"
     "@inquirer/type" "^3.0.8"
-    ansi-escapes "^4.3.2"
     cli-width "^4.1.0"
     mute-stream "^2.0.0"
     signal-exit "^4.1.0"
@@ -1411,20 +1416,20 @@
     yoctocolors-cjs "^2.1.2"
 
 "@inquirer/editor@^4.2.17":
-  version "4.2.19"
-  resolved "https://registry.yarnpkg.com/@inquirer/editor/-/editor-4.2.19.tgz#2c2602be4f9d69eddc3984a702a3281cbc4aa613"
-  integrity sha512-AX467MY9HOuGYXH6vhb7zZG5Rq8fWpf/B4RDoRWRlmxeP8oi1V02MCjUha0M5wFFjwt6tD6jbJERZp7j6biAGg==
+  version "4.2.20"
+  resolved "https://registry.yarnpkg.com/@inquirer/editor/-/editor-4.2.20.tgz#25c3ceeaed91f62135832c3792c650b4d8102dc7"
+  integrity sha512-7omh5y5bK672Q+Brk4HBbnHNowOZwrb/78IFXdrEB9PfdxL3GudQyDk8O9vQ188wj3xrEebS2M9n18BjJoI83g==
   dependencies:
-    "@inquirer/core" "^10.2.1"
+    "@inquirer/core" "^10.2.2"
     "@inquirer/external-editor" "^1.0.2"
     "@inquirer/type" "^3.0.8"
 
 "@inquirer/expand@^4.0.17":
-  version "4.0.19"
-  resolved "https://registry.yarnpkg.com/@inquirer/expand/-/expand-4.0.19.tgz#f0206e4601ee3014c905a8fb96fd8543a2f86782"
-  integrity sha512-WZ0boesxizld/NyrWzDNPAhMZsneOkHu2xESdnrqpYaHj6QjBnYMYgL3OZUlNR/YP6am8666VG+7tvxz5ySstQ==
+  version "4.0.20"
+  resolved "https://registry.yarnpkg.com/@inquirer/expand/-/expand-4.0.20.tgz#7c2b542ccd0d0c85428263c6d56308b880b12cb2"
+  integrity sha512-Dt9S+6qUg94fEvgn54F2Syf0Z3U8xmnBI9ATq2f5h9xt09fs2IJXSCIXyyVHwvggKWFXEY/7jATRo2K6Dkn6Ow==
   dependencies:
-    "@inquirer/core" "^10.2.1"
+    "@inquirer/core" "^10.2.2"
     "@inquirer/type" "^3.0.8"
     yoctocolors-cjs "^2.1.2"
 
@@ -1442,29 +1447,29 @@
   integrity sha512-lGPVU3yO9ZNqA7vTYz26jny41lE7yoQansmqdMLBEfqaGsmdg7V3W9mK9Pvb5IL4EVZ9GnSDGMO/cJXud5dMaw==
 
 "@inquirer/input@^4.2.1":
-  version "4.2.3"
-  resolved "https://registry.yarnpkg.com/@inquirer/input/-/input-4.2.3.tgz#b4aaa3af79894a5b6976eeca17ee07c99cbf5b56"
-  integrity sha512-WyyXXdY2xeOnjqNhTrGXLB200zhJ3qnE38Y1ufiwTg5YXmztyrW/f8vKwJwDnbvmckq+t1+whyCd20+IkfUIjA==
+  version "4.2.4"
+  resolved "https://registry.yarnpkg.com/@inquirer/input/-/input-4.2.4.tgz#8a8b79c9fe31cc036082404b26b601cca0cb6f30"
+  integrity sha512-cwSGpLBMwpwcZZsc6s1gThm0J+it/KIJ+1qFL2euLmSKUMGumJ5TcbMgxEjMjNHRGadouIYbiIgruKoDZk7klw==
   dependencies:
-    "@inquirer/core" "^10.2.1"
+    "@inquirer/core" "^10.2.2"
     "@inquirer/type" "^3.0.8"
 
 "@inquirer/number@^3.0.17":
-  version "3.0.19"
-  resolved "https://registry.yarnpkg.com/@inquirer/number/-/number-3.0.19.tgz#e057609e431c1e9fe4974bf436107322ce234e47"
-  integrity sha512-I3GxgVXdtHoP2EvjbbYMI7x3jsJ/R1cMKGCgwXA8mM+PcnO9yLfNfrQCleTmtIKaIdfJMFixAVQXpW8C5xRvMA==
+  version "3.0.20"
+  resolved "https://registry.yarnpkg.com/@inquirer/number/-/number-3.0.20.tgz#bfbc9cfd5f2730d86036ef124ec151fbd5ea669b"
+  integrity sha512-bbooay64VD1Z6uMfNehED2A2YOPHSJnQLs9/4WNiV/EK+vXczf/R988itL2XLDGTgmhMF2KkiWZo+iEZmc4jqg==
   dependencies:
-    "@inquirer/core" "^10.2.1"
+    "@inquirer/core" "^10.2.2"
     "@inquirer/type" "^3.0.8"
 
 "@inquirer/password@^4.0.17":
-  version "4.0.19"
-  resolved "https://registry.yarnpkg.com/@inquirer/password/-/password-4.0.19.tgz#6c2e0498e52a00c93e1165a2514dca26772a339e"
-  integrity sha512-vTwZ2sSwvqDFBFl1jjXlEq7WWfYQE90J8aD8/DrEcg4XrfEXs3cdkxs1wBhEGJMeR+pRtQmU+tqB76AX/DgPaA==
+  version "4.0.20"
+  resolved "https://registry.yarnpkg.com/@inquirer/password/-/password-4.0.20.tgz#931c2a321cc09a63d790199702d3930a3e864830"
+  integrity sha512-nxSaPV2cPvvoOmRygQR+h0B+Av73B01cqYLcr7NXcGXhbmsYfUb8fDdw2Us1bI2YsX+VvY7I7upgFYsyf8+Nug==
   dependencies:
-    "@inquirer/core" "^10.2.1"
+    "@inquirer/ansi" "^1.0.0"
+    "@inquirer/core" "^10.2.2"
     "@inquirer/type" "^3.0.8"
-    ansi-escapes "^4.3.2"
 
 "@inquirer/prompts@7.8.2":
   version "7.8.2"
@@ -1483,33 +1488,33 @@
     "@inquirer/select" "^4.3.1"
 
 "@inquirer/rawlist@^4.1.5":
-  version "4.1.7"
-  resolved "https://registry.yarnpkg.com/@inquirer/rawlist/-/rawlist-4.1.7.tgz#f76bf6e87ae167303ce9ebe6524d2d3fbbf47dd2"
-  integrity sha512-mTPAPBbac2sZSCWHFWoO37097GOFKsTpx0e+dJAQWa/2YA8V1VcIIFTWJpp9gYRtUDD43F6mJnLb3dN1Bn38dw==
+  version "4.1.8"
+  resolved "https://registry.yarnpkg.com/@inquirer/rawlist/-/rawlist-4.1.8.tgz#a254a385b715a133dcf42a31161aee8827846a53"
+  integrity sha512-CQ2VkIASbgI2PxdzlkeeieLRmniaUU1Aoi5ggEdm6BIyqopE9GuDXdDOj9XiwOqK5qm72oI2i6J+Gnjaa26ejg==
   dependencies:
-    "@inquirer/core" "^10.2.1"
+    "@inquirer/core" "^10.2.2"
     "@inquirer/type" "^3.0.8"
     yoctocolors-cjs "^2.1.2"
 
 "@inquirer/search@^3.1.0":
-  version "3.1.2"
-  resolved "https://registry.yarnpkg.com/@inquirer/search/-/search-3.1.2.tgz#27caec089936864c6dcda2886844dd8b98a04e23"
-  integrity sha512-8G2O1wnOL8ITcZwKOcGjD6yLx3ZaSb6P5eefdZrkSsE4KRvhRYTVULhrOQnjuz9LFxO3bl8HgPU+7HuxJE8yGQ==
+  version "3.1.3"
+  resolved "https://registry.yarnpkg.com/@inquirer/search/-/search-3.1.3.tgz#3a4d725c596617ab9a516906fea9d8347ea5c28f"
+  integrity sha512-D5T6ioybJJH0IiSUK/JXcoRrrm8sXwzrVMjibuPs+AgxmogKslaafy1oxFiorNI4s3ElSkeQZbhYQgLqiL8h6Q==
   dependencies:
-    "@inquirer/core" "^10.2.1"
+    "@inquirer/core" "^10.2.2"
     "@inquirer/figures" "^1.0.13"
     "@inquirer/type" "^3.0.8"
     yoctocolors-cjs "^2.1.2"
 
 "@inquirer/select@^4.3.1":
-  version "4.3.3"
-  resolved "https://registry.yarnpkg.com/@inquirer/select/-/select-4.3.3.tgz#da7bceafd4521dcbd105143fbf8a9ebb958875ac"
-  integrity sha512-aGDVqCQp9Kn9XgwaUWNaOo4cYXyRY9wgTPMysDF03IasLiO0QL+F5ZBDooRLHZjpW1BtgEuVg7QvEdB/1V9ssw==
+  version "4.3.4"
+  resolved "https://registry.yarnpkg.com/@inquirer/select/-/select-4.3.4.tgz#e50e0c2539631ba93e26adc225a9e0e232883833"
+  integrity sha512-Qp20nySRmfbuJBBsgPU7E/cL62Hf250vMZRzYDcBHty2zdD1kKCnoDFWRr0WO2ZzaXp3R7a4esaVGJUx0E6zvA==
   dependencies:
-    "@inquirer/core" "^10.2.1"
+    "@inquirer/ansi" "^1.0.0"
+    "@inquirer/core" "^10.2.2"
     "@inquirer/figures" "^1.0.13"
     "@inquirer/type" "^3.0.8"
-    ansi-escapes "^4.3.2"
     yoctocolors-cjs "^2.1.2"
 
 "@inquirer/type@^3.0.7", "@inquirer/type@^3.0.8":
@@ -2771,13 +2776,6 @@ ansi-colors@4.1.3:
   version "4.1.3"
   resolved "https://registry.yarnpkg.com/ansi-colors/-/ansi-colors-4.1.3.tgz#37611340eb2243e70cc604cad35d63270d48781b"
   integrity sha512-/6w/C21Pm1A7aZitlI5Ni/2J6FFQN8i1Cvz3kHABAAbw93v/NlvKdVOqz7CCWz/3iv/JplRSEEZ83XION15ovw==
-
-ansi-escapes@^4.3.2:
-  version "4.3.2"
-  resolved "https://registry.yarnpkg.com/ansi-escapes/-/ansi-escapes-4.3.2.tgz#6b2291d1db7d98b6521d5f1efa42d0f3a9feb65e"
-  integrity sha512-gKXj5ALrKWQLsYG9jlTRmR/xKluxHV+Z9QEwNIgCfM1/uwPMCuzVVnh5mwTd+OuBZcwSIMbqssNWRm1lE51QaQ==
-  dependencies:
-    type-fest "^0.21.3"
 
 ansi-escapes@^7.0.0:
   version "7.1.0"
@@ -6734,11 +6732,6 @@ tuf-js@^3.0.1:
     "@tufjs/models" "3.0.1"
     debug "^4.4.1"
     make-fetch-happen "^14.0.3"
-
-type-fest@^0.21.3:
-  version "0.21.3"
-  resolved "https://registry.yarnpkg.com/type-fest/-/type-fest-0.21.3.tgz#d260a24b0198436e133fa26a524a6d65fa3b2e37"
-  integrity sha512-t0rzBq87m3fVcduHDUFhKmyyX+9eo6WQjZvf51Ea/M0Q7+T374Jp1aUiyUl0GKxp8M/OETVHSDvmkyPgvX+X2w==
 
 type-is@^2.0.0, type-is@^2.0.1:
   version "2.0.1"
