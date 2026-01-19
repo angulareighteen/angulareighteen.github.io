@@ -1654,6 +1654,18 @@
     "@jsonjoy.com/codegen" "^1.0.0"
     "@jsonjoy.com/util" "^1.9.0"
 
+"@jsonjoy.com/node-fs-dependencies@4.55.0":
+  version "4.55.0"
+  resolved "https://registry.yarnpkg.com/@jsonjoy.com/node-fs-dependencies/-/node-fs-dependencies-4.55.0.tgz#d8e3ca4a1b69775714bbb6604360746e45a46e69"
+  integrity sha512-gqO6MB5HAqVOytyjwDQ7E5BikL1dBC108d75YQrpIIIbzH1+4INDCtjB2JhGeXqUeBS7VNqGR/cvOKeHr6+pwA==
+
+"@jsonjoy.com/node-fs-utils@4.55.0":
+  version "4.55.0"
+  resolved "https://registry.yarnpkg.com/@jsonjoy.com/node-fs-utils/-/node-fs-utils-4.55.0.tgz#43002c2d854735432d634f8ac63a5aeeb15939b3"
+  integrity sha512-y2c7ukrhzsJXMK4uHADSl2fXY3YUjgug8rfOW1BYL0C4wceC/kr6ewsEfMwwgwioY6wbiq0qrMa9Ui9fRzQKow==
+  dependencies:
+    "@jsonjoy.com/node-fs-dependencies" "4.55.0"
+
 "@jsonjoy.com/util@^1.9.0":
   version "1.9.0"
   resolved "https://registry.yarnpkg.com/@jsonjoy.com/util/-/util-1.9.0.tgz#7ee95586aed0a766b746cd8d8363e336c3c47c46"
@@ -3717,9 +3729,9 @@ eventemitter3@^4.0.0:
   integrity sha512-8guHBZCwKnFhYdHr2ysuRWErTwhoN2X8XELRlrRwpmfeY2jjuUN4taQMsULKUVo1K4DvZl+0pgfyoysHxvmvEw==
 
 eventemitter3@^5.0.1:
-  version "5.0.1"
-  resolved "https://registry.yarnpkg.com/eventemitter3/-/eventemitter3-5.0.1.tgz#53f5ffd0a492ac800721bb42c66b841de96423c4"
-  integrity sha512-GWkBvjiSZK87ELrYOSESUYeVIc9mvLLf/nXalMOS5dYrgZq9o5OVkbZAVM06CVxYsCwH9BDZFPlQTlPA1j4ahA==
+  version "5.0.2"
+  resolved "https://registry.yarnpkg.com/eventemitter3/-/eventemitter3-5.0.2.tgz#9067808090c68629e7f658a30015630504e7a040"
+  integrity sha512-RQ5d+HfzVjGO537vWau+KVFHUSj3sBOzd1nVQcnRMCak/OyXwwUTBh++rZrI3un9gtfSpg63jjOHUvhQnQBuAA==
 
 events@^3.2.0:
   version "3.3.0"
@@ -4892,11 +4904,13 @@ media-typer@^1.1.0:
   integrity sha512-aisnrDP4GNe06UcKFnV5bfMNPBUw4jsLGaWwWfnH3v02GnBuXX2MCVn5RbrWo0j3pczUilYblq7fQ7Nw2t5XKw==
 
 memfs@^4.43.1:
-  version "4.54.0"
-  resolved "https://registry.yarnpkg.com/memfs/-/memfs-4.54.0.tgz#fd4b04a3a9b268e94fb8cff2e0ac0f83b673e150"
-  integrity sha512-wiJ9YYUj2bVcpdJgIv6y1KrStknSdNhfM4+4+ttt0cHHMxVLZ3aOBoER8krt9lGY5HkR2ustUXiihhNPeNxXaQ==
+  version "4.55.0"
+  resolved "https://registry.yarnpkg.com/memfs/-/memfs-4.55.0.tgz#aeec246021beb056c9204c0a84b8a73bab358f20"
+  integrity sha512-sayAf6AyB4fLSOsZzaXBV8cztWY8/pKhVDbUDwFuC9aI6lGa6R8ilKZe/TYsKebH0MZWrbMhCTYsctXrCT4NBA==
   dependencies:
     "@jsonjoy.com/json-pack" "^1.11.0"
+    "@jsonjoy.com/node-fs-dependencies" "4.55.0"
+    "@jsonjoy.com/node-fs-utils" "4.55.0"
     "@jsonjoy.com/util" "^1.9.0"
     glob-to-regex.js "^1.0.1"
     thingies "^2.5.0"
