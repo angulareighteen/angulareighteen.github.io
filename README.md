@@ -1,7 +1,9 @@
 # Colorado Quiz
 
-A small Angular 22 PWA of quizzes and news, deployed to Firebase Hosting at
+A small Angular 22 PWA of quizzes and news, deployed to GitHub Pages at
 https://angulareighteen.github.io.
+
+[![Deploy to GitHub Pages](https://github.com/angulareighteen/angulareighteen.github.io/actions/workflows/deploy.yml/badge.svg)](https://github.com/angulareighteen/angulareighteen.github.io/actions/workflows/deploy.yml)
 
 ## Tech stack
 
@@ -22,7 +24,7 @@ https://angulareighteen.github.io.
 ```bash
 yarn install            # install dependencies
 yarn start              # dev server at http://localhost:4200
-yarn build              # production build -> public/browser (served by Firebase)
+yarn build              # production build -> public/browser (published to GitHub Pages)
 yarn test               # unit tests (Vitest, watch mode)
 yarn test:ci            # unit tests once, with coverage
 yarn e2e                # end-to-end tests (Playwright)
@@ -36,10 +38,18 @@ yarn playwright install chromium
 
 ## Deployment
 
-`firebase.json` serves the build output from `public/browser`. The production
-build writes there directly (`outputPath` in `angular.json`), so deployment is:
+Deployment is automatic via GitHub Actions. On every push to `master`, the
+`.github/workflows/deploy.yml` workflow builds the app (`ng build
+--configuration=production`), publishes `public/browser` to GitHub Pages, and
+the site goes live at https://angulareighteen.github.io.
 
-```bash
-yarn build
-firebase deploy
-```
+The workflow also copies `index.html` to `404.html` so client-side routes (deep
+links such as `/quiz/us-civics`) resolve correctly — GitHub Pages has no
+server-side rewrites — and writes a `.nojekyll` file so the output is served
+verbatim.
+
+One-time setup: in the repository, go to **Settings → Pages → Build and
+deployment** and set **Source** to **GitHub Actions**.
+
+You can also trigger a deploy manually from the **Actions** tab
+(**Deploy to GitHub Pages → Run workflow**).

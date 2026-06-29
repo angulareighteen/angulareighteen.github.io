@@ -46,15 +46,11 @@ jobs:
         
     - name: Bundle size analysis
       run: |
-        yarn ng build --configuration=production --stats-json
-        echo "=== Bundle Analysis ==="
-        npx webpack-bundle-analyzer docs/stats.json docs/ -m static -r bundle-report.html -O
+        yarn ng build --configuration=production
+        echo "=== Largest JS/CSS files (public/browser) ==="
+        find public -type f \( -name "*.js" -o -name "*.css" \) \
+          -exec du -h {} \; | sort -rh | head -25
+        echo "=== Total bundle size ==="
+        du -sh public/browser || du -sh public
       continue-on-error: true
       
-    - name: Upload bundle analysis
-      if: success()
-      uses: actions/upload-artifact@v4
-      with:
-        name: bundle-analysis
-        path: bundle-report.html
-        retention-days: 7

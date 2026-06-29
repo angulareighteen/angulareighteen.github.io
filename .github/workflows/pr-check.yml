@@ -61,13 +61,13 @@ jobs:
         git checkout ${{ github.base_ref }}
         yarn install --frozen-lockfile
         yarn ng build --configuration=production
-        BASE_SIZE=$(du -sb docs | cut -f1)
+        BASE_SIZE=$(du -sb public | cut -f1)
         
         # Build PR branch
         git checkout ${{ github.head_ref }}
         yarn install --frozen-lockfile
         yarn ng build --configuration=production
-        PR_SIZE=$(du -sb docs | cut -f1)
+        PR_SIZE=$(du -sb public | cut -f1)
         
         # Calculate difference
         DIFF=$((PR_SIZE - BASE_SIZE))

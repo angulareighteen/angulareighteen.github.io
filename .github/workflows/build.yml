@@ -16,7 +16,7 @@ jobs:
     strategy:
       fail-fast: false  # Don't cancel other jobs if one fails
       matrix:
-        node-version: [24.x, 26.x]  # Removed 18.x - not compatible with Angular 20
+        node-version: [22.x, 24.x]  # Removed 18.x - not compatible with Angular 20
     
     steps:
     - name: Checkout repository
@@ -55,10 +55,10 @@ jobs:
       uses: actions/upload-artifact@v4
       with:
         name: dist-node-${{ matrix.node-version }}
-        path: docs/
+        path: public/browser/
         retention-days: 7
         
     - name: Check bundle size
       run: |
         echo "Bundle sizes:"
-        find docs -name "*.js" -exec du -h {} \; | sort -rh | head -20
+        find public -name "*.js" -exec du -h {} \; | sort -rh | head -20
