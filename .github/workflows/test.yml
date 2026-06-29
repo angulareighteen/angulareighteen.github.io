@@ -54,7 +54,7 @@ jobs:
       fail-fast: false  # Don't cancel other jobs if one fails
       matrix:
         browser: [ChromeHeadless, FirefoxHeadless]
-        node-version: [20.x, 22.x]  # Testing across compatible Node versions
+        node-version: [24.x, 26.x]  # Testing across compatible Node versions
     
     steps:
     - name: Checkout repository
