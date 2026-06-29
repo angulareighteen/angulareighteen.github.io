@@ -1431,7 +1431,7 @@ jobs:
       run: yarn ng build --configuration=production
       
     - name: Upload build artifacts
-      uses: actions/upload-artifact@v4
+      uses: actions/upload-artifact@v7
       with:
         name: dist-node-${{ matrix.node-version }}
         path: docs/
@@ -1580,7 +1580,7 @@ jobs:
       
     - name: Upload bundle analysis
       if: success()
-      uses: actions/upload-artifact@v4
+      uses: actions/upload-artifact@v7
       with:
         name: bundle-analysis
         path: bundle-report.html
@@ -1759,7 +1759,7 @@ jobs:
       run: yarn ng test --watch=false --code-coverage --browsers=ChromeHeadless
       
     - name: Upload coverage reports
-      uses: actions/upload-artifact@v4
+      uses: actions/upload-artifact@v7
       with:
         name: coverage-report
         path: coverage/
