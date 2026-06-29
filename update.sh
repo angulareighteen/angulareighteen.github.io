@@ -43,7 +43,7 @@ PING_COUNT="20"                          # echo requests per probe
 PING_TARGET="8.8.8.8"                    # probe target host
 
 PROJECT_TITLE="angulareighteen"
-SITE_URL="https://angulareighteen.web.app"
+SITE_URL="https://angulareighteen.github.io"
 GH_SLUG="angulareighteen/angulareighteen.github.io"        # owner/repo used for the CI badge
 WORKFLOW_FILE="firebase-hosting-merge.yml"
 

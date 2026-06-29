@@ -1,7 +1,7 @@
 # Colorado Quiz
 
 A small Angular 22 PWA of quizzes and news, deployed to Firebase Hosting at
-https://angulareighteen.web.app.
+https://angulareighteen.github.io.
 
 ## Tech stack
 
