@@ -1,89 +1,4 @@
-kushal@fedora:~/src/angular/coloradoquiz$ time yarn run ng build
-yarn run v1.22.22
-$ ng build
-[baseline-browser-mapping] The data in this module is over two months old.  To ensure accurate Baseline data, please update: `npm i baseline-browser-mapping@latest -D`
-Initial chunk files | Names                    |  Raw size | Estimated transfer size
-main-YS4WI2CN.js    | main                     | 329.93 kB |                88.93 kB
-styles-AX2II72J.css | styles                   |   8.05 kB |                 1.31 kB
-
-                    | Initial total            | 337.98 kB |                90.24 kB
-
-Lazy chunk files    | Names                    |  Raw size | Estimated transfer size
-chunk-Cc02ckWq.js   | -                        | 107.34 kB |                21.60 kB
-chunk-DjbP6_O7.js   | browser                  |  68.53 kB |                17.86 kB
-chunk-CfqO4fnY.js   | quiz-component           |  54.99 kB |                13.40 kB
-chunk-DDUXkZPy.js   | -                        |  29.13 kB |                 7.48 kB
-chunk-b_0CUpWM.js   | -                        |  24.05 kB |                 5.81 kB
-chunk-BtyP_Wke.js   | key-industries-component |   3.77 kB |                 1.16 kB
-chunk-DjveFeZd.js   | news-component           |   3.34 kB |                 1.38 kB
-chunk-Cigzcxaj.js   | home-component           |   1.40 kB |               658 bytes
-chunk-kCSSTtWh.js   | loader-io-component      | 314 bytes |               314 bytes
-chunk-CguUs1Qa.js   | playground-component     | 253 bytes |               253 bytes
-
-Application bundle generation complete. [2.681 seconds] - 2026-06-29T22:38:26.649Z
-
-Output location: /home/kushal/src/angular/coloradoquiz/public
-
-Done in 3.28s.
-
-real	0m3.394s
-user	0m5.664s
-sys	0m0.817s
-kushal@fedora:~/src/angular/coloradoquiz$ time yarn run ng start
-yarn run v1.22.22
-$ ng start
-Error: Unknown argument: start
-error Command failed with exit code 1.
-info Visit https://yarnpkg.com/en/docs/cli/run for documentation about this command.
-
-real	0m0.664s
-user	0m0.536s
-sys	0m0.174s
-kushal@fedora:~/src/angular/coloradoquiz$ time yarn run start
-yarn run v1.22.22
-$ ng serve
-[baseline-browser-mapping] The data in this module is over two months old.  To ensure accurate Baseline data, please update: `npm i baseline-browser-mapping@latest -D`
-Initial chunk files | Names                    |  Raw size
-main.js             | main                     |  15.36 kB | 
-styles.css          | styles                   |   8.81 kB | 
-chunk-VUJOFXKG.js   | -                        | 938 bytes | 
-
-                    | Initial total            |  25.11 kB
-
-Lazy chunk files    | Names                    |  Raw size
-chunk-SPMXR3G4.js   | quiz-component           |  15.02 kB | 
-chunk-INTMLAGT.js   | key-industries-component |  11.75 kB | 
-chunk-3BGTMT64.js   | news-component           |  11.22 kB | 
-chunk-SFUQ4IMD.js   | home-component           |   5.16 kB | 
-chunk-KZMN5CN7.js   | -                        |   3.99 kB | 
-chunk-4Y2DNRUC.js   | loader-io-component      |   2.00 kB | 
-chunk-RHF2XRW4.js   | playground-component     |   1.89 kB | 
-
-Application bundle generation complete. [1.219 seconds] - 2026-06-29T22:40:54.219Z
-
-Watch mode enabled. Watching for file changes...
-NOTE: Raw file sizes do not reflect development server per-request transformations.
-  ➜  Local:   http://localhost:4200/
-  ➜  press h + enter to show help
-^C
-
-real	0m27.589s
-user	0m0.149s
-sys	0m0.048s
-kushal@fedora:~/src/angular/coloradoquiz$ cd .. 
-kushal@fedora:~/src/angular$ time git clone git@github.com:angulareighteen/angulareighteen.github.io.git
-Cloning into 'angulareighteen.github.io'...
-remote: Enumerating objects: 6904, done.
-remote: Counting objects: 100% (24/24), done.
-remote: Compressing objects: 100% (16/16), done.
-remote: Total 6904 (delta 14), reused 18 (delta 8), pack-reused 6880 (from 3)
-Receiving objects: 100% (6904/6904), 5.81 MiB | 11.85 MiB/s, done.
-Resolving deltas: 100% (4696/4696), done.
-
-real	0m1.411s
-user	0m1.459s
-sys	0m0.243s
-kushal@fedora:~/src/angular$ cd ~/src/angular/angulareighteen.github.io/; cat update.sh; time bash update.sh;
+kushal@fedora:~/src/angular/angulareighteen.github.io$ cd ~/src/angular/angulareighteen.github.io/; cat update.sh; time bash update.sh;
 #!/usr/bin/env bash
 # =============================================================================
 # update.sh — Toolchain update + rebuild + test + publish for this repo.
@@ -371,28 +286,27 @@ fi
 note "done."
 
 ==> Node version manager: fnm
-[master 43ccd1c] add timestamp
- 2 files changed, 25 insertions(+), 213 deletions(-)
- create mode 100644 docs/llm/update.md
-[master e79c296] begin add system status
+[master bbf4c3a] add timestamp
+ 2 files changed, 25 insertions(+), 319 deletions(-)
+[master 7385515] begin add system status
  2 files changed, 38 insertions(+)
-[master fbff085] add system status
+[master 07be9a6] add system status
  1 file changed, 6 insertions(+)
-[master f9f828a] end add system status
+[master 2b2f38e] end add system status
  1 file changed, 1 insertion(+)
-[master 0a02307] begin update node
+[master a98f02e] begin update node
  2 files changed, 28 insertions(+)
 Installing Node v24.18.0 (x64)
 warning: Version already installed at "/home/kushal/.local/share/fnm/node-versions/v24.18.0"
 
-real	0m0.107s
-user	0m0.004s
-sys	0m0.009s
+real	0m0.138s
+user	0m0.005s
+sys	0m0.008s
 Using Node for alias lts-latest
 
 real	0m0.002s
-user	0m0.001s
-sys	0m0.001s
+user	0m0.000s
+sys	0m0.002s
 
 changed 278 packages in 5s
 
@@ -403,21 +317,21 @@ npm warn allow-scripts   yarn@1.22.22 (preinstall: :; (node ./preinstall.js > /d
 npm warn allow-scripts
 npm warn allow-scripts Run `npm approve-scripts --allow-scripts-pending` to review, or `npm approve-scripts <pkg>` to allow.
 
-real	0m4.831s
-user	0m3.206s
-sys	0m1.853s
+real	0m5.159s
+user	0m3.335s
+sys	0m1.743s
 
-real	0m0.492s
-user	0m0.384s
-sys	0m0.135s
+real	0m0.403s
+user	0m0.332s
+sys	0m0.115s
 
-real	0m0.242s
-user	0m0.271s
-sys	0m0.043s
-[master 5cdf7eb] end update node
+real	0m0.238s
+user	0m0.256s
+sys	0m0.056s
+[master df583da] end update node
  2 files changed, 70 insertions(+)
 On branch master
-Your branch is ahead of 'origin/master' by 6 commits.
+Your branch is ahead of 'origin/master' by 7 commits.
   (use "git push" to publish your local commits)
 
 nothing to commit, working tree clean
@@ -430,79 +344,77 @@ Fetching dependency metadata from registry...
 Package '@angular/core' is already up to date.
 Package '@angular/cli' is already up to date.
 Package '@angular/material' is already up to date.
-Done in 3.25s.
+Done in 3.47s.
 
-real	0m3.350s
-user	0m1.818s
-sys	0m0.588s
+real	0m3.576s
+user	0m1.788s
+sys	0m0.578s
 On branch master
-Your branch is ahead of 'origin/master' by 6 commits.
+Your branch is ahead of 'origin/master' by 7 commits.
   (use "git push" to publish your local commits)
 
 nothing to commit, working tree clean
 
-real	0m1.102s
-user	0m0.839s
-sys	0m0.203s
-[master 43d9249] begin prepare to build angular
+real	0m1.054s
+user	0m0.835s
+sys	0m0.213s
+[master 8d12439] begin prepare to build angular
  2 files changed, 36 insertions(+)
 
-real	0m5.368s
-user	0m13.465s
-sys	0m2.097s
+real	0m3.455s
+user	0m5.787s
+sys	0m0.773s
 warning: in the working copy of 'public/3rdpartylicenses.txt', CRLF will be replaced by LF the next time Git touches it
-[master 5fb0f22] end prepare to build angular
- 4 files changed, 35 insertions(+), 6 deletions(-)
+[master d02b83f] end prepare to build angular
+ 3 files changed, 31 insertions(+), 11 deletions(-)
 warning: in the working copy of 'public/3rdpartylicenses.txt', CRLF will be replaced by LF the next time Git touches it
-[master b15c33a] begin prepare to unit test angular
+[master a8fabe7] begin prepare to unit test angular
  2 files changed, 27 insertions(+), 33 deletions(-)
 [baseline-browser-mapping] The data in this module is over two months old.  To ensure accurate Baseline data, please update: `npm i baseline-browser-mapping@latest -D`
 
-real	0m4.419s
-user	0m22.157s
-sys	0m4.696s
-[master 83e507a] end prepare to unit test angular
+real	0m3.970s
+user	0m21.019s
+sys	0m3.738s
+[master 439b30d] end prepare to unit test angular
  2 files changed, 60 insertions(+)
 
-real	0m0.148s
-user	0m0.086s
-sys	0m0.060s
-[master 20cb6ec] add timestamp
+real	0m0.168s
+user	0m0.088s
+sys	0m0.059s
+[master 3528d24] add timestamp
  2 files changed, 32 insertions(+)
 
 ==> running export.sh (refresh docs/llm/dump.txt)
 warning: in the working copy of 'docs/llm/dump.txt', CRLF will be replaced by LF the next time Git touches it
-[master c0404c2] add repo context dump
- 1 file changed, 16166 insertions(+)
- create mode 100644 docs/llm/dump.txt
+[master b416e22] add repo context dump
+ 1 file changed, 317 insertions(+), 330 deletions(-)
 
 ==> syncing with origin/master
 From github.com:angulareighteen/angulareighteen.github.io
  * branch            master     -> FETCH_HEAD
 Current branch master is up to date.
-warning: in the working copy of 'docs/llm/dump.txt', CRLF will be replaced by LF the next time Git touches it
 On branch master
-Your branch is ahead of 'origin/master' by 13 commits.
+Your branch is ahead of 'origin/master' by 14 commits.
   (use "git push" to publish your local commits)
 
 nothing to commit, working tree clean
-Enumerating objects: 84, done.
-Counting objects: 100% (84/84), done.
+Enumerating objects: 103, done.
+Counting objects: 100% (103/103), done.
 Delta compression using up to 16 threads
-Compressing objects: 100% (53/53), done.
-Writing objects: 100% (74/74), 298.53 KiB | 18.66 MiB/s, done.
-Total 74 (delta 36), reused 0 (delta 0), pack-reused 0 (from 0)
-remote: Resolving deltas: 100% (36/36), completed with 9 local objects.
+Compressing objects: 100% (70/70), done.
+Writing objects: 100% (84/84), 14.34 KiB | 1.79 MiB/s, done.
+Total 84 (delta 51), reused 0 (delta 0), pack-reused 0 (from 0)
+remote: Resolving deltas: 100% (51/51), completed with 14 local objects.
 remote: 
 remote: GitHub found 48 vulnerabilities on angulareighteen/angulareighteen.github.io's default branch (15 high, 29 moderate, 4 low). To find out more, visit:
 remote:      https://github.com/angulareighteen/angulareighteen.github.io/security/dependabot
 remote: 
 To github.com:angulareighteen/angulareighteen.github.io.git
-   4f919d9..c0404c2  master -> master
+   a3e8f3c..b416e22  master -> master
 
 ==> done.
 
-real	0m48.662s
-user	0m44.924s
-sys	0m13.321s
+real	0m46.697s
+user	0m36.183s
+sys	0m10.963s
 kushal@fedora:~/src/angular/angulareighteen.github.io$ 
