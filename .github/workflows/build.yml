@@ -1,0 +1,64 @@
+name: Build Angular Application
+
+on:
+  push:
+    branches: [ '**' ]  # Run on all branches
+  pull_request:
+    branches: [ '**' ]  # Run on PRs to any branch
+  workflow_dispatch:  # Allow manual triggering
+  schedule:
+    - cron: '0 6 * * *'  # Run daily at 6 AM UTC
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    
+    strategy:
+      fail-fast: false  # Don't cancel other jobs if one fails
+      matrix:
+        node-version: [20.x, 22.x]  # Removed 18.x - not compatible with Angular 20
+    
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v4
+      
+    - name: Setup Node.js ${{ matrix.node-version }}
+      uses: actions/setup-node@v4
+      with:
+        node-version: ${{ matrix.node-version }}
+        cache: 'yarn'
+    
+    - name: Install dependencies
+      run: yarn install --frozen-lockfile
+      
+    - name: Check Angular CLI version
+      run: yarn ng version
+      
+    - name: Lint code
+      run: |
+        if yarn ng lint --help >/dev/null 2>&1; then
+          echo "Running linter..."
+          yarn ng lint
+        else
+          echo "Linting not configured. Skipping..."
+          echo "To add linting, run: ng add @angular-eslint/schematics"
+        fi
+      continue-on-error: true  # Don't fail build on lint errors
+      
+    - name: Build application (development)
+      run: yarn ng build
+      
+    - name: Build application (production)
+      run: yarn ng build --configuration=production
+      
+    - name: Upload build artifacts
+      uses: actions/upload-artifact@v4
+      with:
+        name: dist-node-${{ matrix.node-version }}
+        path: docs/
+        retention-days: 7
+        
+    - name: Check bundle size
+      run: |
+        echo "Bundle sizes:"
+        find docs -name "*.js" -exec du -h {} \; | sort -rh | head -20

@@ -1,0 +1,61 @@
+name: Dependency Security Check
+
+on:
+  push:
+    branches: [ '**' ]  # Run on all branches
+  pull_request:
+    branches: [ '**' ]  # Run on PRs to any branch
+  workflow_dispatch:  # Allow manual triggering
+  schedule:
+    - cron: '0 10 * * *'  # Run daily at 10 AM UTC
+
+jobs:
+  security:
+    runs-on: ubuntu-latest
+    
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v4
+      
+    - name: Setup Node.js
+      uses: actions/setup-node@v4
+      with:
+        node-version: '22.x'
+        cache: 'yarn'
+    
+    - name: Install dependencies
+      run: yarn install --frozen-lockfile
+      
+    - name: Check for security vulnerabilities
+      run: yarn audit --level moderate
+      continue-on-error: true  # Don't fail the workflow
+      
+    - name: Check for outdated packages
+      run: |
+        echo "=== Outdated Packages ==="
+        yarn outdated || true
+        
+    - name: Check Angular packages specifically
+      run: |
+        echo "=== Angular Package Versions ==="
+        yarn list --pattern "@angular/*" --depth=0
+        
+    - name: License checker
+      run: |
+        npx license-checker --summary --excludePrivatePackages || true
+        
+    - name: Bundle size analysis
+      run: |
+        yarn ng build --configuration=production --stats-json
+        echo "=== Bundle Analysis ==="
+        npx webpack-bundle-analyzer docs/stats.json docs/ -m static -r bundle-report.html -O
+      continue-on-error: true
+      
+    - name: Upload bundle analysis
+      if: success()
+      uses: actions/upload-artifact@v4
+      with:
+        name: bundle-analysis
+        path: bundle-report.html
+        retention-days: 7
+        

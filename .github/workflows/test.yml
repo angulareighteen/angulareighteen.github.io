@@ -1,0 +1,86 @@
+name: Run Tests
+
+on:
+  push:
+    branches: [ '**' ]  # Run on all branches
+  pull_request:
+    branches: [ '**' ]  # Run on PRs to any branch
+  workflow_dispatch:  # Allow manual triggering
+  schedule:
+    - cron: '0 2 * * *'  # Run daily at 2 AM UTC
+
+jobs:
+  test-unit:
+    runs-on: ubuntu-latest
+    
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v4
+      
+    - name: Setup Node.js
+      uses: actions/setup-node@v4
+      with:
+        node-version: '22.x'  # Use latest LTS
+        cache: 'yarn'
+    
+    - name: Install dependencies
+      run: yarn install --frozen-lockfile
+      
+    - name: Run unit tests with coverage
+      run: yarn ng test --watch=false --code-coverage --browsers=ChromeHeadless
+      
+    - name: Upload coverage reports
+      uses: actions/upload-artifact@v4
+      with:
+        name: coverage-report
+        path: coverage/
+        retention-days: 30
+        
+    - name: Display coverage summary
+      run: |
+        if [ -f coverage/lcov-report/index.html ]; then
+          echo "Coverage report generated successfully"
+          # Extract coverage percentage if possible
+          if [ -f coverage/lcov.info ]; then
+            echo "Coverage summary:"
+            npx lcov-summary coverage/lcov.info || true
+          fi
+        fi
+
+  test-browsers:
+    runs-on: ubuntu-latest
+    
+    strategy:
+      fail-fast: false  # Don't cancel other jobs if one fails
+      matrix:
+        browser: [ChromeHeadless, FirefoxHeadless]
+        node-version: [20.x, 22.x]  # Testing across compatible Node versions
+    
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v4
+      
+    - name: Setup Node.js ${{ matrix.node-version }}
+      uses: actions/setup-node@v4
+      with:
+        node-version: ${{ matrix.node-version }}
+        cache: 'yarn'
+        
+    - name: Install dependencies
+      run: yarn install --frozen-lockfile
+      
+    - name: Setup Firefox
+      if: matrix.browser == 'FirefoxHeadless'
+      uses: browser-actions/setup-firefox@latest
+      
+    - name: Setup Chrome
+      if: matrix.browser == 'ChromeHeadless'
+      uses: browser-actions/setup-chrome@latest
+      
+    - name: Run tests in ${{ matrix.browser }}
+      run: yarn ng test --watch=false --browsers=${{ matrix.browser }}
+      
+    - name: Test results summary
+      if: always()
+      run: echo "Tests completed for ${{ matrix.browser }}"
+      
