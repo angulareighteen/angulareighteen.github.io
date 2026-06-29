@@ -7,7 +7,7 @@
 
 DUMP METADATA
 ═════════════════════════════════════════════════════════════════════════════════
-  Generated at   : 2026-06-29T19:25:57-04:00
+  Generated at   : 2026-06-29T19:49:35-04:00
   Generator      : export.sh
   Host           : fedora
   User           : kushal
@@ -17,9 +17,9 @@ REPOSITORY METADATA
 ═════════════════════════════════════════════════════════════════════════════════
   Repository root: /home/kushal/src/angular/angulareighteen.github.io
   Branch         : master
-  Commit (full)  : 77d24435d1d694b967a82b386f7268878996f75f
-  Commit (short) : 77d2443
-  Commit date    : 2026-06-29 19:25:57 -0400
+  Commit (full)  : 3528d24ce0fd251d1dc1932b906e43b2a3792526
+  Commit (short) : 3528d24
+  Commit date    : 2026-06-29 19:49:35 -0400
   Commit message : add timestamp
   Remote origin  : git@github.com:angulareighteen/angulareighteen.github.io.git
   Files included : 179
@@ -1366,15 +1366,15 @@ mv -f "$TMP_FILE" "$OUTPUT_FILE"
   File name:             build.yml
   Relative path:         .github/workflows/build.yml
   Absolute path:         /home/kushal/src/angular/angulareighteen.github.io/.github/workflows/build.yml
-  Size:                  1.7 KiB (1786 bytes)
-  Last modified:         2026-06-29 19:24:53.013373388 -0400
+  Size:                  1.7 KiB (1798 bytes)
+  Last modified:         2026-06-29 19:48:05.839484969 -0400
   Permissions:           -rw-r--r--
   Owner:                 kushal:kushal
   Inode:                 17533522
   Hard links:            1
   MIME type:             text/plain
-  SHA-256:               5179589f6771d7205fc22b632ad7e387c91c43129b77942e419478099385755d
-  Last git commit:       88fd5a7 2026-06-29 19:25:20 -0400 add timestamp
+  SHA-256:               d981dd507b7d835433a8ee15a77c94d00e157e412d89e3d4f148748b54252cbe
+  Last git commit:       02d0247 2026-06-29 19:48:13 -0400 use v7
 
 --- CONTENT ---
 name: Build Angular Application
@@ -1395,7 +1395,7 @@ jobs:
     strategy:
       fail-fast: false  # Don't cancel other jobs if one fails
       matrix:
-        node-version: [24.x, 26.x]  # Removed 18.x - not compatible with Angular 20
+        node-version: [22.x, 24.x]  # Removed 18.x - not compatible with Angular 20
     
     steps:
     - name: Checkout repository
@@ -1434,13 +1434,13 @@ jobs:
       uses: actions/upload-artifact@v7
       with:
         name: dist-node-${{ matrix.node-version }}
-        path: docs/
+        path: public/browser/
         retention-days: 7
         
     - name: Check bundle size
       run: |
         echo "Bundle sizes:"
-        find docs -name "*.js" -exec du -h {} \; | sort -rh | head -20
+        find public -name "*.js" -exec du -h {} \; | sort -rh | head -20
 
 
 ################################################################################
@@ -1514,15 +1514,15 @@ jobs:
   File name:             dependency-check.yml
   Relative path:         .github/workflows/dependency-check.yml
   Absolute path:         /home/kushal/src/angular/angulareighteen.github.io/.github/workflows/dependency-check.yml
-  Size:                  1.6 KiB (1657 bytes)
-  Last modified:         2026-06-29 19:16:36.123416122 -0400
+  Size:                  1.5 KiB (1581 bytes)
+  Last modified:         2026-06-29 19:43:16.357251363 -0400
   Permissions:           -rw-r--r--
   Owner:                 kushal:kushal
   Inode:                 17533573
   Hard links:            1
   MIME type:             text/plain
-  SHA-256:               6aceaaa165a1e2b6ab7d16e4cdc08dc716807ed04a396df80b69da5b0ebd51ac
-  Last git commit:       77d8ffb 2026-06-29 19:16:59 -0400 add github actions files
+  SHA-256:               d04e25caabf100755a8e177f7a26fb82acd6f5370f0c8b7bcef07b92a4b0f963
+  Last git commit:       a3e8f3c 2026-06-29 19:47:01 -0400 add claude response
 
 --- CONTENT ---
 name: Dependency Security Check
@@ -1573,19 +1573,14 @@ jobs:
         
     - name: Bundle size analysis
       run: |
-        yarn ng build --configuration=production --stats-json
-        echo "=== Bundle Analysis ==="
-        npx webpack-bundle-analyzer docs/stats.json docs/ -m static -r bundle-report.html -O
+        yarn ng build --configuration=production
+        echo "=== Largest JS/CSS files (public/browser) ==="
+        find public -type f \( -name "*.js" -o -name "*.css" \) \
+          -exec du -h {} \; | sort -rh | head -25
+        echo "=== Total bundle size ==="
+        du -sh public/browser || du -sh public
       continue-on-error: true
       
-    - name: Upload bundle analysis
-      if: success()
-      uses: actions/upload-artifact@v7
-      with:
-        name: bundle-analysis
-        path: bundle-report.html
-        retention-days: 7
-
 
 ################################################################################
 # FILE: .github/workflows/pr-check.yml
@@ -1595,15 +1590,15 @@ jobs:
   File name:             pr-check.yml
   Relative path:         .github/workflows/pr-check.yml
   Absolute path:         /home/kushal/src/angular/angulareighteen.github.io/.github/workflows/pr-check.yml
-  Size:                  3.0 KiB (3088 bytes)
-  Last modified:         2026-06-29 19:16:34.985690531 -0400
+  Size:                  3.0 KiB (3092 bytes)
+  Last modified:         2026-06-29 19:43:52.916110915 -0400
   Permissions:           -rw-r--r--
   Owner:                 kushal:kushal
   Inode:                 17533605
   Hard links:            1
   MIME type:             text/plain
-  SHA-256:               fab4f271bc25ba7236d00fd17159626ebd1e23df43852923e75b985640acb8e2
-  Last git commit:       77d8ffb 2026-06-29 19:16:59 -0400 add github actions files
+  SHA-256:               90696554738e0b034ec25044fabbdfe2d1761c6f8f5e4b25aabd08d7e63c3f59
+  Last git commit:       a3e8f3c 2026-06-29 19:47:01 -0400 add claude response
 
 --- CONTENT ---
 name: Pull Request Checks
@@ -1669,13 +1664,13 @@ jobs:
         git checkout ${{ github.base_ref }}
         yarn install --frozen-lockfile
         yarn ng build --configuration=production
-        BASE_SIZE=$(du -sb docs | cut -f1)
+        BASE_SIZE=$(du -sb public | cut -f1)
         
         # Build PR branch
         git checkout ${{ github.head_ref }}
         yarn install --frozen-lockfile
         yarn ng build --configuration=production
-        PR_SIZE=$(du -sb docs | cut -f1)
+        PR_SIZE=$(du -sb public | cut -f1)
         
         # Calculate difference
         DIFF=$((PR_SIZE - BASE_SIZE))
@@ -1717,14 +1712,14 @@ jobs:
   Relative path:         .github/workflows/test.yml
   Absolute path:         /home/kushal/src/angular/angulareighteen.github.io/.github/workflows/test.yml
   Size:                  2.3 KiB (2402 bytes)
-  Last modified:         2026-06-29 19:16:34.985732701 -0400
+  Last modified:         2026-06-29 19:48:05.841291026 -0400
   Permissions:           -rw-r--r--
   Owner:                 kushal:kushal
   Inode:                 17533632
   Hard links:            1
   MIME type:             text/plain
-  SHA-256:               f6f573f5ade0215bc83c979795f26fcf6b13f2a9a9c8cc3ced73d03cbff8ce0d
-  Last git commit:       77d8ffb 2026-06-29 19:16:59 -0400 add github actions files
+  SHA-256:               4a85966e6e825bb7deb78f88e9e0cdc6090d299d60e2c0d58a97aa76bf178972
+  Last git commit:       02d0247 2026-06-29 19:48:13 -0400 use v7
 
 --- CONTENT ---
 name: Run Tests
@@ -2322,18 +2317,18 @@ Sat Jun 25 07:19:32 PM EDT 2022
   File name:             fedoratest.md
   Relative path:         locallog/fedoratest.md
   Absolute path:         /home/kushal/src/angular/angulareighteen.github.io/locallog/fedoratest.md
-  Size:                  2.9 KiB (2998 bytes)
-  Last modified:         2026-06-29 19:25:37.503812750 -0400
+  Size:                  2.9 KiB (2999 bytes)
+  Last modified:         2026-06-29 19:49:16.238328426 -0400
   Permissions:           -rw-r--r--
   Owner:                 kushal:kushal
   Inode:                 17490279
   Hard links:            1
   MIME type:             text/plain
-  SHA-256:               c0b46f425048dcca57f1733406a68b90cd54e12bccb15adb0729568b754e65ed
-  Last git commit:       898aada 2026-06-29 19:25:37 -0400 end prepare to unit test angular
+  SHA-256:               82f25a248a37bf8e37a53092d7f5702d81023aff12948a88ca24c1204e4a348a
+  Last git commit:       439b30d 2026-06-29 19:49:16 -0400 end prepare to unit test angular
 
 --- CONTENT ---
-[Binary file — content omitted. Size: 2.9 KiB, SHA-256: c0b46f425048dcca57f1733406a68b90cd54e12bccb15adb0729568b754e65ed]
+[Binary file — content omitted. Size: 2.9 KiB, SHA-256: 82f25a248a37bf8e37a53092d7f5702d81023aff12948a88ca24c1204e4a348a]
 
 ################################################################################
 # FILE: ngsw-config.json
@@ -2395,19 +2390,19 @@ Sat Jun 25 07:19:32 PM EDT 2022
   Relative path:         package.json
   Absolute path:         /home/kushal/src/angular/angulareighteen.github.io/package.json
   Size:                  1.1 KiB (1164 bytes)
-  Last modified:         2026-06-29 19:25:57.052608681 -0400
+  Last modified:         2026-06-29 19:49:35.758676321 -0400
   Permissions:           -rw-r--r--
   Owner:                 kushal:kushal
   Inode:                 17532336
   Hard links:            1
   MIME type:             application/json
-  SHA-256:               dac18dddbf77a34cc20ad8de3116b23585b9358261a1d7f7faac77fdd62d5e01
-  Last git commit:       cde9c72 2026-06-29 19:25:57 -0400 v2.0.7
+  SHA-256:               66cef17b4b2b684e82d7336a10d4901d7dc1b8b3c30ecfa596a09887e2e5110d
+  Last git commit:       7083076 2026-06-29 19:49:35 -0400 v2.0.8
 
 --- CONTENT ---
 {
   "name": "angulareighteen",
-  "version": "2.0.7",
+  "version": "2.0.8",
   "description": "Colorado Quiz - an Angular PWA of quizzes and news.",
   "scripts": {
     "ng": "ng",
@@ -2457,232 +2452,232 @@ Sat Jun 25 07:19:32 PM EDT 2022
   Relative path:         ping.txt
   Absolute path:         /home/kushal/src/angular/angulareighteen.github.io/ping.txt
   Size:                  14.8 KiB (15199 bytes)
-  Last modified:         2026-06-29 19:25:56.923765136 -0400
+  Last modified:         2026-06-29 19:49:35.619292315 -0400
   Permissions:           -rw-r--r--
   Owner:                 kushal:kushal
   Inode:                 17532337
   Hard links:            1
   MIME type:             text/plain
-  SHA-256:               9994a6a726bb773570f0f20bff5d4c8bb0b59caf5f02b989c069eca0efb4de26
-  Last git commit:       77d2443 2026-06-29 19:25:57 -0400 add timestamp
+  SHA-256:               20a6bc5cef18f51e2ec6b5283e36354052db995e741e6a8b51f18d6c020a8d89
+  Last git commit:       3528d24 2026-06-29 19:49:35 -0400 add timestamp
 
 --- CONTENT ---
 ping: sock4.fd: 3 (socktype: SOCK_DGRAM), sock6.fd: 4 (socktype: SOCK_DGRAM), hints.ai_family: AF_UNSPEC
 ping: ai->ai_family: AF_INET, ai->ai_canonname: '8.8.8.8'
 PING 8.8.8.8 (8.8.8.8) 56(84) bytes of data.
-[1782775520.535797] 64 bytes from 8.8.8.8: icmp_seq=1 ttl=119 time=11.8 ms
-[1782775520.553306] 64 bytes from 8.8.8.8: icmp_seq=2 ttl=119 time=17.3 ms
-[1782775520.562902] 64 bytes from 8.8.8.8: icmp_seq=3 ttl=119 time=14.8 ms
-[1782775520.582972] 64 bytes from 8.8.8.8: icmp_seq=4 ttl=119 time=20.0 ms
-[1782775520.592527] 64 bytes from 8.8.8.8: icmp_seq=5 ttl=119 time=16.5 ms
-[1782775520.604549] 64 bytes from 8.8.8.8: icmp_seq=6 ttl=119 time=12.0 ms
-[1782775520.627133] 64 bytes from 8.8.8.8: icmp_seq=7 ttl=119 time=20.6 ms
-[1782775520.636023] 64 bytes from 8.8.8.8: icmp_seq=8 ttl=119 time=15.4 ms
-[1782775520.652702] 64 bytes from 8.8.8.8: icmp_seq=9 ttl=119 time=16.6 ms
-[1782775520.663243] 64 bytes from 8.8.8.8: icmp_seq=10 ttl=119 time=12.1 ms
-[1782775520.681536] 64 bytes from 8.8.8.8: icmp_seq=11 ttl=119 time=15.4 ms
-[1782775520.702231] 64 bytes from 8.8.8.8: icmp_seq=12 ttl=119 time=20.9 ms
-[1782775520.712965] 64 bytes from 8.8.8.8: icmp_seq=13 ttl=119 time=16.3 ms
-[1782775520.734030] 64 bytes from 8.8.8.8: icmp_seq=14 ttl=119 time=21.6 ms
-[1782775520.742009] 64 bytes from 8.8.8.8: icmp_seq=15 ttl=119 time=12.9 ms
-[1782775520.762064] 64 bytes from 8.8.8.8: icmp_seq=16 ttl=119 time=17.0 ms
-[1782775520.779818] 64 bytes from 8.8.8.8: icmp_seq=17 ttl=119 time=18.6 ms
-[1782775520.791024] 64 bytes from 8.8.8.8: icmp_seq=18 ttl=119 time=12.8 ms
-[1782775520.818628] 64 bytes from 8.8.8.8: icmp_seq=19 ttl=119 time=24.4 ms
-[1782775520.829963] 64 bytes from 8.8.8.8: icmp_seq=20 ttl=119 time=19.6 ms
+[1782776935.900400] 64 bytes from 8.8.8.8: icmp_seq=1 ttl=119 time=15.4 ms
+[1782776935.911030] 64 bytes from 8.8.8.8: icmp_seq=2 ttl=119 time=10.6 ms
+[1782776935.931083] 64 bytes from 8.8.8.8: icmp_seq=3 ttl=119 time=15.6 ms
+[1782776935.949434] 64 bytes from 8.8.8.8: icmp_seq=4 ttl=119 time=18.8 ms
+[1782776935.960818] 64 bytes from 8.8.8.8: icmp_seq=5 ttl=119 time=14.6 ms
+[1782776935.980458] 64 bytes from 8.8.8.8: icmp_seq=6 ttl=119 time=19.2 ms
+[1782776935.989514] 64 bytes from 8.8.8.8: icmp_seq=7 ttl=119 time=12.8 ms
+[1782776936.008403] 64 bytes from 8.8.8.8: icmp_seq=8 ttl=119 time=17.0 ms
+[1782776936.017967] 64 bytes from 8.8.8.8: icmp_seq=9 ttl=119 time=11.5 ms
+[1782776936.038062] 64 bytes from 8.8.8.8: icmp_seq=10 ttl=119 time=16.6 ms
+[1782776936.047618] 64 bytes from 8.8.8.8: icmp_seq=11 ttl=119 time=11.0 ms
+[1782776936.068460] 64 bytes from 8.8.8.8: icmp_seq=12 ttl=119 time=16.9 ms
+[1782776936.077590] 64 bytes from 8.8.8.8: icmp_seq=13 ttl=119 time=10.8 ms
+[1782776936.097235] 64 bytes from 8.8.8.8: icmp_seq=14 ttl=119 time=16.5 ms
+[1782776936.107597] 64 bytes from 8.8.8.8: icmp_seq=15 ttl=119 time=12.8 ms
+[1782776936.126934] 64 bytes from 8.8.8.8: icmp_seq=16 ttl=119 time=17.1 ms
+[1782776936.136568] 64 bytes from 8.8.8.8: icmp_seq=17 ttl=119 time=11.4 ms
+[1782776936.156600] 64 bytes from 8.8.8.8: icmp_seq=18 ttl=119 time=17.5 ms
+[1782776936.167163] 64 bytes from 8.8.8.8: icmp_seq=19 ttl=119 time=13.2 ms
+[1782776936.186978] 64 bytes from 8.8.8.8: icmp_seq=20 ttl=119 time=18.0 ms
 
 --- 8.8.8.8 ping statistics ---
-20 packets transmitted, 20 received, 0% packet loss, time 286ms
-rtt min/avg/max/mdev = 11.752/16.819/24.398/3.498 ms, pipe 2, ipg/ewma 15.067/17.296 ms
+20 packets transmitted, 20 received, 0% packet loss, time 284ms
+rtt min/avg/max/mdev = 10.558/14.868/19.199/2.789 ms, pipe 2, ipg/ewma 14.942/15.016 ms
 ping: sock4.fd: 3 (socktype: SOCK_DGRAM), sock6.fd: 4 (socktype: SOCK_DGRAM), hints.ai_family: AF_UNSPEC
 ping: ai->ai_family: AF_INET, ai->ai_canonname: '8.8.8.8'
 PING 8.8.8.8 (8.8.8.8) 56(84) bytes of data.
-[1782775520.859033] 64 bytes from 8.8.8.8: icmp_seq=1 ttl=119 time=10.9 ms
-[1782775520.880648] 64 bytes from 8.8.8.8: icmp_seq=2 ttl=119 time=21.5 ms
-[1782775520.888593] 64 bytes from 8.8.8.8: icmp_seq=3 ttl=119 time=18.4 ms
-[1782775520.899002] 64 bytes from 8.8.8.8: icmp_seq=4 ttl=119 time=10.4 ms
-[1782775520.919035] 64 bytes from 8.8.8.8: icmp_seq=5 ttl=119 time=17.4 ms
-[1782775520.926994] 64 bytes from 8.8.8.8: icmp_seq=6 ttl=119 time=12.3 ms
-[1782775520.947111] 64 bytes from 8.8.8.8: icmp_seq=7 ttl=119 time=19.3 ms
-[1782775520.957389] 64 bytes from 8.8.8.8: icmp_seq=8 ttl=119 time=16.4 ms
-[1782775520.976794] 64 bytes from 8.8.8.8: icmp_seq=9 ttl=119 time=19.4 ms
-[1782775520.987883] 64 bytes from 8.8.8.8: icmp_seq=10 ttl=119 time=16.3 ms
-[1782775521.007844] 64 bytes from 8.8.8.8: icmp_seq=11 ttl=119 time=20.9 ms
-[1782775521.015818] 64 bytes from 8.8.8.8: icmp_seq=12 ttl=119 time=12.8 ms
-[1782775521.036191] 64 bytes from 8.8.8.8: icmp_seq=13 ttl=119 time=18.1 ms
-[1782775521.049830] 64 bytes from 8.8.8.8: icmp_seq=14 ttl=119 time=16.7 ms
-[1782775521.065986] 64 bytes from 8.8.8.8: icmp_seq=15 ttl=119 time=16.5 ms
-[1782775521.085030] 64 bytes from 8.8.8.8: icmp_seq=16 ttl=119 time=18.9 ms
-[1782775521.095364] 64 bytes from 8.8.8.8: icmp_seq=17 ttl=119 time=13.1 ms
-[1782775521.115118] 64 bytes from 8.8.8.8: icmp_seq=18 ttl=119 time=16.9 ms
-[1782775521.136743] 64 bytes from 8.8.8.8: icmp_seq=19 ttl=119 time=22.4 ms
-[1782775521.144936] 64 bytes from 8.8.8.8: icmp_seq=20 ttl=119 time=13.7 ms
+[1782776936.216462] 64 bytes from 8.8.8.8: icmp_seq=1 ttl=119 time=16.9 ms
+[1782776936.235687] 64 bytes from 8.8.8.8: icmp_seq=2 ttl=119 time=19.1 ms
+[1782776936.245736] 64 bytes from 8.8.8.8: icmp_seq=3 ttl=119 time=12.0 ms
+[1782776936.265524] 64 bytes from 8.8.8.8: icmp_seq=4 ttl=119 time=14.8 ms
+[1782776936.285185] 64 bytes from 8.8.8.8: icmp_seq=5 ttl=119 time=18.5 ms
+[1782776936.294584] 64 bytes from 8.8.8.8: icmp_seq=6 ttl=119 time=11.1 ms
+[1782776936.314910] 64 bytes from 8.8.8.8: icmp_seq=7 ttl=119 time=15.5 ms
+[1782776936.333378] 64 bytes from 8.8.8.8: icmp_seq=8 ttl=119 time=17.9 ms
+[1782776936.344443] 64 bytes from 8.8.8.8: icmp_seq=9 ttl=119 time=12.5 ms
+[1782776936.363860] 64 bytes from 8.8.8.8: icmp_seq=10 ttl=119 time=16.0 ms
+[1782776936.383008] 64 bytes from 8.8.8.8: icmp_seq=11 ttl=119 time=19.0 ms
+[1782776936.392867] 64 bytes from 8.8.8.8: icmp_seq=12 ttl=119 time=12.7 ms
+[1782776936.412298] 64 bytes from 8.8.8.8: icmp_seq=13 ttl=119 time=16.2 ms
+[1782776936.431741] 64 bytes from 8.8.8.8: icmp_seq=14 ttl=119 time=19.5 ms
+[1782776936.442140] 64 bytes from 8.8.8.8: icmp_seq=15 ttl=119 time=13.6 ms
+[1782776936.461358] 64 bytes from 8.8.8.8: icmp_seq=16 ttl=119 time=16.8 ms
+[1782776936.472534] 64 bytes from 8.8.8.8: icmp_seq=17 ttl=119 time=11.4 ms
+[1782776936.491840] 64 bytes from 8.8.8.8: icmp_seq=18 ttl=119 time=15.7 ms
+[1782776936.511143] 64 bytes from 8.8.8.8: icmp_seq=19 ttl=119 time=19.8 ms
+[1782776936.520672] 64 bytes from 8.8.8.8: icmp_seq=20 ttl=119 time=13.6 ms
 
 --- 8.8.8.8 ping statistics ---
-20 packets transmitted, 20 received, 0% packet loss, time 283ms
-rtt min/avg/max/mdev = 10.382/16.614/22.419/3.379 ms, pipe 2, ipg/ewma 14.901/16.439 ms
+20 packets transmitted, 20 received, 0% packet loss, time 307ms
+rtt min/avg/max/mdev = 11.098/15.633/19.841/2.753 ms, pipe 2, ipg/ewma 16.181/15.707 ms
 ping: sock4.fd: 3 (socktype: SOCK_DGRAM), sock6.fd: 4 (socktype: SOCK_DGRAM), hints.ai_family: AF_UNSPEC
 ping: ai->ai_family: AF_INET, ai->ai_canonname: '8.8.8.8'
 PING 8.8.8.8 (8.8.8.8) 56(84) bytes of data.
-[1782775521.291675] 64 bytes from 8.8.8.8: icmp_seq=1 ttl=119 time=17.3 ms
-[1782775521.303189] 64 bytes from 8.8.8.8: icmp_seq=2 ttl=119 time=11.4 ms
-[1782775521.320796] 64 bytes from 8.8.8.8: icmp_seq=3 ttl=119 time=12.0 ms
-[1782775521.340874] 64 bytes from 8.8.8.8: icmp_seq=4 ttl=119 time=16.1 ms
-[1782775521.360922] 64 bytes from 8.8.8.8: icmp_seq=5 ttl=119 time=20.0 ms
-[1782775521.371548] 64 bytes from 8.8.8.8: icmp_seq=6 ttl=119 time=14.4 ms
-[1782775521.391792] 64 bytes from 8.8.8.8: icmp_seq=7 ttl=119 time=18.6 ms
-[1782775521.400625] 64 bytes from 8.8.8.8: icmp_seq=8 ttl=119 time=11.3 ms
-[1782775521.419995] 64 bytes from 8.8.8.8: icmp_seq=9 ttl=119 time=14.7 ms
-[1782775521.439537] 64 bytes from 8.8.8.8: icmp_seq=10 ttl=119 time=18.2 ms
-[1782775521.449838] 64 bytes from 8.8.8.8: icmp_seq=11 ttl=119 time=12.4 ms
-[1782775521.468942] 64 bytes from 8.8.8.8: icmp_seq=12 ttl=119 time=15.5 ms
-[1782775521.489838] 64 bytes from 8.8.8.8: icmp_seq=13 ttl=119 time=20.8 ms
-[1782775521.500142] 64 bytes from 8.8.8.8: icmp_seq=14 ttl=119 time=14.9 ms
-[1782775521.518583] 64 bytes from 8.8.8.8: icmp_seq=15 ttl=119 time=17.4 ms
-[1782775521.528196] 64 bytes from 8.8.8.8: icmp_seq=16 ttl=119 time=10.9 ms
-[1782775521.547318] 64 bytes from 8.8.8.8: icmp_seq=17 ttl=119 time=14.0 ms
-[1782775521.567335] 64 bytes from 8.8.8.8: icmp_seq=18 ttl=119 time=19.0 ms
-[1782775521.579285] 64 bytes from 8.8.8.8: icmp_seq=19 ttl=119 time=15.8 ms
-[1782775521.596928] 64 bytes from 8.8.8.8: icmp_seq=20 ttl=119 time=17.5 ms
+[1782776936.667998] 64 bytes from 8.8.8.8: icmp_seq=1 ttl=119 time=17.4 ms
+[1782776936.679177] 64 bytes from 8.8.8.8: icmp_seq=2 ttl=119 time=11.1 ms
+[1782776936.699226] 64 bytes from 8.8.8.8: icmp_seq=3 ttl=119 time=14.1 ms
+[1782776936.717914] 64 bytes from 8.8.8.8: icmp_seq=4 ttl=119 time=16.8 ms
+[1782776936.728021] 64 bytes from 8.8.8.8: icmp_seq=5 ttl=119 time=10.9 ms
+[1782776936.747882] 64 bytes from 8.8.8.8: icmp_seq=6 ttl=119 time=14.7 ms
+[1782776936.767920] 64 bytes from 8.8.8.8: icmp_seq=7 ttl=119 time=18.7 ms
+[1782776936.776965] 64 bytes from 8.8.8.8: icmp_seq=8 ttl=119 time=11.7 ms
+[1782776936.796102] 64 bytes from 8.8.8.8: icmp_seq=9 ttl=119 time=15.8 ms
+[1782776936.806277] 64 bytes from 8.8.8.8: icmp_seq=10 ttl=119 time=10.9 ms
+[1782776936.826568] 64 bytes from 8.8.8.8: icmp_seq=11 ttl=119 time=16.1 ms
+[1782776936.835897] 64 bytes from 8.8.8.8: icmp_seq=12 ttl=119 time=10.2 ms
+[1782776936.856201] 64 bytes from 8.8.8.8: icmp_seq=13 ttl=119 time=16.5 ms
+[1782776936.865745] 64 bytes from 8.8.8.8: icmp_seq=14 ttl=119 time=11.7 ms
+[1782776936.885433] 64 bytes from 8.8.8.8: icmp_seq=15 ttl=119 time=17.5 ms
+[1782776936.895069] 64 bytes from 8.8.8.8: icmp_seq=16 ttl=119 time=13.0 ms
+[1782776936.914277] 64 bytes from 8.8.8.8: icmp_seq=17 ttl=119 time=17.2 ms
+[1782776936.923897] 64 bytes from 8.8.8.8: icmp_seq=18 ttl=119 time=11.7 ms
+[1782776936.943934] 64 bytes from 8.8.8.8: icmp_seq=19 ttl=119 time=17.8 ms
+[1782776936.954387] 64 bytes from 8.8.8.8: icmp_seq=20 ttl=119 time=14.1 ms
 
 --- 8.8.8.8 ping statistics ---
-20 packets transmitted, 20 received, 0% packet loss, time 305ms
-rtt min/avg/max/mdev = 10.856/15.604/20.756/2.914 ms, pipe 2, ipg/ewma 16.056/16.023 ms
+20 packets transmitted, 20 received, 0% packet loss, time 290ms
+rtt min/avg/max/mdev = 10.198/14.400/18.732/2.729 ms, pipe 2, ipg/ewma 15.247/14.777 ms
 ping: sock4.fd: 3 (socktype: SOCK_DGRAM), sock6.fd: 4 (socktype: SOCK_DGRAM), hints.ai_family: AF_UNSPEC
 ping: ai->ai_family: AF_INET, ai->ai_canonname: '8.8.8.8'
 PING 8.8.8.8 (8.8.8.8) 56(84) bytes of data.
-[1782775524.836533] 64 bytes from 8.8.8.8: icmp_seq=1 ttl=119 time=20.0 ms
-[1782775524.847857] 64 bytes from 8.8.8.8: icmp_seq=2 ttl=119 time=11.3 ms
-[1782775524.867629] 64 bytes from 8.8.8.8: icmp_seq=3 ttl=119 time=12.0 ms
-[1782775524.885156] 64 bytes from 8.8.8.8: icmp_seq=4 ttl=119 time=11.6 ms
-[1782775524.905339] 64 bytes from 8.8.8.8: icmp_seq=5 ttl=119 time=14.7 ms
-[1782775524.925738] 64 bytes from 8.8.8.8: icmp_seq=6 ttl=119 time=18.1 ms
-[1782775524.945319] 64 bytes from 8.8.8.8: icmp_seq=7 ttl=119 time=20.4 ms
-[1782775524.955029] 64 bytes from 8.8.8.8: icmp_seq=8 ttl=119 time=12.0 ms
-[1782775524.975014] 64 bytes from 8.8.8.8: icmp_seq=9 ttl=119 time=15.0 ms
-[1782775524.994913] 64 bytes from 8.8.8.8: icmp_seq=10 ttl=119 time=17.9 ms
-[1782775525.015665] 64 bytes from 8.8.8.8: icmp_seq=11 ttl=119 time=21.6 ms
-[1782775525.023557] 64 bytes from 8.8.8.8: icmp_seq=12 ttl=119 time=11.5 ms
-[1782775525.042769] 64 bytes from 8.8.8.8: icmp_seq=13 ttl=119 time=13.7 ms
-[1782775525.063004] 64 bytes from 8.8.8.8: icmp_seq=14 ttl=119 time=17.9 ms
-[1782775525.072487] 64 bytes from 8.8.8.8: icmp_seq=15 ttl=119 time=11.2 ms
-[1782775525.092571] 64 bytes from 8.8.8.8: icmp_seq=16 ttl=119 time=15.3 ms
-[1782775525.114093] 64 bytes from 8.8.8.8: icmp_seq=17 ttl=119 time=20.9 ms
-[1782775525.125132] 64 bytes from 8.8.8.8: icmp_seq=18 ttl=119 time=15.8 ms
-[1782775525.143918] 64 bytes from 8.8.8.8: icmp_seq=19 ttl=119 time=18.6 ms
-[1782775525.161644] 64 bytes from 8.8.8.8: icmp_seq=20 ttl=119 time=20.0 ms
+[1782776942.920590] 64 bytes from 8.8.8.8: icmp_seq=1 ttl=119 time=13.9 ms
+[1782776942.940527] 64 bytes from 8.8.8.8: icmp_seq=2 ttl=119 time=19.8 ms
+[1782776942.951715] 64 bytes from 8.8.8.8: icmp_seq=3 ttl=119 time=16.9 ms
+[1782776942.970927] 64 bytes from 8.8.8.8: icmp_seq=4 ttl=119 time=20.2 ms
+[1782776942.979726] 64 bytes from 8.8.8.8: icmp_seq=5 ttl=119 time=13.9 ms
+[1782776942.999722] 64 bytes from 8.8.8.8: icmp_seq=6 ttl=119 time=18.9 ms
+[1782776943.009361] 64 bytes from 8.8.8.8: icmp_seq=7 ttl=119 time=13.4 ms
+[1782776943.029312] 64 bytes from 8.8.8.8: icmp_seq=8 ttl=119 time=18.4 ms
+[1782776943.038993] 64 bytes from 8.8.8.8: icmp_seq=9 ttl=119 time=13.0 ms
+[1782776943.059043] 64 bytes from 8.8.8.8: icmp_seq=10 ttl=119 time=18.0 ms
+[1782776943.068621] 64 bytes from 8.8.8.8: icmp_seq=11 ttl=119 time=12.5 ms
+[1782776943.089756] 64 bytes from 8.8.8.8: icmp_seq=12 ttl=119 time=18.5 ms
+[1782776943.099044] 64 bytes from 8.8.8.8: icmp_seq=13 ttl=119 time=12.8 ms
+[1782776943.118130] 64 bytes from 8.8.8.8: icmp_seq=14 ttl=119 time=16.9 ms
+[1782776943.129486] 64 bytes from 8.8.8.8: icmp_seq=15 ttl=119 time=12.6 ms
+[1782776943.149072] 64 bytes from 8.8.8.8: icmp_seq=16 ttl=119 time=17.2 ms
+[1782776943.167381] 64 bytes from 8.8.8.8: icmp_seq=17 ttl=119 time=20.3 ms
+[1782776943.176960] 64 bytes from 8.8.8.8: icmp_seq=18 ttl=119 time=14.4 ms
+[1782776943.196749] 64 bytes from 8.8.8.8: icmp_seq=19 ttl=119 time=18.2 ms
+[1782776943.216989] 64 bytes from 8.8.8.8: icmp_seq=20 ttl=119 time=22.2 ms
 
 --- 8.8.8.8 ping statistics ---
-20 packets transmitted, 20 received, 0% packet loss, time 325ms
-rtt min/avg/max/mdev = 11.244/15.973/21.601/3.533 ms, pipe 2, ipg/ewma 17.105/17.020 ms
+20 packets transmitted, 20 received, 0% packet loss, time 288ms
+rtt min/avg/max/mdev = 12.461/16.587/22.244/2.969 ms, pipe 2, ipg/ewma 15.155/16.912 ms
 ping: sock4.fd: 3 (socktype: SOCK_DGRAM), sock6.fd: 4 (socktype: SOCK_DGRAM), hints.ai_family: AF_UNSPEC
 ping: ai->ai_family: AF_INET, ai->ai_canonname: '8.8.8.8'
 PING 8.8.8.8 (8.8.8.8) 56(84) bytes of data.
-[1782775529.475431] 64 bytes from 8.8.8.8: icmp_seq=1 ttl=119 time=13.7 ms
-[1782775529.504546] 64 bytes from 8.8.8.8: icmp_seq=2 ttl=119 time=29.1 ms
-[1782775529.523445] 64 bytes from 8.8.8.8: icmp_seq=3 ttl=119 time=33.9 ms
-[1782775529.523574] 64 bytes from 8.8.8.8: icmp_seq=4 ttl=119 time=20.0 ms
-[1782775529.533047] 64 bytes from 8.8.8.8: icmp_seq=5 ttl=119 time=12.4 ms
-[1782775529.552319] 64 bytes from 8.8.8.8: icmp_seq=6 ttl=119 time=14.6 ms
-[1782775529.572403] 64 bytes from 8.8.8.8: icmp_seq=7 ttl=119 time=17.7 ms
-[1782775529.583441] 64 bytes from 8.8.8.8: icmp_seq=8 ttl=119 time=11.7 ms
-[1782775529.603572] 64 bytes from 8.8.8.8: icmp_seq=9 ttl=119 time=15.7 ms
-[1782775529.623676] 64 bytes from 8.8.8.8: icmp_seq=10 ttl=119 time=19.9 ms
-[1782775529.631615] 64 bytes from 8.8.8.8: icmp_seq=11 ttl=119 time=11.8 ms
-[1782775529.651809] 64 bytes from 8.8.8.8: icmp_seq=12 ttl=119 time=15.9 ms
-[1782775529.671664] 64 bytes from 8.8.8.8: icmp_seq=13 ttl=119 time=19.7 ms
-[1782775529.681292] 64 bytes from 8.8.8.8: icmp_seq=14 ttl=119 time=13.2 ms
-[1782775529.700453] 64 bytes from 8.8.8.8: icmp_seq=15 ttl=119 time=16.4 ms
-[1782775529.711609] 64 bytes from 8.8.8.8: icmp_seq=16 ttl=119 time=11.2 ms
-[1782775529.732099] 64 bytes from 8.8.8.8: icmp_seq=17 ttl=119 time=15.7 ms
-[1782775529.751590] 64 bytes from 8.8.8.8: icmp_seq=18 ttl=119 time=19.2 ms
-[1782775529.759694] 64 bytes from 8.8.8.8: icmp_seq=19 ttl=119 time=11.0 ms
-[1782775529.779574] 64 bytes from 8.8.8.8: icmp_seq=20 ttl=119 time=15.9 ms
+[1782776947.884351] 64 bytes from 8.8.8.8: icmp_seq=1 ttl=119 time=12.2 ms
+[1782776947.902638] 64 bytes from 8.8.8.8: icmp_seq=2 ttl=119 time=18.2 ms
+[1782776947.912192] 64 bytes from 8.8.8.8: icmp_seq=3 ttl=119 time=15.7 ms
+[1782776947.922602] 64 bytes from 8.8.8.8: icmp_seq=4 ttl=119 time=10.4 ms
+[1782776947.941823] 64 bytes from 8.8.8.8: icmp_seq=5 ttl=119 time=16.6 ms
+[1782776947.951546] 64 bytes from 8.8.8.8: icmp_seq=6 ttl=119 time=13.1 ms
+[1782776947.962688] 64 bytes from 8.8.8.8: icmp_seq=7 ttl=119 time=11.1 ms
+[1782776947.981847] 64 bytes from 8.8.8.8: icmp_seq=8 ttl=119 time=17.2 ms
+[1782776947.991429] 64 bytes from 8.8.8.8: icmp_seq=9 ttl=119 time=13.7 ms
+[1782776948.011493] 64 bytes from 8.8.8.8: icmp_seq=10 ttl=119 time=19.8 ms
+[1782776948.021049] 64 bytes from 8.8.8.8: icmp_seq=11 ttl=119 time=15.3 ms
+[1782776948.040314] 64 bytes from 8.8.8.8: icmp_seq=12 ttl=119 time=19.2 ms
+[1782776948.050816] 64 bytes from 8.8.8.8: icmp_seq=13 ttl=119 time=15.6 ms
+[1782776948.069901] 64 bytes from 8.8.8.8: icmp_seq=14 ttl=119 time=19.4 ms
+[1782776948.079509] 64 bytes from 8.8.8.8: icmp_seq=15 ttl=119 time=13.6 ms
+[1782776948.099484] 64 bytes from 8.8.8.8: icmp_seq=16 ttl=119 time=18.5 ms
+[1782776948.109074] 64 bytes from 8.8.8.8: icmp_seq=17 ttl=119 time=13.0 ms
+[1782776948.129063] 64 bytes from 8.8.8.8: icmp_seq=18 ttl=119 time=18.0 ms
+[1782776948.140044] 64 bytes from 8.8.8.8: icmp_seq=19 ttl=119 time=13.9 ms
+[1782776948.158772] 64 bytes from 8.8.8.8: icmp_seq=20 ttl=119 time=16.6 ms
 
 --- 8.8.8.8 ping statistics ---
-20 packets transmitted, 20 received, 0% packet loss, time 302ms
-rtt min/avg/max/mdev = 10.958/16.924/33.890/5.678 ms, pipe 3, ipg/ewma 15.892/15.459 ms
+20 packets transmitted, 20 received, 0% packet loss, time 270ms
+rtt min/avg/max/mdev = 10.375/15.570/19.810/2.777 ms, pipe 2, ipg/ewma 14.209/15.692 ms
 ping: sock4.fd: 3 (socktype: SOCK_DGRAM), sock6.fd: 4 (socktype: SOCK_DGRAM), hints.ai_family: AF_UNSPEC
 ping: ai->ai_family: AF_INET, ai->ai_canonname: '8.8.8.8'
 PING 8.8.8.8 (8.8.8.8) 56(84) bytes of data.
-[1782775533.353739] 64 bytes from 8.8.8.8: icmp_seq=1 ttl=119 time=15.4 ms
-[1782775533.372682] 64 bytes from 8.8.8.8: icmp_seq=2 ttl=119 time=18.9 ms
-[1782775533.383031] 64 bytes from 8.8.8.8: icmp_seq=3 ttl=119 time=14.1 ms
-[1782775533.403058] 64 bytes from 8.8.8.8: icmp_seq=4 ttl=119 time=18.2 ms
-[1782775533.412718] 64 bytes from 8.8.8.8: icmp_seq=5 ttl=119 time=11.7 ms
-[1782775533.431874] 64 bytes from 8.8.8.8: icmp_seq=6 ttl=119 time=15.9 ms
-[1782775533.443097] 64 bytes from 8.8.8.8: icmp_seq=7 ttl=119 time=12.0 ms
-[1782775533.463082] 64 bytes from 8.8.8.8: icmp_seq=8 ttl=119 time=17.0 ms
-[1782775533.481520] 64 bytes from 8.8.8.8: icmp_seq=9 ttl=119 time=20.4 ms
-[1782775533.491060] 64 bytes from 8.8.8.8: icmp_seq=10 ttl=119 time=14.9 ms
-[1782775533.511186] 64 bytes from 8.8.8.8: icmp_seq=11 ttl=119 time=19.0 ms
-[1782775533.520743] 64 bytes from 8.8.8.8: icmp_seq=12 ttl=119 time=12.5 ms
-[1782775533.541212] 64 bytes from 8.8.8.8: icmp_seq=13 ttl=119 time=16.9 ms
-[1782775533.551433] 64 bytes from 8.8.8.8: icmp_seq=14 ttl=119 time=11.0 ms
-[1782775533.571230] 64 bytes from 8.8.8.8: icmp_seq=15 ttl=119 time=15.9 ms
-[1782775533.591150] 64 bytes from 8.8.8.8: icmp_seq=16 ttl=119 time=20.7 ms
-[1782775533.599104] 64 bytes from 8.8.8.8: icmp_seq=17 ttl=119 time=12.7 ms
-[1782775533.619150] 64 bytes from 8.8.8.8: icmp_seq=18 ttl=119 time=16.8 ms
-[1782775533.628733] 64 bytes from 8.8.8.8: icmp_seq=19 ttl=119 time=10.3 ms
-[1782775533.648874] 64 bytes from 8.8.8.8: icmp_seq=20 ttl=119 time=15.3 ms
+[1782776951.910790] 64 bytes from 8.8.8.8: icmp_seq=1 ttl=119 time=20.7 ms
+[1782776951.929735] 64 bytes from 8.8.8.8: icmp_seq=2 ttl=119 time=18.7 ms
+[1782776951.949693] 64 bytes from 8.8.8.8: icmp_seq=3 ttl=119 time=18.6 ms
+[1782776951.968818] 64 bytes from 8.8.8.8: icmp_seq=4 ttl=119 time=17.7 ms
+[1782776951.988764] 64 bytes from 8.8.8.8: icmp_seq=5 ttl=119 time=17.7 ms
+[1782776952.008850] 64 bytes from 8.8.8.8: icmp_seq=6 ttl=119 time=17.7 ms
+[1782776952.028178] 64 bytes from 8.8.8.8: icmp_seq=7 ttl=119 time=18.0 ms
+[1782776952.048016] 64 bytes from 8.8.8.8: icmp_seq=8 ttl=119 time=18.9 ms
+[1782776952.067981] 64 bytes from 8.8.8.8: icmp_seq=9 ttl=119 time=19.9 ms
+[1782776952.077537] 64 bytes from 8.8.8.8: icmp_seq=10 ttl=119 time=10.4 ms
+[1782776952.096808] 64 bytes from 8.8.8.8: icmp_seq=11 ttl=119 time=11.6 ms
+[1782776952.116817] 64 bytes from 8.8.8.8: icmp_seq=12 ttl=119 time=14.6 ms
+[1782776952.136938] 64 bytes from 8.8.8.8: icmp_seq=13 ttl=119 time=17.7 ms
+[1782776952.147255] 64 bytes from 8.8.8.8: icmp_seq=14 ttl=119 time=11.0 ms
+[1782776952.188276] 64 bytes from 8.8.8.8: icmp_seq=15 ttl=119 time=36.0 ms
+[1782776952.188313] 64 bytes from 8.8.8.8: icmp_seq=16 ttl=119 time=19.8 ms
+[1782776952.207202] 64 bytes from 8.8.8.8: icmp_seq=17 ttl=119 time=22.6 ms
+[1782776952.217165] 64 bytes from 8.8.8.8: icmp_seq=18 ttl=119 time=12.6 ms
+[1782776952.236405] 64 bytes from 8.8.8.8: icmp_seq=19 ttl=119 time=12.9 ms
+[1782776952.255016] 64 bytes from 8.8.8.8: icmp_seq=20 ttl=119 time=13.5 ms
 
 --- 8.8.8.8 ping statistics ---
-20 packets transmitted, 20 received, 0% packet loss, time 295ms
-rtt min/avg/max/mdev = 10.271/15.472/20.688/3.004 ms, pipe 2, ipg/ewma 15.536/15.096 ms
+20 packets transmitted, 20 received, 0% packet loss, time 351ms
+rtt min/avg/max/mdev = 10.365/17.531/35.977/5.435 ms, pipe 3, ipg/ewma 18.493/17.284 ms
 ping: sock4.fd: 3 (socktype: SOCK_DGRAM), sock6.fd: 4 (socktype: SOCK_DGRAM), hints.ai_family: AF_UNSPEC
 ping: ai->ai_family: AF_INET, ai->ai_canonname: '8.8.8.8'
 PING 8.8.8.8 (8.8.8.8) 56(84) bytes of data.
-[1782775537.540287] 64 bytes from 8.8.8.8: icmp_seq=1 ttl=119 time=18.1 ms
-[1782775537.558060] 64 bytes from 8.8.8.8: icmp_seq=2 ttl=119 time=17.7 ms
-[1782775537.577224] 64 bytes from 8.8.8.8: icmp_seq=3 ttl=119 time=18.9 ms
-[1782775537.587621] 64 bytes from 8.8.8.8: icmp_seq=4 ttl=119 time=11.2 ms
-[1782775537.607787] 64 bytes from 8.8.8.8: icmp_seq=5 ttl=119 time=14.3 ms
-[1782775537.626136] 64 bytes from 8.8.8.8: icmp_seq=6 ttl=119 time=15.7 ms
-[1782775537.646310] 64 bytes from 8.8.8.8: icmp_seq=7 ttl=119 time=18.9 ms
-[1782775537.655786] 64 bytes from 8.8.8.8: icmp_seq=8 ttl=119 time=11.3 ms
-[1782775537.675671] 64 bytes from 8.8.8.8: icmp_seq=9 ttl=119 time=15.1 ms
-[1782775537.686981] 64 bytes from 8.8.8.8: icmp_seq=10 ttl=119 time=10.4 ms
-[1782775537.705275] 64 bytes from 8.8.8.8: icmp_seq=11 ttl=119 time=13.7 ms
-[1782775537.725304] 64 bytes from 8.8.8.8: icmp_seq=12 ttl=119 time=18.8 ms
-[1782775537.735607] 64 bytes from 8.8.8.8: icmp_seq=13 ttl=119 time=14.0 ms
-[1782775537.754208] 64 bytes from 8.8.8.8: icmp_seq=14 ttl=119 time=17.5 ms
-[1782775537.765563] 64 bytes from 8.8.8.8: icmp_seq=15 ttl=119 time=13.8 ms
-[1782775537.784366] 64 bytes from 8.8.8.8: icmp_seq=16 ttl=119 time=17.6 ms
-[1782775537.795504] 64 bytes from 8.8.8.8: icmp_seq=17 ttl=119 time=13.6 ms
-[1782775537.813293] 64 bytes from 8.8.8.8: icmp_seq=18 ttl=119 time=16.4 ms
-[1782775537.822943] 64 bytes from 8.8.8.8: icmp_seq=19 ttl=119 time=11.0 ms
-[1782775537.843508] 64 bytes from 8.8.8.8: icmp_seq=20 ttl=119 time=16.5 ms
+[1782776956.262230] 64 bytes from 8.8.8.8: icmp_seq=1 ttl=119 time=15.6 ms
+[1782776956.282194] 64 bytes from 8.8.8.8: icmp_seq=2 ttl=119 time=19.6 ms
+[1782776956.291742] 64 bytes from 8.8.8.8: icmp_seq=3 ttl=119 time=13.1 ms
+[1782776956.311893] 64 bytes from 8.8.8.8: icmp_seq=4 ttl=119 time=17.2 ms
+[1782776956.321633] 64 bytes from 8.8.8.8: icmp_seq=5 ttl=119 time=10.9 ms
+[1782776956.341732] 64 bytes from 8.8.8.8: icmp_seq=6 ttl=119 time=16.0 ms
+[1782776956.360688] 64 bytes from 8.8.8.8: icmp_seq=7 ttl=119 time=19.8 ms
+[1782776956.370209] 64 bytes from 8.8.8.8: icmp_seq=8 ttl=119 time=13.3 ms
+[1782776956.390184] 64 bytes from 8.8.8.8: icmp_seq=9 ttl=119 time=17.3 ms
+[1782776956.399785] 64 bytes from 8.8.8.8: icmp_seq=10 ttl=119 time=10.8 ms
+[1782776956.419776] 64 bytes from 8.8.8.8: icmp_seq=11 ttl=119 time=15.8 ms
+[1782776956.429391] 64 bytes from 8.8.8.8: icmp_seq=12 ttl=119 time=10.3 ms
+[1782776956.449374] 64 bytes from 8.8.8.8: icmp_seq=13 ttl=119 time=15.3 ms
+[1782776956.459797] 64 bytes from 8.8.8.8: icmp_seq=14 ttl=119 time=10.6 ms
+[1782776956.478320] 64 bytes from 8.8.8.8: icmp_seq=15 ttl=119 time=16.1 ms
+[1782776956.488640] 64 bytes from 8.8.8.8: icmp_seq=16 ttl=119 time=12.4 ms
+[1782776956.507879] 64 bytes from 8.8.8.8: icmp_seq=17 ttl=119 time=17.6 ms
+[1782776956.518206] 64 bytes from 8.8.8.8: icmp_seq=18 ttl=119 time=13.8 ms
+[1782776956.538258] 64 bytes from 8.8.8.8: icmp_seq=19 ttl=119 time=18.8 ms
+[1782776956.548626] 64 bytes from 8.8.8.8: icmp_seq=20 ttl=119 time=14.1 ms
 
 --- 8.8.8.8 ping statistics ---
-20 packets transmitted, 20 received, 0% packet loss, time 305ms
-rtt min/avg/max/mdev = 10.386/15.227/18.876/2.741 ms, pipe 2, ipg/ewma 16.041/15.213 ms
+20 packets transmitted, 20 received, 0% packet loss, time 288ms
+rtt min/avg/max/mdev = 10.305/14.926/19.837/2.929 ms, pipe 2, ipg/ewma 15.156/14.932 ms
 ping: sock4.fd: 3 (socktype: SOCK_DGRAM), sock6.fd: 4 (socktype: SOCK_DGRAM), hints.ai_family: AF_UNSPEC
 ping: ai->ai_family: AF_INET, ai->ai_canonname: '8.8.8.8'
 PING 8.8.8.8 (8.8.8.8) 56(84) bytes of data.
-[1782775537.882830] 64 bytes from 8.8.8.8: icmp_seq=1 ttl=119 time=15.3 ms
-[1782775538.897029] 64 bytes from 8.8.8.8: icmp_seq=2 ttl=119 time=27.9 ms
-[1782775539.901387] 64 bytes from 8.8.8.8: icmp_seq=3 ttl=119 time=31.0 ms
-[1782775540.904899] 64 bytes from 8.8.8.8: icmp_seq=4 ttl=119 time=34.1 ms
-[1782775541.890051] 64 bytes from 8.8.8.8: icmp_seq=5 ttl=119 time=18.0 ms
-[1782775542.903925] 64 bytes from 8.8.8.8: icmp_seq=6 ttl=119 time=30.7 ms
-[1782775543.910031] 64 bytes from 8.8.8.8: icmp_seq=7 ttl=119 time=34.8 ms
-[1782775544.894048] 64 bytes from 8.8.8.8: icmp_seq=8 ttl=119 time=17.0 ms
-[1782775545.907457] 64 bytes from 8.8.8.8: icmp_seq=9 ttl=119 time=29.0 ms
-[1782775546.901383] 64 bytes from 8.8.8.8: icmp_seq=10 ttl=119 time=21.5 ms
-[1782775547.905884] 64 bytes from 8.8.8.8: icmp_seq=11 ttl=119 time=24.1 ms
-[1782775548.901339] 64 bytes from 8.8.8.8: icmp_seq=12 ttl=119 time=18.5 ms
-[1782775549.914500] 64 bytes from 8.8.8.8: icmp_seq=13 ttl=119 time=30.9 ms
-[1782775550.919504] 64 bytes from 8.8.8.8: icmp_seq=14 ttl=119 time=34.9 ms
-[1782775551.913309] 64 bytes from 8.8.8.8: icmp_seq=15 ttl=119 time=27.4 ms
-[1782775552.918167] 64 bytes from 8.8.8.8: icmp_seq=16 ttl=119 time=31.3 ms
-[1782775553.924184] 64 bytes from 8.8.8.8: icmp_seq=17 ttl=119 time=35.9 ms
-[1782775554.916772] 64 bytes from 8.8.8.8: icmp_seq=18 ttl=119 time=26.8 ms
-[1782775555.911328] 64 bytes from 8.8.8.8: icmp_seq=19 ttl=119 time=19.4 ms
-[1782775556.925226] 64 bytes from 8.8.8.8: icmp_seq=20 ttl=119 time=31.7 ms
+[1782776956.588727] 64 bytes from 8.8.8.8: icmp_seq=1 ttl=119 time=17.8 ms
+[1782776957.595536] 64 bytes from 8.8.8.8: icmp_seq=2 ttl=119 time=22.4 ms
+[1782776958.587014] 64 bytes from 8.8.8.8: icmp_seq=3 ttl=119 time=12.3 ms
+[1782776959.591127] 64 bytes from 8.8.8.8: icmp_seq=4 ttl=119 time=15.0 ms
+[1782776960.594839] 64 bytes from 8.8.8.8: icmp_seq=5 ttl=119 time=18.0 ms
+[1782776961.588834] 64 bytes from 8.8.8.8: icmp_seq=6 ttl=119 time=10.9 ms
+[1782776962.593416] 64 bytes from 8.8.8.8: icmp_seq=7 ttl=119 time=13.6 ms
+[1782776963.608265] 64 bytes from 8.8.8.8: icmp_seq=8 ttl=119 time=27.4 ms
+[1782776964.605025] 64 bytes from 8.8.8.8: icmp_seq=9 ttl=119 time=23.2 ms
+[1782776965.597597] 64 bytes from 8.8.8.8: icmp_seq=10 ttl=119 time=14.2 ms
+[1782776966.601155] 64 bytes from 8.8.8.8: icmp_seq=11 ttl=119 time=17.0 ms
+[1782776967.596484] 64 bytes from 8.8.8.8: icmp_seq=12 ttl=119 time=11.1 ms
+[1782776968.620784] 64 bytes from 8.8.8.8: icmp_seq=13 ttl=119 time=33.9 ms
+[1782776969.604505] 64 bytes from 8.8.8.8: icmp_seq=14 ttl=119 time=16.6 ms
+[1782776970.608917] 64 bytes from 8.8.8.8: icmp_seq=15 ttl=119 time=19.1 ms
+[1782776971.613080] 64 bytes from 8.8.8.8: icmp_seq=16 ttl=119 time=21.6 ms
+[1782776972.627801] 64 bytes from 8.8.8.8: icmp_seq=17 ttl=119 time=34.2 ms
+[1782776973.612361] 64 bytes from 8.8.8.8: icmp_seq=18 ttl=119 time=17.3 ms
+[1782776974.616447] 64 bytes from 8.8.8.8: icmp_seq=19 ttl=119 time=20.6 ms
+[1782776975.620313] 64 bytes from 8.8.8.8: icmp_seq=20 ttl=119 time=22.7 ms
 
 --- 8.8.8.8 ping statistics ---
-20 packets transmitted, 20 received, 0% packet loss, time 19026ms
-rtt min/avg/max/mdev = 15.298/27.018/35.895/6.442 ms
+20 packets transmitted, 20 received, 0% packet loss, time 19027ms
+rtt min/avg/max/mdev = 10.863/19.451/34.235/6.446 ms
 
 
 ################################################################################
@@ -2746,10 +2741,10 @@ export default defineConfig({
   Relative path:         public/3rdpartylicenses.txt
   Absolute path:         /home/kushal/src/angular/angulareighteen.github.io/public/3rdpartylicenses.txt
   Size:                  22.4 KiB (23038 bytes)
-  Last modified:         2026-06-29 19:25:32.979763110 -0400
+  Last modified:         2026-06-29 19:49:11.527337204 -0400
   Permissions:           -rw-r--r--
   Owner:                 kushal:kushal
-  Inode:                 17559079
+  Inode:                 17573120
   Hard links:            1
   MIME type:             text/plain
   SHA-256:               438ac4558f833b137db908085028d86a44e684d62b2e47111df77bfb8a20274b
@@ -3229,7 +3224,7 @@ THE SOFTWARE.
   Last modified:         2026-06-28 23:12:27.533999919 -0400
   Permissions:           -rw-r--r--
   Owner:                 kushal:kushal
-  Inode:                 17559106
+  Inode:                 17573134
   Hard links:            1
   MIME type:             image/png
   SHA-256:               2f17085589c393dd593fbb1dada76c83bc5421cadb0efbfd2999020127b57d7e
@@ -3250,7 +3245,7 @@ THE SOFTWARE.
   Last modified:         2026-06-28 23:12:27.533999919 -0400
   Permissions:           -rw-r--r--
   Owner:                 kushal:kushal
-  Inode:                 17559096
+  Inode:                 17573151
   Hard links:            1
   MIME type:             image/png
   SHA-256:               d09450d82d89a6abe872d5a3dffe0c59e25d7ad4e293506da6591eb490539653
@@ -3271,7 +3266,7 @@ THE SOFTWARE.
   Last modified:         2026-06-28 23:12:27.533999919 -0400
   Permissions:           -rw-r--r--
   Owner:                 kushal:kushal
-  Inode:                 17559104
+  Inode:                 17573148
   Hard links:            1
   MIME type:             image/png
   SHA-256:               e36832c8b62acf6612fae9aba0f6ca13d06c43faad219919c2ebaa3a4005b1cd
@@ -3292,7 +3287,7 @@ THE SOFTWARE.
   Last modified:         2026-06-28 23:12:27.533999919 -0400
   Permissions:           -rw-r--r--
   Owner:                 kushal:kushal
-  Inode:                 17559107
+  Inode:                 17573145
   Hard links:            1
   MIME type:             image/png
   SHA-256:               8cea7177bd110420d3b495f9e13567a7f068d4eead1bb99babfd2984a2f4e0b8
@@ -3313,7 +3308,7 @@ THE SOFTWARE.
   Last modified:         2026-06-28 23:12:27.533999919 -0400
   Permissions:           -rw-r--r--
   Owner:                 kushal:kushal
-  Inode:                 17559102
+  Inode:                 17573140
   Hard links:            1
   MIME type:             image/png
   SHA-256:               f31a48335d3a82fab7b6f3baa50c08a03639b209afdb46af76831da4c49063e4
@@ -3334,7 +3329,7 @@ THE SOFTWARE.
   Last modified:         2026-06-28 23:12:27.533999919 -0400
   Permissions:           -rw-r--r--
   Owner:                 kushal:kushal
-  Inode:                 17559103
+  Inode:                 17573142
   Hard links:            1
   MIME type:             image/png
   SHA-256:               7faee466b0bcb0dadb14ae0ba4c6c71ef335facdea3b099c2afe546885764571
@@ -3355,7 +3350,7 @@ THE SOFTWARE.
   Last modified:         2026-06-28 23:12:27.533999919 -0400
   Permissions:           -rw-r--r--
   Owner:                 kushal:kushal
-  Inode:                 17559109
+  Inode:                 17573141
   Hard links:            1
   MIME type:             image/png
   SHA-256:               eaf1af0ed115345d558609b32d44b42e77c8380711667d1a7d013f09253abaf0
@@ -3376,7 +3371,7 @@ THE SOFTWARE.
   Last modified:         2026-06-28 23:12:27.533999919 -0400
   Permissions:           -rw-r--r--
   Owner:                 kushal:kushal
-  Inode:                 17559105
+  Inode:                 17573144
   Hard links:            1
   MIME type:             image/png
   SHA-256:               69df10ee4742febf5a66c1639cd411a18c00b9516bf6261d95d55fcc7e22c16f
@@ -3397,7 +3392,7 @@ THE SOFTWARE.
   Last modified:         2026-06-28 23:12:27.589999914 -0400
   Permissions:           -rw-r--r--
   Owner:                 kushal:kushal
-  Inode:                 17559108
+  Inode:                 17573135
   Hard links:            1
   MIME type:             image/png
   SHA-256:               e9d1d553a09f97b1ef843596d361ae0b3b174c35998b4eb8d7245bf46a3f7ad8
@@ -3418,7 +3413,7 @@ THE SOFTWARE.
   Last modified:         2026-06-28 23:12:27.595000028 -0400
   Permissions:           -rw-r--r--
   Owner:                 kushal:kushal
-  Inode:                 17559097
+  Inode:                 17573149
   Hard links:            1
   MIME type:             image/heic
   SHA-256:               4947cc6509fe8920191d4dd549f34d17990c303879e79f4e27967d09e9ecf4d4
@@ -3439,7 +3434,7 @@ THE SOFTWARE.
   Last modified:         2026-06-28 23:12:27.615000009 -0400
   Permissions:           -rw-r--r--
   Owner:                 kushal:kushal
-  Inode:                 17559111
+  Inode:                 17573143
   Hard links:            1
   MIME type:             image/jpeg
   SHA-256:               9a1049ffaab30e7d514085c8f7fc2b2312020b9340b941a5d7679b4eb98f9ea1
@@ -3460,7 +3455,7 @@ THE SOFTWARE.
   Last modified:         2026-06-28 23:12:27.618999958 -0400
   Permissions:           -rw-r--r--
   Owner:                 kushal:kushal
-  Inode:                 17559117
+  Inode:                 17573147
   Hard links:            1
   MIME type:             image/heic
   SHA-256:               eb04fba8902a47726ede572dc5168eb85e23a851a2e7cfca6bdbd71f03b44727
@@ -3481,7 +3476,7 @@ THE SOFTWARE.
   Last modified:         2026-06-28 23:12:27.651999950 -0400
   Permissions:           -rw-r--r--
   Owner:                 kushal:kushal
-  Inode:                 17559110
+  Inode:                 17573150
   Hard links:            1
   MIME type:             image/png
   SHA-256:               99abe9d1b49e95291821751718714ffd6a00f6cb533d830b7907bd3a92cf1d56
@@ -3502,7 +3497,7 @@ THE SOFTWARE.
   Last modified:         2026-06-28 23:12:27.653000116 -0400
   Permissions:           -rw-r--r--
   Owner:                 kushal:kushal
-  Inode:                 17559112
+  Inode:                 17573146
   Hard links:            1
   MIME type:             image/png
   SHA-256:               3967b4fc85eca8a835cc5c69800362a7c4c5050abe3e36260251edc63eba518f
@@ -3523,7 +3518,7 @@ THE SOFTWARE.
   Last modified:         2026-06-28 23:12:27.654000043 -0400
   Permissions:           -rw-r--r--
   Owner:                 kushal:kushal
-  Inode:                 17559114
+  Inode:                 17573152
   Hard links:            1
   MIME type:             image/svg+xml
   SHA-256:               fae68eb7269c79ac5dba63ed683097b7adec3d837a9da9d497a39499c9545a26
@@ -3544,7 +3539,7 @@ THE SOFTWARE.
   Last modified:         2026-06-28 23:12:27.665999889 -0400
   Permissions:           -rwxr-xr-x
   Owner:                 kushal:kushal
-  Inode:                 17559113
+  Inode:                 17573156
   Hard links:            1
   MIME type:             image/jpeg
   SHA-256:               08bf634a009b4b4862c1b3d36bb96fe4e9ac183e1ae7c624017113f2b712574c
@@ -3565,7 +3560,7 @@ THE SOFTWARE.
   Last modified:         2026-06-28 23:12:27.665999889 -0400
   Permissions:           -rw-r--r--
   Owner:                 kushal:kushal
-  Inode:                 17559116
+  Inode:                 17573154
   Hard links:            1
   MIME type:             image/svg+xml
   SHA-256:               9356fdb80c77214acb6962f403f6a045cb79ad41cf8702ff69805bb09fb58963
@@ -3586,7 +3581,7 @@ THE SOFTWARE.
   Last modified:         2026-06-28 23:12:27.665999889 -0400
   Permissions:           -rw-r--r--
   Owner:                 kushal:kushal
-  Inode:                 17559115
+  Inode:                 17573153
   Hard links:            1
   MIME type:             image/svg+xml
   SHA-256:               74cdf0a5779626aadaa60a6d6b524fab4dc85e51edd370e096e86235b11d2d1c
@@ -3607,7 +3602,7 @@ THE SOFTWARE.
   Last modified:         2026-06-28 23:12:27.665999889 -0400
   Permissions:           -rw-r--r--
   Owner:                 kushal:kushal
-  Inode:                 17559118
+  Inode:                 17573155
   Hard links:            1
   MIME type:             image/svg+xml
   SHA-256:               a711dbfb93bb8414bf045a7e99c49acf61e96a7d28472f2ff48ad08be6d3db9e
@@ -3628,7 +3623,7 @@ THE SOFTWARE.
   Last modified:         2026-06-28 23:12:27.665999889 -0400
   Permissions:           -rw-r--r--
   Owner:                 kushal:kushal
-  Inode:                 17559119
+  Inode:                 17573136
   Hard links:            1
   MIME type:             application/json
   SHA-256:               61469e78099f77a0fb23c28d2cfac2145fd944326df16921e26799e825bb3f47
@@ -3680,7 +3675,7 @@ THE SOFTWARE.
   Last modified:         2026-06-28 23:12:27.667000055 -0400
   Permissions:           -rw-r--r--
   Owner:                 kushal:kushal
-  Inode:                 17559100
+  Inode:                 17573158
   Hard links:            1
   MIME type:             application/json
   SHA-256:               55d527aa163a823b524c1d732e325eeda6a505bd763dfcdc4fb7d2be38461e11
@@ -3730,7 +3725,7 @@ THE SOFTWARE.
   Last modified:         2026-06-28 23:12:27.667000055 -0400
   Permissions:           -rw-r--r--
   Owner:                 kushal:kushal
-  Inode:                 17559121
+  Inode:                 17573137
   Hard links:            1
   MIME type:             application/json
   SHA-256:               2c08c379275c5772b581c46791b66f0fff5bf30559a1c7c9c52af72d7be046bf
@@ -3817,7 +3812,7 @@ THE SOFTWARE.
   Last modified:         2026-06-28 23:12:27.667000055 -0400
   Permissions:           -rw-r--r--
   Owner:                 kushal:kushal
-  Inode:                 17559101
+  Inode:                 17573157
   Hard links:            1
   MIME type:             application/json
   SHA-256:               3aae0d771d91ca36df9933a600de3249766a58d43cf5f2b7cab0f7c939e22d44
@@ -3964,7 +3959,7 @@ THE SOFTWARE.
   Last modified:         2026-06-28 23:12:27.667000055 -0400
   Permissions:           -rw-r--r--
   Owner:                 kushal:kushal
-  Inode:                 17559120
+  Inode:                 17573160
   Hard links:            1
   MIME type:             application/json
   SHA-256:               53d516fce4251ad570c787a75a405debe607db2dc487e990de91e2c654458d94
@@ -4080,7 +4075,7 @@ THE SOFTWARE.
   Last modified:         2026-06-28 23:12:27.667000055 -0400
   Permissions:           -rw-r--r--
   Owner:                 kushal:kushal
-  Inode:                 17559122
+  Inode:                 17573159
   Hard links:            1
   MIME type:             application/json
   SHA-256:               2d464be35c1af14f78de4aea426ec62833c7a2c3d2c906a361944f0459e2909f
@@ -4407,7 +4402,7 @@ THE SOFTWARE.
   Last modified:         2026-06-28 23:12:27.667000055 -0400
   Permissions:           -rw-r--r--
   Owner:                 kushal:kushal
-  Inode:                 17559098
+  Inode:                 17573138
   Hard links:            1
   MIME type:             text/html
   SHA-256:               1c05fff4ff5797aec2e1e14eaca45c98d940e03a7fa111821295877d07fde9af
@@ -4471,7 +4466,7 @@ pendo.initialize({
   Last modified:         2026-06-28 23:12:27.667000055 -0400
   Permissions:           -rw-r--r--
   Owner:                 kushal:kushal
-  Inode:                 17559099
+  Inode:                 17573139
   Hard links:            1
   MIME type:             video/webm
   SHA-256:               e5674a07bcb6afc7f7ceb5559da2ed38268664009662b3cfeaad4681606245bb
@@ -4489,10 +4484,10 @@ pendo.initialize({
   Relative path:         public/browser/chunk-b_0CUpWM.js
   Absolute path:         /home/kushal/src/angular/angulareighteen.github.io/public/browser/chunk-b_0CUpWM.js
   Size:                  23.4 KiB (24048 bytes)
-  Last modified:         2026-06-29 19:25:32.979763110 -0400
+  Last modified:         2026-06-29 19:49:11.527337204 -0400
   Permissions:           -rw-r--r--
   Owner:                 kushal:kushal
-  Inode:                 17559076
+  Inode:                 17573113
   Hard links:            1
   MIME type:             text/plain
   SHA-256:               0c540cafa8b6a8d1213c7789bf4766d6126f671ac04fc99ee7cfbbac914e52ee
@@ -4806,10 +4801,10 @@ import {T as Tn,r as re,k as kt,c as Mt,E as En,S as Sn,_ as _r,d as St$1,s as s
   Relative path:         public/browser/chunk-BtyP_Wke.js
   Absolute path:         /home/kushal/src/angular/angulareighteen.github.io/public/browser/chunk-BtyP_Wke.js
   Size:                  3.6 KiB (3767 bytes)
-  Last modified:         2026-06-29 19:25:32.979763110 -0400
+  Last modified:         2026-06-29 19:49:11.527337204 -0400
   Permissions:           -rw-r--r--
   Owner:                 kushal:kushal
-  Inode:                 17559073
+  Inode:                 17573110
   Hard links:            1
   MIME type:             text/plain
   SHA-256:               f1d8d57d820d3ff57c3164c8a7257e47bf83f9b433b35d169d1d303be62dd18c
@@ -4827,10 +4822,10 @@ import {B as Bv,i as ic,r as rE,s as sc}from'./main-YS4WI2CN.js';var d=class o{s
   Relative path:         public/browser/chunk-Cc02ckWq.js
   Absolute path:         /home/kushal/src/angular/angulareighteen.github.io/public/browser/chunk-Cc02ckWq.js
   Size:                  104.8 KiB (107344 bytes)
-  Last modified:         2026-06-29 19:25:32.979763110 -0400
+  Last modified:         2026-06-29 19:49:11.527337204 -0400
   Permissions:           -rw-r--r--
   Owner:                 kushal:kushal
-  Inode:                 17559080
+  Inode:                 17573117
   Hard links:            1
   MIME type:             application/javascript
   SHA-256:               7005dffff74b396f9fbf224e52d3c5f6c4764f9107d3e87269f812ddf244af18
@@ -5625,10 +5620,10 @@ import {U as Uv,F as ul,G as Gu,B as Bv,Q as _f,S as xI,b4 as Lf,ar as AI,i as i
   Relative path:         public/browser/chunk-CfqO4fnY.js
   Absolute path:         /home/kushal/src/angular/angulareighteen.github.io/public/browser/chunk-CfqO4fnY.js
   Size:                  53.7 KiB (54995 bytes)
-  Last modified:         2026-06-29 19:25:32.979763110 -0400
+  Last modified:         2026-06-29 19:49:11.527337204 -0400
   Permissions:           -rw-r--r--
   Owner:                 kushal:kushal
-  Inode:                 17559075
+  Inode:                 17573111
   Hard links:            1
   MIME type:             text/plain
   SHA-256:               f9f0d1af4f7d44fc0b3cc6773570d3e5c237d004c7d288ad344d72653202e5b6
@@ -6049,10 +6044,10 @@ export{ln as QuizComponent};
   Relative path:         public/browser/chunk-CguUs1Qa.js
   Absolute path:         /home/kushal/src/angular/angulareighteen.github.io/public/browser/chunk-CguUs1Qa.js
   Size:                  253 B (253 bytes)
-  Last modified:         2026-06-29 19:25:32.979763110 -0400
+  Last modified:         2026-06-29 19:49:11.527337204 -0400
   Permissions:           -rw-r--r--
   Owner:                 kushal:kushal
-  Inode:                 17559082
+  Inode:                 17573118
   Hard links:            1
   MIME type:             text/plain
   SHA-256:               22f66a4cbd4d9efd65f5e512635d2c67404b414cdb4357bf0718ee474b0ce221
@@ -6070,10 +6065,10 @@ import {B as Bv}from'./main-YS4WI2CN.js';var t=class e{static \u0275fac=function
   Relative path:         public/browser/chunk-Cigzcxaj.js
   Absolute path:         /home/kushal/src/angular/angulareighteen.github.io/public/browser/chunk-Cigzcxaj.js
   Size:                  1.3 KiB (1395 bytes)
-  Last modified:         2026-06-29 19:25:32.979763110 -0400
+  Last modified:         2026-06-29 19:49:11.527337204 -0400
   Permissions:           -rw-r--r--
   Owner:                 kushal:kushal
-  Inode:                 17559077
+  Inode:                 17573114
   Hard links:            1
   MIME type:             text/plain
   SHA-256:               0a7c93adc837268dc41f1db51c9baec967ea529cf4bde852a060b755ad5cd32b
@@ -6091,10 +6086,10 @@ import {E as Et,S as St,i as it}from'./chunk-DDUXkZPy.js';import {w,D as Du,B as
   Relative path:         public/browser/chunk-DDUXkZPy.js
   Absolute path:         /home/kushal/src/angular/angulareighteen.github.io/public/browser/chunk-DDUXkZPy.js
   Size:                  28.4 KiB (29126 bytes)
-  Last modified:         2026-06-29 19:25:32.979763110 -0400
+  Last modified:         2026-06-29 19:49:11.527337204 -0400
   Permissions:           -rw-r--r--
   Owner:                 kushal:kushal
-  Inode:                 17559078
+  Inode:                 17573116
   Hard links:            1
   MIME type:             text/plain
   SHA-256:               b754d21444e0c5084a451f1e60b7e9635c296d9aa805f6255bd08dad73631e79
@@ -6369,10 +6364,10 @@ import {U as Uv,F as ul,G as Gu,w,a9 as Xn,a8 as sr,aO as Fn,B as Bv,S as xI,ar 
   Relative path:         public/browser/chunk-DjbP6_O7.js
   Absolute path:         /home/kushal/src/angular/angulareighteen.github.io/public/browser/chunk-DjbP6_O7.js
   Size:                  66.9 KiB (68529 bytes)
-  Last modified:         2026-06-29 19:25:32.979763110 -0400
+  Last modified:         2026-06-29 19:49:11.527337204 -0400
   Permissions:           -rw-r--r--
   Owner:                 kushal:kushal
-  Inode:                 17559072
+  Inode:                 17573109
   Hard links:            1
   MIME type:             application/javascript
   SHA-256:               5f1220f8bd9571af5325d36925f053811eeec91003bb1974bbb4aae382ea6a39
@@ -6390,10 +6385,10 @@ import {o as oe$1,_ as _$1,$ as $$1,v as vp}from'./main-YS4WI2CN.js';var _=(func
   Relative path:         public/browser/chunk-DjveFeZd.js
   Absolute path:         /home/kushal/src/angular/angulareighteen.github.io/public/browser/chunk-DjveFeZd.js
   Size:                  3.2 KiB (3337 bytes)
-  Last modified:         2026-06-29 19:25:32.979763110 -0400
+  Last modified:         2026-06-29 19:49:11.527337204 -0400
   Permissions:           -rw-r--r--
   Owner:                 kushal:kushal
-  Inode:                 17559074
+  Inode:                 17573112
   Hard links:            1
   MIME type:             text/plain
   SHA-256:               908c01ed2b2e74bf0b20bba8abab6ed5eef60a0593fafabd3d12647f75513d11
@@ -6411,10 +6406,10 @@ import {q as qe,e as ee,t as te$1,_ as _e,l as le,h as he,g as ge,f as fe,b as b
   Relative path:         public/browser/chunk-kCSSTtWh.js
   Absolute path:         /home/kushal/src/angular/angulareighteen.github.io/public/browser/chunk-kCSSTtWh.js
   Size:                  314 B (314 bytes)
-  Last modified:         2026-06-29 19:25:32.979763110 -0400
+  Last modified:         2026-06-29 19:49:11.527337204 -0400
   Permissions:           -rw-r--r--
   Owner:                 kushal:kushal
-  Inode:                 17559081
+  Inode:                 17573119
   Hard links:            1
   MIME type:             text/plain
   SHA-256:               90aa473383b51dbebf8f0e7765305a6ee7337fcb677b5c00bf2955ad0a43005a
@@ -6436,7 +6431,7 @@ import {B as Bv,r as rE}from'./main-YS4WI2CN.js';var a=class o{static \u0275fac=
   Last modified:         2026-06-29 11:42:09.000000000 -0400
   Permissions:           -rw-r--r--
   Owner:                 kushal:kushal
-  Inode:                 17559095
+  Inode:                 17573132
   Hard links:            1
   MIME type:             image/png
   SHA-256:               2d0a4f5a77c788b084919b1b8cad5713d9dfc3388ef29969c4cb66c28092e683
@@ -6453,15 +6448,15 @@ import {B as Bv,r as rE}from'./main-YS4WI2CN.js';var a=class o{static \u0275fac=
   File name:             index.html
   Relative path:         public/browser/index.html
   Absolute path:         /home/kushal/src/angular/angulareighteen.github.io/public/browser/index.html
-  Size:                  48.3 KiB (49526 bytes)
-  Last modified:         2026-06-29 19:25:32.979763110 -0400
+  Size:                  47.9 KiB (49089 bytes)
+  Last modified:         2026-06-29 19:49:11.527337204 -0400
   Permissions:           -rw-r--r--
   Owner:                 kushal:kushal
-  Inode:                 17559084
+  Inode:                 17573123
   Hard links:            1
   MIME type:             text/html
-  SHA-256:               dc3c8f13f478e06b1b1d7de8068cce1596c26220369f209f39c964b3e817a908
-  Last git commit:       5fb0f22 2026-06-29 19:21:25 -0400 end prepare to build angular
+  SHA-256:               3989f5ef8bfe63591ffdab50771301872c325294fc4e3ce3266e27c420515ef6
+  Last git commit:       d02b83f 2026-06-29 19:49:11 -0400 end prepare to build angular
 
 --- CONTENT ---
 <!DOCTYPE html>
@@ -7167,15 +7162,6 @@ import {B as Bv,r as rE}from'./main-YS4WI2CN.js';var a=class o{static \u0275fac=
         };
       })(document, "script");
     </script>
-    <!-- The core Firebase JS SDK is always required and must be listed first -->
-    <script src="/__/firebase/8.6.3/firebase-app.js"></script>
-
-    <!-- TODO: Add SDKs for Firebase products that you want to use
-     https://firebase.google.com/docs/web/setup#available-libraries -->
-    <script src="/__/firebase/8.6.3/firebase-analytics.js"></script>
-
-    <!-- Initialize Firebase -->
-    <script src="/__/firebase/init.js"></script>
   <script src="main-YS4WI2CN.js" type="module"></script></body>
 </html>
 
@@ -7189,10 +7175,10 @@ import {B as Bv,r as rE}from'./main-YS4WI2CN.js';var a=class o{static \u0275fac=
   Relative path:         public/browser/main-YS4WI2CN.js
   Absolute path:         /home/kushal/src/angular/angulareighteen.github.io/public/browser/main-YS4WI2CN.js
   Size:                  322.1 KiB (329929 bytes)
-  Last modified:         2026-06-29 19:25:32.979763110 -0400
+  Last modified:         2026-06-29 19:49:11.527337204 -0400
   Permissions:           -rw-r--r--
   Owner:                 kushal:kushal
-  Inode:                 17559071
+  Inode:                 17573115
   Hard links:            1
   MIME type:             application/javascript
   SHA-256:               cce547c4dfc7d7641d9f0288ad017631945cbfc59a8019b634637836672b36e0
@@ -7396,7 +7382,7 @@ Please reload the page.`);});}notifyUser(t){console.log(t);}static \u0275fac=fun
   Last modified:         2026-06-29 19:12:36.650000095 -0400
   Permissions:           -rw-r--r--
   Owner:                 kushal:kushal
-  Inode:                 17559094
+  Inode:                 17573129
   Hard links:            1
   MIME type:             application/json
   SHA-256:               b4986d9b0cf1f217dbf609637cb142113a9282b7fcdec3744768a817f8bedc54
@@ -7473,19 +7459,19 @@ Please reload the page.`);});}notifyUser(t){console.log(t);}static \u0275fac=fun
   Relative path:         public/browser/ngsw.json
   Absolute path:         /home/kushal/src/angular/angulareighteen.github.io/public/browser/ngsw.json
   Size:                  5.6 KiB (5826 bytes)
-  Last modified:         2026-06-29 19:25:32.979763110 -0400
+  Last modified:         2026-06-29 19:49:11.527337204 -0400
   Permissions:           -rw-r--r--
   Owner:                 kushal:kushal
-  Inode:                 17559086
+  Inode:                 17573121
   Hard links:            1
   MIME type:             application/json
-  SHA-256:               67379b06baa26fd377e1edd6e1dd0c526b657844ad65c44423f38f8540aa3acf
-  Last git commit:       cff0770 2026-06-29 19:25:33 -0400 end prepare to build angular
+  SHA-256:               a33d16c9c1a5ec5b437b5a3903b9c4c03a0850a42909296eadb102a83cb083f0
+  Last git commit:       d02b83f 2026-06-29 19:49:11 -0400 end prepare to build angular
 
 --- CONTENT ---
 {
   "configVersion": 1,
-  "timestamp": 1782775532961,
+  "timestamp": 1782776951511,
   "index": "/index.html",
   "assetGroups": [
     {
@@ -7593,7 +7579,7 @@ Please reload the page.`);});}notifyUser(t){console.log(t);}static \u0275fac=fun
     "/chunk-b_0CUpWM.js": "1b6cff7261fb46643e06c8eeebc9bae4b3f98916",
     "/chunk-kCSSTtWh.js": "fe4a853c0c35ac7c09fd4c5a3e4fe863d2094e3f",
     "/favicon.ico": "22f6a4a3bcaafafb0254e0f2fa4ceb89e505e8b2",
-    "/index.html": "cd21d436aa2d5d1932bf1c15682f739db151742d",
+    "/index.html": "14607a1672f038f355c08f1372e172637d69c3a2",
     "/main-YS4WI2CN.js": "30ce34079701055b4fb8fa43e1214de382061e77",
     "/manifest.webmanifest": "764704c52731e65201beae9457bcb64cdc2e4ca9",
     "/styles-AX2II72J.css": "d5b83da3102b323ac924ee805441383611bc07e4"
@@ -7631,7 +7617,7 @@ Please reload the page.`);});}notifyUser(t){console.log(t);}static \u0275fac=fun
   Last modified:         2026-06-28 23:27:18.059000015 -0400
   Permissions:           -rwxr-xr-x
   Owner:                 kushal:kushal
-  Inode:                 17559091
+  Inode:                 17573130
   Hard links:            1
   MIME type:             application/javascript
   SHA-256:               9f37538c57e3320c2523b1d3c1844a1e29dec729468d1b5840b886c7bc1b55fa
@@ -9937,7 +9923,7 @@ ${msgIdle}`, { headers: this.adapter.newHeaders({ "Content-Type": "text/plain" }
   Last modified:         2026-06-28 23:27:18.059000015 -0400
   Permissions:           -rwxr-xr-x
   Owner:                 kushal:kushal
-  Inode:                 17559093
+  Inode:                 17573133
   Hard links:            1
   MIME type:             text/plain
   SHA-256:               2df8905dc1736290ab3687df537c491ca59058cd0a1b903f93fb1fb596209cc3
@@ -9985,10 +9971,10 @@ self.addEventListener('activate', (event) => {
   Relative path:         public/browser/styles-AX2II72J.css
   Absolute path:         /home/kushal/src/angular/angulareighteen.github.io/public/browser/styles-AX2II72J.css
   Size:                  7.8 KiB (8048 bytes)
-  Last modified:         2026-06-29 19:25:32.979763110 -0400
+  Last modified:         2026-06-29 19:49:11.527337204 -0400
   Permissions:           -rw-r--r--
   Owner:                 kushal:kushal
-  Inode:                 17559070
+  Inode:                 17573108
   Hard links:            1
   MIME type:             text/plain
   SHA-256:               1e6de41cce86d183dfd61d424a646f1fc0c1b124784c6b4c18f76fe3724c3c15
@@ -10010,7 +9996,7 @@ html{color-scheme:light;--mat-sys-background: light-dark(#faf9fd, #121316);--mat
   Last modified:         2026-06-28 23:27:18.059000015 -0400
   Permissions:           -rwxr-xr-x
   Owner:                 kushal:kushal
-  Inode:                 17559092
+  Inode:                 17573131
   Hard links:            1
   MIME type:             text/plain
   SHA-256:               2df8905dc1736290ab3687df537c491ca59058cd0a1b903f93fb1fb596209cc3
@@ -10058,10 +10044,10 @@ self.addEventListener('activate', (event) => {
   Relative path:         public/prerendered-routes.json
   Absolute path:         /home/kushal/src/angular/angulareighteen.github.io/public/prerendered-routes.json
   Size:                  18 B (18 bytes)
-  Last modified:         2026-06-29 19:25:32.979763110 -0400
+  Last modified:         2026-06-29 19:49:11.527337204 -0400
   Permissions:           -rw-r--r--
   Owner:                 kushal:kushal
-  Inode:                 17559083
+  Inode:                 17573122
   Hard links:            1
   MIME type:             application/json
   SHA-256:               a79ddcc8a115190e9c19479ed36914741a7d1db74f0a1153529efc80725505fe
@@ -10080,21 +10066,23 @@ self.addEventListener('activate', (event) => {
   File name:             README.md
   Relative path:         README.md
   Absolute path:         /home/kushal/src/angular/angulareighteen.github.io/README.md
-  Size:                  1.3 KiB (1399 bytes)
-  Last modified:         2026-06-29 19:19:06.809147141 -0400
+  Size:                  2.1 KiB (2190 bytes)
+  Last modified:         2026-06-29 19:43:09.365218694 -0400
   Permissions:           -rw-r--r--
   Owner:                 kushal:kushal
   Inode:                 17532396
   Hard links:            1
   MIME type:             text/plain
-  SHA-256:               5f409756b78edf49ae0ceb36d9f3e4f90ad893eead05329f276a05af89a614a4
-  Last git commit:       4f919d9 2026-06-29 19:19:31 -0400 delete files
+  SHA-256:               986a6f0cdc5043c648b474d78a7fa53e1e43d08a5a9bcec0bedf9c05a4a9fe82
+  Last git commit:       a3e8f3c 2026-06-29 19:47:01 -0400 add claude response
 
 --- CONTENT ---
 # Colorado Quiz
 
-A small Angular 22 PWA of quizzes and news, deployed to Firebase Hosting at
+A small Angular 22 PWA of quizzes and news, deployed to GitHub Pages at
 https://angulareighteen.github.io.
+
+[![Deploy to GitHub Pages](https://github.com/angulareighteen/angulareighteen.github.io/actions/workflows/deploy.yml/badge.svg)](https://github.com/angulareighteen/angulareighteen.github.io/actions/workflows/deploy.yml)
 
 ## Tech stack
 
@@ -10115,7 +10103,7 @@ https://angulareighteen.github.io.
 ```bash
 yarn install            # install dependencies
 yarn start              # dev server at http://localhost:4200
-yarn build              # production build -> public/browser (served by Firebase)
+yarn build              # production build -> public/browser (published to GitHub Pages)
 yarn test               # unit tests (Vitest, watch mode)
 yarn test:ci            # unit tests once, with coverage
 yarn e2e                # end-to-end tests (Playwright)
@@ -10129,13 +10117,21 @@ yarn playwright install chromium
 
 ## Deployment
 
-`firebase.json` serves the build output from `public/browser`. The production
-build writes there directly (`outputPath` in `angular.json`), so deployment is:
+Deployment is automatic via GitHub Actions. On every push to `master`, the
+`.github/workflows/deploy.yml` workflow builds the app (`ng build
+--configuration=production`), publishes `public/browser` to GitHub Pages, and
+the site goes live at https://angulareighteen.github.io.
 
-```bash
-yarn build
-firebase deploy
-```
+The workflow also copies `index.html` to `404.html` so client-side routes (deep
+links such as `/quiz/us-civics`) resolve correctly — GitHub Pages has no
+server-side rewrites — and writes a `.nojekyll` file so the output is served
+verbatim.
+
+One-time setup: in the repository, go to **Settings → Pages → Build and
+deployment** and set **Source** to **GitHub Actions**.
+
+You can also trigger a deploy manually from the **Actions** tab
+(**Deploy to GitHub Pages → Run workflow**).
 
 
 ################################################################################
@@ -14311,15 +14307,15 @@ export const environment = {
   File name:             index.html
   Relative path:         src/index.html
   Absolute path:         /home/kushal/src/angular/angulareighteen.github.io/src/index.html
-  Size:                  24.8 KiB (25497 bytes)
-  Last modified:         2026-06-29 19:19:05.588172166 -0400
+  Size:                  24.4 KiB (25060 bytes)
+  Last modified:         2026-06-29 19:43:31.165310189 -0400
   Permissions:           -rw-r--r--
   Owner:                 kushal:kushal
   Inode:                 17532511
   Hard links:            1
   MIME type:             text/html
-  SHA-256:               3ea5d0697c3a12df36dda9629034a1a3d038f4db581369062d8902c9b19003da
-  Last git commit:       4f919d9 2026-06-29 19:19:31 -0400 delete files
+  SHA-256:               e91c25c66b8748ab7096aa56e7c81d6f2158c88a6f2f807a71be32cb570c4d4b
+  Last git commit:       a3e8f3c 2026-06-29 19:47:01 -0400 add claude response
 
 --- CONTENT ---
 <!DOCTYPE html>
@@ -15025,15 +15021,6 @@ export const environment = {
         };
       })(document, "script");
     </script>
-    <!-- The core Firebase JS SDK is always required and must be listed first -->
-    <script src="/__/firebase/8.6.3/firebase-app.js"></script>
-
-    <!-- TODO: Add SDKs for Firebase products that you want to use
-     https://firebase.google.com/docs/web/setup#available-libraries -->
-    <script src="/__/firebase/8.6.3/firebase-analytics.js"></script>
-
-    <!-- Initialize Firebase -->
-    <script src="/__/firebase/init.js"></script>
   </body>
 </html>
 
@@ -16158,9 +16145,9 @@ note "done."
 # DUMP SUMMARY
 ################################################################################
   Files dumped   : 179
-  Total size     : 124.0 MiB (130041837 bytes)
+  Total size     : 124.0 MiB (130041695 bytes)
   Output file    : /home/kushal/src/angular/angulareighteen.github.io/docs/llm/dump.txt
-  Completed at   : 2026-06-29T19:26:02-04:00
+  Completed at   : 2026-06-29T19:49:40-04:00
 ################################################################################
 # END OF DUMP
 ################################################################################
