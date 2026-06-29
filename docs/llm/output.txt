@@ -1,0 +1,508 @@
+kushal@fedora:~/src/angular/coloradoquiz$ time yarn run ng build
+yarn run v1.22.22
+$ ng build
+[baseline-browser-mapping] The data in this module is over two months old.  To ensure accurate Baseline data, please update: `npm i baseline-browser-mapping@latest -D`
+Initial chunk files | Names                    |  Raw size | Estimated transfer size
+main-YS4WI2CN.js    | main                     | 329.93 kB |                88.93 kB
+styles-AX2II72J.css | styles                   |   8.05 kB |                 1.31 kB
+
+                    | Initial total            | 337.98 kB |                90.24 kB
+
+Lazy chunk files    | Names                    |  Raw size | Estimated transfer size
+chunk-Cc02ckWq.js   | -                        | 107.34 kB |                21.60 kB
+chunk-DjbP6_O7.js   | browser                  |  68.53 kB |                17.86 kB
+chunk-CfqO4fnY.js   | quiz-component           |  54.99 kB |                13.40 kB
+chunk-DDUXkZPy.js   | -                        |  29.13 kB |                 7.48 kB
+chunk-b_0CUpWM.js   | -                        |  24.05 kB |                 5.81 kB
+chunk-BtyP_Wke.js   | key-industries-component |   3.77 kB |                 1.16 kB
+chunk-DjveFeZd.js   | news-component           |   3.34 kB |                 1.38 kB
+chunk-Cigzcxaj.js   | home-component           |   1.40 kB |               658 bytes
+chunk-kCSSTtWh.js   | loader-io-component      | 314 bytes |               314 bytes
+chunk-CguUs1Qa.js   | playground-component     | 253 bytes |               253 bytes
+
+Application bundle generation complete. [2.681 seconds] - 2026-06-29T22:38:26.649Z
+
+Output location: /home/kushal/src/angular/coloradoquiz/public
+
+Done in 3.28s.
+
+real	0m3.394s
+user	0m5.664s
+sys	0m0.817s
+kushal@fedora:~/src/angular/coloradoquiz$ time yarn run ng start
+yarn run v1.22.22
+$ ng start
+Error: Unknown argument: start
+error Command failed with exit code 1.
+info Visit https://yarnpkg.com/en/docs/cli/run for documentation about this command.
+
+real	0m0.664s
+user	0m0.536s
+sys	0m0.174s
+kushal@fedora:~/src/angular/coloradoquiz$ time yarn run start
+yarn run v1.22.22
+$ ng serve
+[baseline-browser-mapping] The data in this module is over two months old.  To ensure accurate Baseline data, please update: `npm i baseline-browser-mapping@latest -D`
+Initial chunk files | Names                    |  Raw size
+main.js             | main                     |  15.36 kB | 
+styles.css          | styles                   |   8.81 kB | 
+chunk-VUJOFXKG.js   | -                        | 938 bytes | 
+
+                    | Initial total            |  25.11 kB
+
+Lazy chunk files    | Names                    |  Raw size
+chunk-SPMXR3G4.js   | quiz-component           |  15.02 kB | 
+chunk-INTMLAGT.js   | key-industries-component |  11.75 kB | 
+chunk-3BGTMT64.js   | news-component           |  11.22 kB | 
+chunk-SFUQ4IMD.js   | home-component           |   5.16 kB | 
+chunk-KZMN5CN7.js   | -                        |   3.99 kB | 
+chunk-4Y2DNRUC.js   | loader-io-component      |   2.00 kB | 
+chunk-RHF2XRW4.js   | playground-component     |   1.89 kB | 
+
+Application bundle generation complete. [1.219 seconds] - 2026-06-29T22:40:54.219Z
+
+Watch mode enabled. Watching for file changes...
+NOTE: Raw file sizes do not reflect development server per-request transformations.
+  ➜  Local:   http://localhost:4200/
+  ➜  press h + enter to show help
+^C
+
+real	0m27.589s
+user	0m0.149s
+sys	0m0.048s
+kushal@fedora:~/src/angular/coloradoquiz$ cd .. 
+kushal@fedora:~/src/angular$ time git clone git@github.com:angulareighteen/angulareighteen.github.io.git
+Cloning into 'angulareighteen.github.io'...
+remote: Enumerating objects: 6904, done.
+remote: Counting objects: 100% (24/24), done.
+remote: Compressing objects: 100% (16/16), done.
+remote: Total 6904 (delta 14), reused 18 (delta 8), pack-reused 6880 (from 3)
+Receiving objects: 100% (6904/6904), 5.81 MiB | 11.85 MiB/s, done.
+Resolving deltas: 100% (4696/4696), done.
+
+real	0m1.411s
+user	0m1.459s
+sys	0m0.243s
+kushal@fedora:~/src/angular$ cd ~/src/angular/angulareighteen.github.io/; cat update.sh; time bash update.sh;
+#!/usr/bin/env bash
+# =============================================================================
+# update.sh — Toolchain update + rebuild + test + publish for this repo.
+#
+# Location: <repo root>/update.sh   (sits next to export.sh)
+#
+# Run with:   bash update.sh
+#             bash /any/absolute/path/to/update.sh     # CWD does NOT matter
+#
+# What it does (modernised, while preserving every step of the original):
+#   • Locates the repository from THIS script's own path, so the current
+#     working directory is irrelevant (no hard-coded project directory).
+#   • Bootstraps Node via fnm OR nvm, whichever is present (auto-detected;
+#     force one with NODE_VM=fnm or NODE_VM=nvm in the environment).
+#   • Operates on the CURRENT git branch — nothing is hard-coded to master.
+#   • Writes its human-readable run log to docs/llm/update.md by default
+#     (see UPDATE_LOG_REL below) instead of README.md.
+#   • Logs unit-test output to locallog/fedoratest.md (as before).
+#   • Appends network probes to ping.txt (as before).
+#   • Upgrades Node to the latest LTS, installs the global @angular/cli + yarn,
+#     records `ng version`, installs deps, runs `ng update`, refreshes the
+#     browserslist DB, builds for production, runs the unit tests, bumps the
+#     patch version, runs export.sh to refresh docs/llm/dump.txt, then rebases
+#     from and pushes to origin on the current branch.
+#
+# ERROR-HANDLING NOTE:
+#   This script intentionally does NOT use `set -e`. Like the original, it is a
+#   best-effort pipeline: every checkpoint is committed and the run always
+#   proceeds to the final push, even if an individual step (a flaky test, a
+#   build warning treated as an error, an unreachable ping host, etc.) fails.
+#   Fallible commands are individually guarded with `|| true`.
+# =============================================================================
+
+# ---------------------------------------------------------------------------
+# Configuration — edit to taste
+# ---------------------------------------------------------------------------
+UPDATE_LOG_REL="docs/llm/update.md"      # main run log (replaces the old README.md target)
+TEST_LOG_REL="locallog/fedoratest.md"    # unit-test output log
+PING_LOG_REL="ping.txt"                  # network-probe log
+
+NODE_MAX_OLD_SPACE_MB="8000"             # Node heap ceiling for the heavy Angular steps
+PING_COUNT="20"                          # echo requests per probe
+PING_TARGET="8.8.8.8"                    # probe target host
+
+PROJECT_TITLE="angulareighteen"
+SITE_URL="https://angulareighteen.github.io"
+GH_SLUG="angulareighteen/angulareighteen.github.io"        # owner/repo used for the CI badge
+WORKFLOW_FILE="firebase-hosting-merge.yml"
+
+# Packages handed to `ng update`.
+NG_UPDATE_PKGS=(@angular/core @angular/cli @angular/material)
+
+# Node version manager selection: auto | fnm | nvm
+NODE_VM="${NODE_VM:-auto}"
+
+# ---------------------------------------------------------------------------
+# 0. Resolve this script's own location, then the repo root (CWD-independent)
+# ---------------------------------------------------------------------------
+resolve_self() {
+    local src="${BASH_SOURCE[0]}"
+    if command -v readlink >/dev/null 2>&1 && readlink -f "$src" >/dev/null 2>&1; then
+        readlink -f "$src"
+        return
+    fi
+    # Portable fallback for systems without GNU `readlink -f`.
+    local dir
+    while [[ -h "$src" ]]; do
+        dir="$(cd -P "$(dirname "$src")" >/dev/null 2>&1 && pwd)"
+        src="$(readlink "$src")"
+        [[ "$src" != /* ]] && src="$dir/$src"
+    done
+    printf '%s\n' "$(cd -P "$(dirname "$src")" >/dev/null 2>&1 && pwd)/$(basename "$src")"
+}
+
+SCRIPT_PATH="$(resolve_self)"
+SCRIPT_DIR="$(dirname "$SCRIPT_PATH")"
+EXPORT_SH="${SCRIPT_DIR}/export.sh"
+
+if ! REPO_ROOT="$(git -C "$SCRIPT_DIR" rev-parse --show-toplevel 2>/dev/null)"; then
+    echo "ERROR: '$SCRIPT_DIR' is not inside a git repository; aborting." >&2
+    exit 1
+fi
+cd "$REPO_ROOT" || { echo "ERROR: cannot cd into '$REPO_ROOT'." >&2; exit 1; }
+
+CURRENT_BRANCH="$(git rev-parse --abbrev-ref HEAD 2>/dev/null || echo HEAD)"
+
+# Absolute paths derived from the configurable relative paths above.
+LOG="${REPO_ROOT}/${UPDATE_LOG_REL}"
+TEST_LOG="${REPO_ROOT}/${TEST_LOG_REL}"
+PING_LOG="${REPO_ROOT}/${PING_LOG_REL}"
+mkdir -p "$(dirname "$LOG")" "$(dirname "$TEST_LOG")" "$(dirname "$PING_LOG")"
+
+# Applied to every Node-heavy command below (exported once).
+export NODE_OPTIONS="--max-old-space-size=${NODE_MAX_OLD_SPACE_MB}"
+
+# ---------------------------------------------------------------------------
+# Helpers
+# ---------------------------------------------------------------------------
+note() { printf '\n==> %s\n' "$*"; }                  # progress line to the terminal
+
+gc() {                                                 # git checkpoint; never aborts the run
+    git add -A
+    git commit -m "$1" || true
+}
+
+md()         { printf '%s\n'   "$*"          >> "$LOG"; }   # append a line to the run log
+md_code()    { printf '```%s\n' "${1:-}"     >> "$LOG"; }   # open a fenced block (``` or ```bash)
+md_endcode() { printf '```\n'                >> "$LOG"; }   # close a fenced block
+
+ping_first() { ping -A -D -c "$PING_COUNT" -v "$PING_TARGET" >  "$PING_LOG" 2>&1 || true; }
+ping_probe() { ping -A -D -c "$PING_COUNT" -v "$PING_TARGET" >> "$PING_LOG" 2>&1 || true; }
+ping_final() { ping    -D -c "$PING_COUNT" -v "$PING_TARGET" >> "$PING_LOG" 2>&1 || true; }
+
+# --- Node version manager bootstrap (fnm OR nvm) ---------------------------
+NODE_VM_ACTIVE="none"
+
+_try_fnm() {
+    command -v fnm >/dev/null 2>&1 || return 1
+    local out
+    # An explicit shell is faster and avoids fnm's process-tree detection.
+    out="$(fnm env --shell bash 2>/dev/null)" || return 1
+    eval "$out"
+    NODE_VM_ACTIVE="fnm"
+}
+
+_try_nvm() {
+    local nvm_sh="${NVM_DIR:-$HOME/.nvm}/nvm.sh"
+    [[ -s "$nvm_sh" ]] || return 1
+    # shellcheck disable=SC1090
+    \. "$nvm_sh" || return 1
+    command -v nvm >/dev/null 2>&1 || return 1
+    NODE_VM_ACTIVE="nvm"
+}
+
+bootstrap_node_vm() {
+    case "$NODE_VM" in
+        fnm) _try_fnm || echo "WARN: NODE_VM=fnm requested but fnm is unavailable." >&2 ;;
+        nvm) _try_nvm || echo "WARN: NODE_VM=nvm requested but nvm is unavailable." >&2 ;;
+        auto|*)
+            _try_fnm || _try_nvm \
+                || echo "WARN: neither fnm nor nvm found; Node-dependent steps may fail." >&2 ;;
+    esac
+    note "Node version manager: ${NODE_VM_ACTIVE}"
+}
+
+install_use_lts() {
+    case "$NODE_VM_ACTIVE" in
+        fnm)
+            time fnm install --lts             || true
+            time fnm use lts-latest            || true
+            fnm default lts-latest 2>/dev/null || true   # default for future shells
+            ;;
+        nvm)
+            time nvm install --lts             || true
+            time nvm use --lts                 || true
+            ;;
+        *)
+            echo "WARN: no Node version manager active; skipping LTS install/use." >&2
+            ;;
+    esac
+}
+
+run_export() {
+    if [[ -f "$EXPORT_SH" ]]; then
+        note "running export.sh (refresh ${UPDATE_LOG_REL%/*}/dump.txt)"
+        # export.sh tees its full dump to stdout; keep the console quiet and
+        # rely on the file it writes to docs/llm/dump.txt.
+        bash "$EXPORT_SH" >/dev/null 2>&1 || echo "WARN: export.sh exited non-zero." >&2
+    else
+        echo "WARN: export.sh not found at '$EXPORT_SH'; skipping context dump." >&2
+    fi
+}
+
+# ===========================================================================
+# 1. Boot: version manager + first probe + fresh run-log header
+# ===========================================================================
+bootstrap_node_vm
+
+ping_first
+date > "$LOG"
+gc "add timestamp"
+
+md ''
+md "# ${PROJECT_TITLE}"
+md ''
+md ''
+md "This project is live at [${SITE_URL}](${SITE_URL} \"colorado!\") thanks to Firebase."
+md ''
+md 'CI Status: '
+md ''
+md "[![Deploy to Firebase Hosting on merge](https://github.com/${GH_SLUG}/actions/workflows/${WORKFLOW_FILE}/badge.svg)](https://github.com/${GH_SLUG}/actions/workflows/${WORKFLOW_FILE})"
+md ''
+
+# ===========================================================================
+# 2. System status
+# ===========================================================================
+md_code bash
+ping_probe
+gc "begin add system status"
+md "System Memory"
+if command -v free >/dev/null 2>&1; then
+    free -h >> "$LOG" 2>&1 || true
+else
+    md '(free unavailable)'
+fi
+md "System Storage"
+du -sh . >> "$LOG" 2>&1 || true
+gc "add system status"
+md_endcode
+gc "end add system status"
+
+# ===========================================================================
+# 3. Update Node (LTS) + global tooling + install deps
+# ===========================================================================
+md_code bash
+ping_probe
+gc "begin update node"
+install_use_lts
+time npm install --global @angular/cli yarn || true
+time yarn run ng version >> "$LOG" 2>&1 || true
+time yarn >> "$LOG" 2>&1 || true
+md_endcode
+ping_probe
+gc "end update node"
+
+# ===========================================================================
+# 4. Update Angular (output goes to the terminal, as in the original)
+# ===========================================================================
+gc "begin prepare to update angular"
+time yarn run ng update "${NG_UPDATE_PKGS[@]}" || true
+gc "end prepare to update angular"
+
+# ===========================================================================
+# 5. Refresh the browserslist DB
+# ===========================================================================
+md_code bash
+time npx update-browserslist-db@latest >> "$LOG" 2>&1 || true
+md_endcode
+
+# ===========================================================================
+# 6. Production build
+# ===========================================================================
+md_code bash
+ping_probe
+gc "begin prepare to build angular"
+time yarn run ng build --configuration production >> "$LOG" 2>&1 || true
+md_endcode
+gc "end prepare to build angular"
+
+# ===========================================================================
+# 7. Unit tests (logged to the test log).
+#    NOTE: `ng test` can run Karma in watch mode unless your angular.json /
+#    karma.conf disables it; the command is kept identical to the original.
+# ===========================================================================
+printf '```bash\n' > "$TEST_LOG"
+ping_probe
+gc "begin prepare to unit test angular"
+time yarn run ng test >> "$TEST_LOG" || true
+printf '```\n' >> "$TEST_LOG"
+ping_probe
+gc "end prepare to unit test angular"
+
+# ===========================================================================
+# 8. Version bump, context dump, and publish on the CURRENT branch
+# ===========================================================================
+date >> "$LOG"
+ping_final
+# NOTE: in Yarn Classic, `yarn version --patch` wants a clean tree and makes
+# its own commit + tag. Command kept identical to the original.
+time yarn version --patch >> "$LOG" 2>&1 || true
+gc "add timestamp"
+
+run_export
+gc "add repo context dump"
+
+if [[ "$CURRENT_BRANCH" == "HEAD" ]]; then
+    echo "WARN: detached HEAD — skipping pull/push." >&2
+else
+    note "syncing with origin/${CURRENT_BRANCH}"
+    git pull --rebase origin "$CURRENT_BRANCH" --strategy-option=ours || true
+    gc "merge from remote"
+    git push origin "$CURRENT_BRANCH" || true
+fi
+
+note "done."
+
+==> Node version manager: fnm
+[master 43ccd1c] add timestamp
+ 2 files changed, 25 insertions(+), 213 deletions(-)
+ create mode 100644 docs/llm/update.md
+[master e79c296] begin add system status
+ 2 files changed, 38 insertions(+)
+[master fbff085] add system status
+ 1 file changed, 6 insertions(+)
+[master f9f828a] end add system status
+ 1 file changed, 1 insertion(+)
+[master 0a02307] begin update node
+ 2 files changed, 28 insertions(+)
+Installing Node v24.18.0 (x64)
+warning: Version already installed at "/home/kushal/.local/share/fnm/node-versions/v24.18.0"
+
+real	0m0.107s
+user	0m0.004s
+sys	0m0.009s
+Using Node for alias lts-latest
+
+real	0m0.002s
+user	0m0.001s
+sys	0m0.001s
+
+changed 278 packages in 5s
+
+69 packages are looking for funding
+  run `npm fund` for details
+npm warn allow-scripts 1 package has install scripts not yet covered by allowScripts:
+npm warn allow-scripts   yarn@1.22.22 (preinstall: :; (node ./preinstall.js > /dev/null 2>&1 || true))
+npm warn allow-scripts
+npm warn allow-scripts Run `npm approve-scripts --allow-scripts-pending` to review, or `npm approve-scripts <pkg>` to allow.
+
+real	0m4.831s
+user	0m3.206s
+sys	0m1.853s
+
+real	0m0.492s
+user	0m0.384s
+sys	0m0.135s
+
+real	0m0.242s
+user	0m0.271s
+sys	0m0.043s
+[master 5cdf7eb] end update node
+ 2 files changed, 70 insertions(+)
+On branch master
+Your branch is ahead of 'origin/master' by 6 commits.
+  (use "git push" to publish your local commits)
+
+nothing to commit, working tree clean
+yarn run v1.22.22
+$ ng update @angular/core @angular/cli @angular/material
+Using package manager: yarn
+Collecting installed dependencies...
+Found 591 dependencies.
+Fetching dependency metadata from registry...
+Package '@angular/core' is already up to date.
+Package '@angular/cli' is already up to date.
+Package '@angular/material' is already up to date.
+Done in 3.25s.
+
+real	0m3.350s
+user	0m1.818s
+sys	0m0.588s
+On branch master
+Your branch is ahead of 'origin/master' by 6 commits.
+  (use "git push" to publish your local commits)
+
+nothing to commit, working tree clean
+
+real	0m1.102s
+user	0m0.839s
+sys	0m0.203s
+[master 43d9249] begin prepare to build angular
+ 2 files changed, 36 insertions(+)
+
+real	0m5.368s
+user	0m13.465s
+sys	0m2.097s
+warning: in the working copy of 'public/3rdpartylicenses.txt', CRLF will be replaced by LF the next time Git touches it
+[master 5fb0f22] end prepare to build angular
+ 4 files changed, 35 insertions(+), 6 deletions(-)
+warning: in the working copy of 'public/3rdpartylicenses.txt', CRLF will be replaced by LF the next time Git touches it
+[master b15c33a] begin prepare to unit test angular
+ 2 files changed, 27 insertions(+), 33 deletions(-)
+[baseline-browser-mapping] The data in this module is over two months old.  To ensure accurate Baseline data, please update: `npm i baseline-browser-mapping@latest -D`
+
+real	0m4.419s
+user	0m22.157s
+sys	0m4.696s
+[master 83e507a] end prepare to unit test angular
+ 2 files changed, 60 insertions(+)
+
+real	0m0.148s
+user	0m0.086s
+sys	0m0.060s
+[master 20cb6ec] add timestamp
+ 2 files changed, 32 insertions(+)
+
+==> running export.sh (refresh docs/llm/dump.txt)
+warning: in the working copy of 'docs/llm/dump.txt', CRLF will be replaced by LF the next time Git touches it
+[master c0404c2] add repo context dump
+ 1 file changed, 16166 insertions(+)
+ create mode 100644 docs/llm/dump.txt
+
+==> syncing with origin/master
+From github.com:angulareighteen/angulareighteen.github.io
+ * branch            master     -> FETCH_HEAD
+Current branch master is up to date.
+warning: in the working copy of 'docs/llm/dump.txt', CRLF will be replaced by LF the next time Git touches it
+On branch master
+Your branch is ahead of 'origin/master' by 13 commits.
+  (use "git push" to publish your local commits)
+
+nothing to commit, working tree clean
+Enumerating objects: 84, done.
+Counting objects: 100% (84/84), done.
+Delta compression using up to 16 threads
+Compressing objects: 100% (53/53), done.
+Writing objects: 100% (74/74), 298.53 KiB | 18.66 MiB/s, done.
+Total 74 (delta 36), reused 0 (delta 0), pack-reused 0 (from 0)
+remote: Resolving deltas: 100% (36/36), completed with 9 local objects.
+remote: 
+remote: GitHub found 48 vulnerabilities on angulareighteen/angulareighteen.github.io's default branch (15 high, 29 moderate, 4 low). To find out more, visit:
+remote:      https://github.com/angulareighteen/angulareighteen.github.io/security/dependabot
+remote: 
+To github.com:angulareighteen/angulareighteen.github.io.git
+   4f919d9..c0404c2  master -> master
+
+==> done.
+
+real	0m48.662s
+user	0m44.924s
+sys	0m13.321s
+kushal@fedora:~/src/angular/angulareighteen.github.io$ 
