@@ -16,7 +16,7 @@ jobs:
     strategy:
       fail-fast: false  # Don't cancel other jobs if one fails
       matrix:
-        node-version: [22.x, 24.x]  # Removed 18.x - not compatible with Angular 20
+        node-version: [24.x, 26.x]  # Removed 18.x - not compatible with Angular 20
     
     steps:
     - name: Checkout repository
