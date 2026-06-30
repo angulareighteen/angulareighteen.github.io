@@ -1,4 +1,7 @@
-There are multiple issues
+There are multiple issues. 
+Please review ALL the dump.txt and give me FULL files for ALL the files that need to change
+not just the yaml files but any source code as well 
+
 
 in pr validation github action 
 Run yarn ng test --watch=false --browsers=ChromeHeadless
@@ -14,6 +17,14 @@ Error: Process completed with exit code 1.
 
 in build (24.x) 
 Run if yarn ng lint --help >/dev/null 2>&1; then
+  if yarn ng lint --help >/dev/null 2>&1; then
+    echo "Running linter..."
+    yarn ng lint
+  else
+    echo "Linting not configured. Skipping..."
+    echo "To add linting, run: ng add @angular-eslint/schematics"
+  fi
+  shell: /usr/bin/bash -e {0}
 Running linter...
 yarn run v1.22.22
 $ ng lint
@@ -27,8 +38,16 @@ error Command failed with exit code 1.
 info Visit https://yarnpkg.com/en/docs/cli/run for documentation about this command.
 Error: Process completed with exit code 1.
 
-in build (22.x) 
+in build (26.x)
 Run if yarn ng lint --help >/dev/null 2>&1; then
+  if yarn ng lint --help >/dev/null 2>&1; then
+    echo "Running linter..."
+    yarn ng lint
+  else
+    echo "Linting not configured. Skipping..."
+    echo "To add linting, run: ng add @angular-eslint/schematics"
+  fi
+  shell: /usr/bin/bash -e {0}
 Running linter...
 yarn run v1.22.22
 $ ng lint
@@ -41,4 +60,2147 @@ For example:
 error Command failed with exit code 1.
 info Visit https://yarnpkg.com/en/docs/cli/run for documentation about this command.
 Error: Process completed with exit code 1.
+
+ test-browsers (ChromeHeadless, 24.x)
+failed 5 minutes ago in 30s
+0s
+2s
+10s
+9s
+0s
+5s
+1s
+Run yarn ng test --watch=false --browsers=ChromeHeadless
+yarn run v1.22.22
+$ ng test --watch=false --browsers=ChromeHeadless
+[baseline-browser-mapping] The data in this module is over two months old.  To ensure accurate Baseline data, please update: `npm i baseline-browser-mapping@latest -D`
+The following packages are required but were not found:
+  - The "browsers" option requires either "@vitest/browser-playwright", "@vitest/browser-webdriverio", or "@vitest/browser-preview" to be installed.
+Please install the missing packages and rerun the test command.
+error Command failed with exit code 1.
+info Visit https://yarnpkg.com/en/docs/cli/run for documentation about this command.
+Error: Process completed with exit code 1.
+
+
+ test-browsers (FirefoxHeadless, 24.x)
+failed 5 minutes ago in 30s
+0s
+2s
+9s
+8s
+7s
+0s
+1s
+Run yarn ng test --watch=false --browsers=FirefoxHeadless
+yarn run v1.22.22
+$ ng test --watch=false --browsers=FirefoxHeadless
+[baseline-browser-mapping] The data in this module is over two months old.  To ensure accurate Baseline data, please update: `npm i baseline-browser-mapping@latest -D`
+The following packages are required but were not found:
+  - The "browsers" option requires either "@vitest/browser-playwright", "@vitest/browser-webdriverio", or "@vitest/browser-preview" to be installed.
+Please install the missing packages and rerun the test command.
+error Command failed with exit code 1.
+info Visit https://yarnpkg.com/en/docs/cli/run for documentation about this command.
+Error: Process completed with exit code 1.
+
+ test-unit
+failed 5 minutes ago in 30s
+0s
+3s
+14s
+9s
+1s
+Run yarn ng test --watch=false --code-coverage --browsers=ChromeHeadless
+yarn run v1.22.22
+$ ng test --watch=false --code-coverage --browsers=ChromeHeadless
+Error: Unknown argument: code-coverage
+error Command failed with exit code 1.
+info Visit https://yarnpkg.com/en/docs/cli/run for documentation about this command.
+Error: Process completed with exit code 1.
+
+ test-browsers (FirefoxHeadless, 26.x)
+failed 5 minutes ago in 39s
+0s
+2s
+14s
+8s
+12s
+0s
+1s
+Run yarn ng test --watch=false --browsers=FirefoxHeadless
+yarn run v1.22.22
+$ ng test --watch=false --browsers=FirefoxHeadless
+[baseline-browser-mapping] The data in this module is over two months old.  To ensure accurate Baseline data, please update: `npm i baseline-browser-mapping@latest -D`
+The following packages are required but were not found:
+  - The "browsers" option requires either "@vitest/browser-playwright", "@vitest/browser-webdriverio", or "@vitest/browser-preview" to be installed.
+Please install the missing packages and rerun the test command.
+error Command failed with exit code 1.
+info Visit https://yarnpkg.com/en/docs/cli/run for documentation about this command.
+Error: Process completed with exit code 1.
+
+ test-browsers (ChromeHeadless, 26.x)
+failed 4 minutes ago in 51s
+2s
+2s
+20s
+15s
+0s
+7s
+1s
+Run yarn ng test --watch=false --browsers=ChromeHeadless
+yarn run v1.22.22
+$ ng test --watch=false --browsers=ChromeHeadless
+[baseline-browser-mapping] The data in this module is over two months old.  To ensure accurate Baseline data, please update: `npm i baseline-browser-mapping@latest -D`
+The following packages are required but were not found:
+  - The "browsers" option requires either "@vitest/browser-playwright", "@vitest/browser-webdriverio", or "@vitest/browser-preview" to be installed.
+Please install the missing packages and rerun the test command.
+error Command failed with exit code 1.
+info Visit https://yarnpkg.com/en/docs/cli/run for documentation about this command.
+Error: Process completed with exit code 1.
+
+also the update.sh needs to update browser lists 
+
+and also there are updates to make in packaage dot json 
+
+please give full package dot json after update 
+and also all the changes in source code necessary for the updates 
+
+kushal@fedora:~/src/angular/angulareighteen.github.io$ yarn audit
+yarn audit v1.22.22
+┌───────────────┬──────────────────────────────────────────────────────────────┐
+│ high          │ Regular Expression Denial of Service (ReDoS) in cross-spawn  │
+├───────────────┼──────────────────────────────────────────────────────────────┤
+│ Package       │ cross-spawn                                                  │
+├───────────────┼──────────────────────────────────────────────────────────────┤
+│ Patched in    │ >=7.0.5                                                      │
+├───────────────┼──────────────────────────────────────────────────────────────┤
+│ Dependency of │ @angular/cli                                                 │
+├───────────────┼──────────────────────────────────────────────────────────────┤
+│ Path          │ @angular/cli > pacote > npm-registry-fetch > minizlib >      │
+│               │ rimraf > glob > foreground-child > cross-spawn               │
+├───────────────┼──────────────────────────────────────────────────────────────┤
+│ More info     │ https://www.npmjs.com/advisories/1104664                     │
+└───────────────┴──────────────────────────────────────────────────────────────┘
+┌───────────────┬──────────────────────────────────────────────────────────────┐
+│ high          │ Regular Expression Denial of Service (ReDoS) in cross-spawn  │
+├───────────────┼──────────────────────────────────────────────────────────────┤
+│ Package       │ cross-spawn                                                  │
+├───────────────┼──────────────────────────────────────────────────────────────┤
+│ Patched in    │ >=7.0.5                                                      │
+├───────────────┼──────────────────────────────────────────────────────────────┤
+│ Dependency of │ @angular/cli                                                 │
+├───────────────┼──────────────────────────────────────────────────────────────┤
+│ Path          │ @angular/cli > pacote > npm-registry-fetch > minipass-fetch  │
+│               │ > minizlib > rimraf > glob > foreground-child > cross-spawn  │
+├───────────────┼──────────────────────────────────────────────────────────────┤
+│ More info     │ https://www.npmjs.com/advisories/1104664                     │
+└───────────────┴──────────────────────────────────────────────────────────────┘
+┌───────────────┬──────────────────────────────────────────────────────────────┐
+│ high          │ Regular Expression Denial of Service (ReDoS) in cross-spawn  │
+├───────────────┼──────────────────────────────────────────────────────────────┤
+│ Package       │ cross-spawn                                                  │
+├───────────────┼──────────────────────────────────────────────────────────────┤
+│ Patched in    │ >=7.0.5                                                      │
+├───────────────┼──────────────────────────────────────────────────────────────┤
+│ Dependency of │ @angular/cli                                                 │
+├───────────────┼──────────────────────────────────────────────────────────────┤
+│ Path          │ @angular/cli > pacote > npm-registry-fetch >                 │
+│               │ make-fetch-happen > minipass-fetch > minizlib > rimraf >     │
+│               │ glob > foreground-child > cross-spawn                        │
+├───────────────┼──────────────────────────────────────────────────────────────┤
+│ More info     │ https://www.npmjs.com/advisories/1104664                     │
+└───────────────┴──────────────────────────────────────────────────────────────┘
+┌───────────────┬──────────────────────────────────────────────────────────────┐
+│ high          │ Regular Expression Denial of Service (ReDoS) in cross-spawn  │
+├───────────────┼──────────────────────────────────────────────────────────────┤
+│ Package       │ cross-spawn                                                  │
+├───────────────┼──────────────────────────────────────────────────────────────┤
+│ Patched in    │ >=7.0.5                                                      │
+├───────────────┼──────────────────────────────────────────────────────────────┤
+│ Dependency of │ @angular/cli                                                 │
+├───────────────┼──────────────────────────────────────────────────────────────┤
+│ Path          │ @angular/cli > pacote > @npmcli/run-script > node-gyp >      │
+│               │ make-fetch-happen > minipass-fetch > minizlib > rimraf >     │
+│               │ glob > foreground-child > cross-spawn                        │
+├───────────────┼──────────────────────────────────────────────────────────────┤
+│ More info     │ https://www.npmjs.com/advisories/1104664                     │
+└───────────────┴──────────────────────────────────────────────────────────────┘
+┌───────────────┬──────────────────────────────────────────────────────────────┐
+│ high          │ Regular Expression Denial of Service (ReDoS) in cross-spawn  │
+├───────────────┼──────────────────────────────────────────────────────────────┤
+│ Package       │ cross-spawn                                                  │
+├───────────────┼──────────────────────────────────────────────────────────────┤
+│ Patched in    │ >=7.0.5                                                      │
+├───────────────┼──────────────────────────────────────────────────────────────┤
+│ Dependency of │ @angular/cli                                                 │
+├───────────────┼──────────────────────────────────────────────────────────────┤
+│ Path          │ @angular/cli > pacote > sigstore > @sigstore/tuf > tuf-js >  │
+│               │ make-fetch-happen > minipass-fetch > minizlib > rimraf >     │
+│               │ glob > foreground-child > cross-spawn                        │
+├───────────────┼──────────────────────────────────────────────────────────────┤
+│ More info     │ https://www.npmjs.com/advisories/1104664                     │
+└───────────────┴──────────────────────────────────────────────────────────────┘
+┌───────────────┬──────────────────────────────────────────────────────────────┐
+│ low           │ brace-expansion Regular Expression Denial of Service         │
+│               │ vulnerability                                                │
+├───────────────┼──────────────────────────────────────────────────────────────┤
+│ Package       │ brace-expansion                                              │
+├───────────────┼──────────────────────────────────────────────────────────────┤
+│ Patched in    │ >=2.0.2                                                      │
+├───────────────┼──────────────────────────────────────────────────────────────┤
+│ Dependency of │ @angular/cli                                                 │
+├───────────────┼──────────────────────────────────────────────────────────────┤
+│ Path          │ @angular/cli > pacote > npm-registry-fetch > minizlib >      │
+│               │ rimraf > glob > minimatch > brace-expansion                  │
+├───────────────┼──────────────────────────────────────────────────────────────┤
+│ More info     │ https://www.npmjs.com/advisories/1105444                     │
+└───────────────┴──────────────────────────────────────────────────────────────┘
+┌───────────────┬──────────────────────────────────────────────────────────────┐
+│ low           │ brace-expansion Regular Expression Denial of Service         │
+│               │ vulnerability                                                │
+├───────────────┼──────────────────────────────────────────────────────────────┤
+│ Package       │ brace-expansion                                              │
+├───────────────┼──────────────────────────────────────────────────────────────┤
+│ Patched in    │ >=2.0.2                                                      │
+├───────────────┼──────────────────────────────────────────────────────────────┤
+│ Dependency of │ @angular/cli                                                 │
+├───────────────┼──────────────────────────────────────────────────────────────┤
+│ Path          │ @angular/cli > pacote > npm-registry-fetch > minipass-fetch  │
+│               │ > minizlib > rimraf > glob > minimatch > brace-expansion     │
+├───────────────┼──────────────────────────────────────────────────────────────┤
+│ More info     │ https://www.npmjs.com/advisories/1105444                     │
+└───────────────┴──────────────────────────────────────────────────────────────┘
+┌───────────────┬──────────────────────────────────────────────────────────────┐
+│ low           │ brace-expansion Regular Expression Denial of Service         │
+│               │ vulnerability                                                │
+├───────────────┼──────────────────────────────────────────────────────────────┤
+│ Package       │ brace-expansion                                              │
+├───────────────┼──────────────────────────────────────────────────────────────┤
+│ Patched in    │ >=2.0.2                                                      │
+├───────────────┼──────────────────────────────────────────────────────────────┤
+│ Dependency of │ @angular/cli                                                 │
+├───────────────┼──────────────────────────────────────────────────────────────┤
+│ Path          │ @angular/cli > pacote > npm-registry-fetch >                 │
+│               │ make-fetch-happen > minipass-fetch > minizlib > rimraf >     │
+│               │ glob > minimatch > brace-expansion                           │
+├───────────────┼──────────────────────────────────────────────────────────────┤
+│ More info     │ https://www.npmjs.com/advisories/1105444                     │
+└───────────────┴──────────────────────────────────────────────────────────────┘
+┌───────────────┬──────────────────────────────────────────────────────────────┐
+│ low           │ brace-expansion Regular Expression Denial of Service         │
+│               │ vulnerability                                                │
+├───────────────┼──────────────────────────────────────────────────────────────┤
+│ Package       │ brace-expansion                                              │
+├───────────────┼──────────────────────────────────────────────────────────────┤
+│ Patched in    │ >=2.0.2                                                      │
+├───────────────┼──────────────────────────────────────────────────────────────┤
+│ Dependency of │ @angular/cli                                                 │
+├───────────────┼──────────────────────────────────────────────────────────────┤
+│ Path          │ @angular/cli > pacote > @npmcli/run-script > node-gyp >      │
+│               │ make-fetch-happen > minipass-fetch > minizlib > rimraf >     │
+│               │ glob > minimatch > brace-expansion                           │
+├───────────────┼──────────────────────────────────────────────────────────────┤
+│ More info     │ https://www.npmjs.com/advisories/1105444                     │
+└───────────────┴──────────────────────────────────────────────────────────────┘
+┌───────────────┬──────────────────────────────────────────────────────────────┐
+│ low           │ brace-expansion Regular Expression Denial of Service         │
+│               │ vulnerability                                                │
+├───────────────┼──────────────────────────────────────────────────────────────┤
+│ Package       │ brace-expansion                                              │
+├───────────────┼──────────────────────────────────────────────────────────────┤
+│ Patched in    │ >=2.0.2                                                      │
+├───────────────┼──────────────────────────────────────────────────────────────┤
+│ Dependency of │ @angular/cli                                                 │
+├───────────────┼──────────────────────────────────────────────────────────────┤
+│ Path          │ @angular/cli > pacote > sigstore > @sigstore/tuf > tuf-js >  │
+│               │ make-fetch-happen > minipass-fetch > minizlib > rimraf >     │
+│               │ glob > minimatch > brace-expansion                           │
+├───────────────┼──────────────────────────────────────────────────────────────┤
+│ More info     │ https://www.npmjs.com/advisories/1105444                     │
+└───────────────┴──────────────────────────────────────────────────────────────┘
+┌───────────────┬──────────────────────────────────────────────────────────────┐
+│ moderate      │ brace-expansion: Zero-step sequence causes process hang and  │
+│               │ memory exhaustion                                            │
+├───────────────┼──────────────────────────────────────────────────────────────┤
+│ Package       │ brace-expansion                                              │
+├───────────────┼──────────────────────────────────────────────────────────────┤
+│ Patched in    │ >=2.0.3                                                      │
+├───────────────┼──────────────────────────────────────────────────────────────┤
+│ Dependency of │ @angular/cli                                                 │
+├───────────────┼──────────────────────────────────────────────────────────────┤
+│ Path          │ @angular/cli > pacote > npm-registry-fetch > minizlib >      │
+│               │ rimraf > glob > minimatch > brace-expansion                  │
+├───────────────┼──────────────────────────────────────────────────────────────┤
+│ More info     │ https://www.npmjs.com/advisories/1115541                     │
+└───────────────┴──────────────────────────────────────────────────────────────┘
+┌───────────────┬──────────────────────────────────────────────────────────────┐
+│ moderate      │ brace-expansion: Zero-step sequence causes process hang and  │
+│               │ memory exhaustion                                            │
+├───────────────┼──────────────────────────────────────────────────────────────┤
+│ Package       │ brace-expansion                                              │
+├───────────────┼──────────────────────────────────────────────────────────────┤
+│ Patched in    │ >=2.0.3                                                      │
+├───────────────┼──────────────────────────────────────────────────────────────┤
+│ Dependency of │ @angular/cli                                                 │
+├───────────────┼──────────────────────────────────────────────────────────────┤
+│ Path          │ @angular/cli > pacote > npm-registry-fetch > minipass-fetch  │
+│               │ > minizlib > rimraf > glob > minimatch > brace-expansion     │
+├───────────────┼──────────────────────────────────────────────────────────────┤
+│ More info     │ https://www.npmjs.com/advisories/1115541                     │
+└───────────────┴──────────────────────────────────────────────────────────────┘
+┌───────────────┬──────────────────────────────────────────────────────────────┐
+│ moderate      │ brace-expansion: Zero-step sequence causes process hang and  │
+│               │ memory exhaustion                                            │
+├───────────────┼──────────────────────────────────────────────────────────────┤
+│ Package       │ brace-expansion                                              │
+├───────────────┼──────────────────────────────────────────────────────────────┤
+│ Patched in    │ >=2.0.3                                                      │
+├───────────────┼──────────────────────────────────────────────────────────────┤
+│ Dependency of │ @angular/cli                                                 │
+├───────────────┼──────────────────────────────────────────────────────────────┤
+│ Path          │ @angular/cli > pacote > npm-registry-fetch >                 │
+│               │ make-fetch-happen > minipass-fetch > minizlib > rimraf >     │
+│               │ glob > minimatch > brace-expansion                           │
+├───────────────┼──────────────────────────────────────────────────────────────┤
+│ More info     │ https://www.npmjs.com/advisories/1115541                     │
+└───────────────┴──────────────────────────────────────────────────────────────┘
+┌───────────────┬──────────────────────────────────────────────────────────────┐
+│ moderate      │ brace-expansion: Zero-step sequence causes process hang and  │
+│               │ memory exhaustion                                            │
+├───────────────┼──────────────────────────────────────────────────────────────┤
+│ Package       │ brace-expansion                                              │
+├───────────────┼──────────────────────────────────────────────────────────────┤
+│ Patched in    │ >=2.0.3                                                      │
+├───────────────┼──────────────────────────────────────────────────────────────┤
+│ Dependency of │ @angular/cli                                                 │
+├───────────────┼──────────────────────────────────────────────────────────────┤
+│ Path          │ @angular/cli > pacote > @npmcli/run-script > node-gyp >      │
+│               │ make-fetch-happen > minipass-fetch > minizlib > rimraf >     │
+│               │ glob > minimatch > brace-expansion                           │
+├───────────────┼──────────────────────────────────────────────────────────────┤
+│ More info     │ https://www.npmjs.com/advisories/1115541                     │
+└───────────────┴──────────────────────────────────────────────────────────────┘
+┌───────────────┬──────────────────────────────────────────────────────────────┐
+│ moderate      │ brace-expansion: Zero-step sequence causes process hang and  │
+│               │ memory exhaustion                                            │
+├───────────────┼──────────────────────────────────────────────────────────────┤
+│ Package       │ brace-expansion                                              │
+├───────────────┼──────────────────────────────────────────────────────────────┤
+│ Patched in    │ >=2.0.3                                                      │
+├───────────────┼──────────────────────────────────────────────────────────────┤
+│ Dependency of │ @angular/cli                                                 │
+├───────────────┼──────────────────────────────────────────────────────────────┤
+│ Path          │ @angular/cli > pacote > sigstore > @sigstore/tuf > tuf-js >  │
+│               │ make-fetch-happen > minipass-fetch > minizlib > rimraf >     │
+│               │ glob > minimatch > brace-expansion                           │
+├───────────────┼──────────────────────────────────────────────────────────────┤
+│ More info     │ https://www.npmjs.com/advisories/1115541                     │
+└───────────────┴──────────────────────────────────────────────────────────────┘
+┌───────────────┬──────────────────────────────────────────────────────────────┐
+│ high          │ glob CLI: Command injection via -c/--cmd executes matches    │
+│               │ with shell:true                                              │
+├───────────────┼──────────────────────────────────────────────────────────────┤
+│ Package       │ glob                                                         │
+├───────────────┼──────────────────────────────────────────────────────────────┤
+│ Patched in    │ >=10.5.0                                                     │
+├───────────────┼──────────────────────────────────────────────────────────────┤
+│ Dependency of │ @angular/cli                                                 │
+├───────────────┼──────────────────────────────────────────────────────────────┤
+│ Path          │ @angular/cli > pacote > npm-registry-fetch > minizlib >      │
+│               │ rimraf > glob                                                │
+├───────────────┼──────────────────────────────────────────────────────────────┤
+│ More info     │ https://www.npmjs.com/advisories/1109842                     │
+└───────────────┴──────────────────────────────────────────────────────────────┘
+┌───────────────┬──────────────────────────────────────────────────────────────┐
+│ high          │ minimatch has a ReDoS via repeated wildcards with            │
+│               │ non-matching literal in pattern                              │
+├───────────────┼──────────────────────────────────────────────────────────────┤
+│ Package       │ minimatch                                                    │
+├───────────────┼──────────────────────────────────────────────────────────────┤
+│ Patched in    │ >=9.0.6                                                      │
+├───────────────┼──────────────────────────────────────────────────────────────┤
+│ Dependency of │ @angular/cli                                                 │
+├───────────────┼──────────────────────────────────────────────────────────────┤
+│ Path          │ @angular/cli > pacote > npm-registry-fetch > minizlib >      │
+│               │ rimraf > glob > minimatch                                    │
+├───────────────┼──────────────────────────────────────────────────────────────┤
+│ More info     │ https://www.npmjs.com/advisories/1113465                     │
+└───────────────┴──────────────────────────────────────────────────────────────┘
+┌───────────────┬──────────────────────────────────────────────────────────────┐
+│ high          │ minimatch has ReDoS: matchOne() combinatorial backtracking   │
+│               │ via multiple non-adjacent GLOBSTAR segments                  │
+├───────────────┼──────────────────────────────────────────────────────────────┤
+│ Package       │ minimatch                                                    │
+├───────────────┼──────────────────────────────────────────────────────────────┤
+│ Patched in    │ >=9.0.7                                                      │
+├───────────────┼──────────────────────────────────────────────────────────────┤
+│ Dependency of │ @angular/cli                                                 │
+├───────────────┼──────────────────────────────────────────────────────────────┤
+│ Path          │ @angular/cli > pacote > npm-registry-fetch > minizlib >      │
+│               │ rimraf > glob > minimatch                                    │
+├───────────────┼──────────────────────────────────────────────────────────────┤
+│ More info     │ https://www.npmjs.com/advisories/1113544                     │
+└───────────────┴──────────────────────────────────────────────────────────────┘
+┌───────────────┬──────────────────────────────────────────────────────────────┐
+│ high          │ minimatch ReDoS: nested *() extglobs generate                │
+│               │ catastrophically backtracking regular expressions            │
+├───────────────┼──────────────────────────────────────────────────────────────┤
+│ Package       │ minimatch                                                    │
+├───────────────┼──────────────────────────────────────────────────────────────┤
+│ Patched in    │ >=9.0.7                                                      │
+├───────────────┼──────────────────────────────────────────────────────────────┤
+│ Dependency of │ @angular/cli                                                 │
+├───────────────┼──────────────────────────────────────────────────────────────┤
+│ Path          │ @angular/cli > pacote > npm-registry-fetch > minizlib >      │
+│               │ rimraf > glob > minimatch                                    │
+├───────────────┼──────────────────────────────────────────────────────────────┤
+│ More info     │ https://www.npmjs.com/advisories/1113552                     │
+└───────────────┴──────────────────────────────────────────────────────────────┘
+┌───────────────┬──────────────────────────────────────────────────────────────┐
+│ high          │ glob CLI: Command injection via -c/--cmd executes matches    │
+│               │ with shell:true                                              │
+├───────────────┼──────────────────────────────────────────────────────────────┤
+│ Package       │ glob                                                         │
+├───────────────┼──────────────────────────────────────────────────────────────┤
+│ Patched in    │ >=10.5.0                                                     │
+├───────────────┼──────────────────────────────────────────────────────────────┤
+│ Dependency of │ @angular/cli                                                 │
+├───────────────┼──────────────────────────────────────────────────────────────┤
+│ Path          │ @angular/cli > pacote > npm-registry-fetch > minipass-fetch  │
+│               │ > minizlib > rimraf > glob                                   │
+├───────────────┼──────────────────────────────────────────────────────────────┤
+│ More info     │ https://www.npmjs.com/advisories/1109842                     │
+└───────────────┴──────────────────────────────────────────────────────────────┘
+┌───────────────┬──────────────────────────────────────────────────────────────┐
+│ high          │ minimatch has a ReDoS via repeated wildcards with            │
+│               │ non-matching literal in pattern                              │
+├───────────────┼──────────────────────────────────────────────────────────────┤
+│ Package       │ minimatch                                                    │
+├───────────────┼──────────────────────────────────────────────────────────────┤
+│ Patched in    │ >=9.0.6                                                      │
+├───────────────┼──────────────────────────────────────────────────────────────┤
+│ Dependency of │ @angular/cli                                                 │
+├───────────────┼──────────────────────────────────────────────────────────────┤
+│ Path          │ @angular/cli > pacote > npm-registry-fetch > minipass-fetch  │
+│               │ > minizlib > rimraf > glob > minimatch                       │
+├───────────────┼──────────────────────────────────────────────────────────────┤
+│ More info     │ https://www.npmjs.com/advisories/1113465                     │
+└───────────────┴──────────────────────────────────────────────────────────────┘
+┌───────────────┬──────────────────────────────────────────────────────────────┐
+│ high          │ minimatch has ReDoS: matchOne() combinatorial backtracking   │
+│               │ via multiple non-adjacent GLOBSTAR segments                  │
+├───────────────┼──────────────────────────────────────────────────────────────┤
+│ Package       │ minimatch                                                    │
+├───────────────┼──────────────────────────────────────────────────────────────┤
+│ Patched in    │ >=9.0.7                                                      │
+├───────────────┼──────────────────────────────────────────────────────────────┤
+│ Dependency of │ @angular/cli                                                 │
+├───────────────┼──────────────────────────────────────────────────────────────┤
+│ Path          │ @angular/cli > pacote > npm-registry-fetch > minipass-fetch  │
+│               │ > minizlib > rimraf > glob > minimatch                       │
+├───────────────┼──────────────────────────────────────────────────────────────┤
+│ More info     │ https://www.npmjs.com/advisories/1113544                     │
+└───────────────┴──────────────────────────────────────────────────────────────┘
+┌───────────────┬──────────────────────────────────────────────────────────────┐
+│ high          │ minimatch ReDoS: nested *() extglobs generate                │
+│               │ catastrophically backtracking regular expressions            │
+├───────────────┼──────────────────────────────────────────────────────────────┤
+│ Package       │ minimatch                                                    │
+├───────────────┼──────────────────────────────────────────────────────────────┤
+│ Patched in    │ >=9.0.7                                                      │
+├───────────────┼──────────────────────────────────────────────────────────────┤
+│ Dependency of │ @angular/cli                                                 │
+├───────────────┼──────────────────────────────────────────────────────────────┤
+│ Path          │ @angular/cli > pacote > npm-registry-fetch > minipass-fetch  │
+│               │ > minizlib > rimraf > glob > minimatch                       │
+├───────────────┼──────────────────────────────────────────────────────────────┤
+│ More info     │ https://www.npmjs.com/advisories/1113552                     │
+└───────────────┴──────────────────────────────────────────────────────────────┘
+┌───────────────┬──────────────────────────────────────────────────────────────┐
+│ high          │ glob CLI: Command injection via -c/--cmd executes matches    │
+│               │ with shell:true                                              │
+├───────────────┼──────────────────────────────────────────────────────────────┤
+│ Package       │ glob                                                         │
+├───────────────┼──────────────────────────────────────────────────────────────┤
+│ Patched in    │ >=10.5.0                                                     │
+├───────────────┼──────────────────────────────────────────────────────────────┤
+│ Dependency of │ @angular/cli                                                 │
+├───────────────┼──────────────────────────────────────────────────────────────┤
+│ Path          │ @angular/cli > pacote > npm-registry-fetch >                 │
+│               │ make-fetch-happen > minipass-fetch > minizlib > rimraf >     │
+│               │ glob                                                         │
+├───────────────┼──────────────────────────────────────────────────────────────┤
+│ More info     │ https://www.npmjs.com/advisories/1109842                     │
+└───────────────┴──────────────────────────────────────────────────────────────┘
+┌───────────────┬──────────────────────────────────────────────────────────────┐
+│ high          │ minimatch has a ReDoS via repeated wildcards with            │
+│               │ non-matching literal in pattern                              │
+├───────────────┼──────────────────────────────────────────────────────────────┤
+│ Package       │ minimatch                                                    │
+├───────────────┼──────────────────────────────────────────────────────────────┤
+│ Patched in    │ >=9.0.6                                                      │
+├───────────────┼──────────────────────────────────────────────────────────────┤
+│ Dependency of │ @angular/cli                                                 │
+├───────────────┼──────────────────────────────────────────────────────────────┤
+│ Path          │ @angular/cli > pacote > npm-registry-fetch >                 │
+│               │ make-fetch-happen > minipass-fetch > minizlib > rimraf >     │
+│               │ glob > minimatch                                             │
+├───────────────┼──────────────────────────────────────────────────────────────┤
+│ More info     │ https://www.npmjs.com/advisories/1113465                     │
+└───────────────┴──────────────────────────────────────────────────────────────┘
+┌───────────────┬──────────────────────────────────────────────────────────────┐
+│ high          │ minimatch has a ReDoS via repeated wildcards with            │
+│               │ non-matching literal in pattern                              │
+├───────────────┼──────────────────────────────────────────────────────────────┤
+│ Package       │ minimatch                                                    │
+├───────────────┼──────────────────────────────────────────────────────────────┤
+│ Patched in    │ >=10.2.1                                                     │
+├───────────────┼──────────────────────────────────────────────────────────────┤
+│ Dependency of │ @angular/cli                                                 │
+├───────────────┼──────────────────────────────────────────────────────────────┤
+│ Path          │ @angular/cli > pacote > npm-registry-fetch >                 │
+│               │ make-fetch-happen > cacache > glob > minimatch               │
+├───────────────┼──────────────────────────────────────────────────────────────┤
+│ More info     │ https://www.npmjs.com/advisories/1113466                     │
+└───────────────┴──────────────────────────────────────────────────────────────┘
+┌───────────────┬──────────────────────────────────────────────────────────────┐
+│ high          │ minimatch has ReDoS: matchOne() combinatorial backtracking   │
+│               │ via multiple non-adjacent GLOBSTAR segments                  │
+├───────────────┼──────────────────────────────────────────────────────────────┤
+│ Package       │ minimatch                                                    │
+├───────────────┼──────────────────────────────────────────────────────────────┤
+│ Patched in    │ >=9.0.7                                                      │
+├───────────────┼──────────────────────────────────────────────────────────────┤
+│ Dependency of │ @angular/cli                                                 │
+├───────────────┼──────────────────────────────────────────────────────────────┤
+│ Path          │ @angular/cli > pacote > npm-registry-fetch >                 │
+│               │ make-fetch-happen > minipass-fetch > minizlib > rimraf >     │
+│               │ glob > minimatch                                             │
+├───────────────┼──────────────────────────────────────────────────────────────┤
+│ More info     │ https://www.npmjs.com/advisories/1113544                     │
+└───────────────┴──────────────────────────────────────────────────────────────┘
+┌───────────────┬──────────────────────────────────────────────────────────────┐
+│ high          │ minimatch has ReDoS: matchOne() combinatorial backtracking   │
+│               │ via multiple non-adjacent GLOBSTAR segments                  │
+├───────────────┼──────────────────────────────────────────────────────────────┤
+│ Package       │ minimatch                                                    │
+├───────────────┼──────────────────────────────────────────────────────────────┤
+│ Patched in    │ >=10.2.3                                                     │
+├───────────────┼──────────────────────────────────────────────────────────────┤
+│ Dependency of │ @angular/cli                                                 │
+├───────────────┼──────────────────────────────────────────────────────────────┤
+│ Path          │ @angular/cli > pacote > npm-registry-fetch >                 │
+│               │ make-fetch-happen > cacache > glob > minimatch               │
+├───────────────┼──────────────────────────────────────────────────────────────┤
+│ More info     │ https://www.npmjs.com/advisories/1113545                     │
+└───────────────┴──────────────────────────────────────────────────────────────┘
+┌───────────────┬──────────────────────────────────────────────────────────────┐
+│ high          │ minimatch ReDoS: nested *() extglobs generate                │
+│               │ catastrophically backtracking regular expressions            │
+├───────────────┼──────────────────────────────────────────────────────────────┤
+│ Package       │ minimatch                                                    │
+├───────────────┼──────────────────────────────────────────────────────────────┤
+│ Patched in    │ >=9.0.7                                                      │
+├───────────────┼──────────────────────────────────────────────────────────────┤
+│ Dependency of │ @angular/cli                                                 │
+├───────────────┼──────────────────────────────────────────────────────────────┤
+│ Path          │ @angular/cli > pacote > npm-registry-fetch >                 │
+│               │ make-fetch-happen > minipass-fetch > minizlib > rimraf >     │
+│               │ glob > minimatch                                             │
+├───────────────┼──────────────────────────────────────────────────────────────┤
+│ More info     │ https://www.npmjs.com/advisories/1113552                     │
+└───────────────┴──────────────────────────────────────────────────────────────┘
+┌───────────────┬──────────────────────────────────────────────────────────────┐
+│ high          │ minimatch ReDoS: nested *() extglobs generate                │
+│               │ catastrophically backtracking regular expressions            │
+├───────────────┼──────────────────────────────────────────────────────────────┤
+│ Package       │ minimatch                                                    │
+├───────────────┼──────────────────────────────────────────────────────────────┤
+│ Patched in    │ >=10.2.3                                                     │
+├───────────────┼──────────────────────────────────────────────────────────────┤
+│ Dependency of │ @angular/cli                                                 │
+├───────────────┼──────────────────────────────────────────────────────────────┤
+│ Path          │ @angular/cli > pacote > npm-registry-fetch >                 │
+│               │ make-fetch-happen > cacache > glob > minimatch               │
+├───────────────┼──────────────────────────────────────────────────────────────┤
+│ More info     │ https://www.npmjs.com/advisories/1113553                     │
+└───────────────┴──────────────────────────────────────────────────────────────┘
+┌───────────────┬──────────────────────────────────────────────────────────────┐
+│ moderate      │ ip-address has XSS in Address6 HTML-emitting methods         │
+├───────────────┼──────────────────────────────────────────────────────────────┤
+│ Package       │ ip-address                                                   │
+├───────────────┼──────────────────────────────────────────────────────────────┤
+│ Patched in    │ >=10.1.1                                                     │
+├───────────────┼──────────────────────────────────────────────────────────────┤
+│ Dependency of │ @angular/cli                                                 │
+├───────────────┼──────────────────────────────────────────────────────────────┤
+│ Path          │ @angular/cli > pacote > npm-registry-fetch >                 │
+│               │ make-fetch-happen > @npmcli/agent > socks-proxy-agent >      │
+│               │ socks > ip-address                                           │
+├───────────────┼──────────────────────────────────────────────────────────────┤
+│ More info     │ https://www.npmjs.com/advisories/1118827                     │
+└───────────────┴──────────────────────────────────────────────────────────────┘
+┌───────────────┬──────────────────────────────────────────────────────────────┐
+│ high          │ glob CLI: Command injection via -c/--cmd executes matches    │
+│               │ with shell:true                                              │
+├───────────────┼──────────────────────────────────────────────────────────────┤
+│ Package       │ glob                                                         │
+├───────────────┼──────────────────────────────────────────────────────────────┤
+│ Patched in    │ >=10.5.0                                                     │
+├───────────────┼──────────────────────────────────────────────────────────────┤
+│ Dependency of │ @angular/cli                                                 │
+├───────────────┼──────────────────────────────────────────────────────────────┤
+│ Path          │ @angular/cli > pacote > @npmcli/run-script > node-gyp >      │
+│               │ make-fetch-happen > minipass-fetch > minizlib > rimraf >     │
+│               │ glob                                                         │
+├───────────────┼──────────────────────────────────────────────────────────────┤
+│ More info     │ https://www.npmjs.com/advisories/1109842                     │
+└───────────────┴──────────────────────────────────────────────────────────────┘
+┌───────────────┬──────────────────────────────────────────────────────────────┐
+│ high          │ minimatch has a ReDoS via repeated wildcards with            │
+│               │ non-matching literal in pattern                              │
+├───────────────┼──────────────────────────────────────────────────────────────┤
+│ Package       │ minimatch                                                    │
+├───────────────┼──────────────────────────────────────────────────────────────┤
+│ Patched in    │ >=9.0.6                                                      │
+├───────────────┼──────────────────────────────────────────────────────────────┤
+│ Dependency of │ @angular/cli                                                 │
+├───────────────┼──────────────────────────────────────────────────────────────┤
+│ Path          │ @angular/cli > pacote > @npmcli/run-script > node-gyp >      │
+│               │ make-fetch-happen > minipass-fetch > minizlib > rimraf >     │
+│               │ glob > minimatch                                             │
+├───────────────┼──────────────────────────────────────────────────────────────┤
+│ More info     │ https://www.npmjs.com/advisories/1113465                     │
+└───────────────┴──────────────────────────────────────────────────────────────┘
+┌───────────────┬──────────────────────────────────────────────────────────────┐
+│ high          │ minimatch has a ReDoS via repeated wildcards with            │
+│               │ non-matching literal in pattern                              │
+├───────────────┼──────────────────────────────────────────────────────────────┤
+│ Package       │ minimatch                                                    │
+├───────────────┼──────────────────────────────────────────────────────────────┤
+│ Patched in    │ >=10.2.1                                                     │
+├───────────────┼──────────────────────────────────────────────────────────────┤
+│ Dependency of │ @angular/cli                                                 │
+├───────────────┼──────────────────────────────────────────────────────────────┤
+│ Path          │ @angular/cli > pacote > @npmcli/run-script > node-gyp >      │
+│               │ make-fetch-happen > cacache > glob > minimatch               │
+├───────────────┼──────────────────────────────────────────────────────────────┤
+│ More info     │ https://www.npmjs.com/advisories/1113466                     │
+└───────────────┴──────────────────────────────────────────────────────────────┘
+┌───────────────┬──────────────────────────────────────────────────────────────┐
+│ high          │ minimatch has ReDoS: matchOne() combinatorial backtracking   │
+│               │ via multiple non-adjacent GLOBSTAR segments                  │
+├───────────────┼──────────────────────────────────────────────────────────────┤
+│ Package       │ minimatch                                                    │
+├───────────────┼──────────────────────────────────────────────────────────────┤
+│ Patched in    │ >=9.0.7                                                      │
+├───────────────┼──────────────────────────────────────────────────────────────┤
+│ Dependency of │ @angular/cli                                                 │
+├───────────────┼──────────────────────────────────────────────────────────────┤
+│ Path          │ @angular/cli > pacote > @npmcli/run-script > node-gyp >      │
+│               │ make-fetch-happen > minipass-fetch > minizlib > rimraf >     │
+│               │ glob > minimatch                                             │
+├───────────────┼──────────────────────────────────────────────────────────────┤
+│ More info     │ https://www.npmjs.com/advisories/1113544                     │
+└───────────────┴──────────────────────────────────────────────────────────────┘
+┌───────────────┬──────────────────────────────────────────────────────────────┐
+│ high          │ minimatch has ReDoS: matchOne() combinatorial backtracking   │
+│               │ via multiple non-adjacent GLOBSTAR segments                  │
+├───────────────┼──────────────────────────────────────────────────────────────┤
+│ Package       │ minimatch                                                    │
+├───────────────┼──────────────────────────────────────────────────────────────┤
+│ Patched in    │ >=10.2.3                                                     │
+├───────────────┼──────────────────────────────────────────────────────────────┤
+│ Dependency of │ @angular/cli                                                 │
+├───────────────┼──────────────────────────────────────────────────────────────┤
+│ Path          │ @angular/cli > pacote > @npmcli/run-script > node-gyp >      │
+│               │ make-fetch-happen > cacache > glob > minimatch               │
+├───────────────┼──────────────────────────────────────────────────────────────┤
+│ More info     │ https://www.npmjs.com/advisories/1113545                     │
+└───────────────┴──────────────────────────────────────────────────────────────┘
+┌───────────────┬──────────────────────────────────────────────────────────────┐
+│ high          │ minimatch ReDoS: nested *() extglobs generate                │
+│               │ catastrophically backtracking regular expressions            │
+├───────────────┼──────────────────────────────────────────────────────────────┤
+│ Package       │ minimatch                                                    │
+├───────────────┼──────────────────────────────────────────────────────────────┤
+│ Patched in    │ >=9.0.7                                                      │
+├───────────────┼──────────────────────────────────────────────────────────────┤
+│ Dependency of │ @angular/cli                                                 │
+├───────────────┼──────────────────────────────────────────────────────────────┤
+│ Path          │ @angular/cli > pacote > @npmcli/run-script > node-gyp >      │
+│               │ make-fetch-happen > minipass-fetch > minizlib > rimraf >     │
+│               │ glob > minimatch                                             │
+├───────────────┼──────────────────────────────────────────────────────────────┤
+│ More info     │ https://www.npmjs.com/advisories/1113552                     │
+└───────────────┴──────────────────────────────────────────────────────────────┘
+┌───────────────┬──────────────────────────────────────────────────────────────┐
+│ high          │ minimatch ReDoS: nested *() extglobs generate                │
+│               │ catastrophically backtracking regular expressions            │
+├───────────────┼──────────────────────────────────────────────────────────────┤
+│ Package       │ minimatch                                                    │
+├───────────────┼──────────────────────────────────────────────────────────────┤
+│ Patched in    │ >=10.2.3                                                     │
+├───────────────┼──────────────────────────────────────────────────────────────┤
+│ Dependency of │ @angular/cli                                                 │
+├───────────────┼──────────────────────────────────────────────────────────────┤
+│ Path          │ @angular/cli > pacote > @npmcli/run-script > node-gyp >      │
+│               │ make-fetch-happen > cacache > glob > minimatch               │
+├───────────────┼──────────────────────────────────────────────────────────────┤
+│ More info     │ https://www.npmjs.com/advisories/1113553                     │
+└───────────────┴──────────────────────────────────────────────────────────────┘
+┌───────────────┬──────────────────────────────────────────────────────────────┐
+│ moderate      │ ip-address has XSS in Address6 HTML-emitting methods         │
+├───────────────┼──────────────────────────────────────────────────────────────┤
+│ Package       │ ip-address                                                   │
+├───────────────┼──────────────────────────────────────────────────────────────┤
+│ Patched in    │ >=10.1.1                                                     │
+├───────────────┼──────────────────────────────────────────────────────────────┤
+│ Dependency of │ @angular/cli                                                 │
+├───────────────┼──────────────────────────────────────────────────────────────┤
+│ Path          │ @angular/cli > pacote > @npmcli/run-script > node-gyp >      │
+│               │ make-fetch-happen > @npmcli/agent > socks-proxy-agent >      │
+│               │ socks > ip-address                                           │
+├───────────────┼──────────────────────────────────────────────────────────────┤
+│ More info     │ https://www.npmjs.com/advisories/1118827                     │
+└───────────────┴──────────────────────────────────────────────────────────────┘
+┌───────────────┬──────────────────────────────────────────────────────────────┐
+│ high          │ glob CLI: Command injection via -c/--cmd executes matches    │
+│               │ with shell:true                                              │
+├───────────────┼──────────────────────────────────────────────────────────────┤
+│ Package       │ glob                                                         │
+├───────────────┼──────────────────────────────────────────────────────────────┤
+│ Patched in    │ >=10.5.0                                                     │
+├───────────────┼──────────────────────────────────────────────────────────────┤
+│ Dependency of │ @angular/cli                                                 │
+├───────────────┼──────────────────────────────────────────────────────────────┤
+│ Path          │ @angular/cli > pacote > sigstore > @sigstore/tuf > tuf-js >  │
+│               │ make-fetch-happen > minipass-fetch > minizlib > rimraf >     │
+│               │ glob                                                         │
+├───────────────┼──────────────────────────────────────────────────────────────┤
+│ More info     │ https://www.npmjs.com/advisories/1109842                     │
+└───────────────┴──────────────────────────────────────────────────────────────┘
+┌───────────────┬──────────────────────────────────────────────────────────────┐
+│ high          │ minimatch has a ReDoS via repeated wildcards with            │
+│               │ non-matching literal in pattern                              │
+├───────────────┼──────────────────────────────────────────────────────────────┤
+│ Package       │ minimatch                                                    │
+├───────────────┼──────────────────────────────────────────────────────────────┤
+│ Patched in    │ >=9.0.6                                                      │
+├───────────────┼──────────────────────────────────────────────────────────────┤
+│ Dependency of │ @angular/cli                                                 │
+├───────────────┼──────────────────────────────────────────────────────────────┤
+│ Path          │ @angular/cli > pacote > sigstore > @sigstore/tuf > tuf-js >  │
+│               │ make-fetch-happen > minipass-fetch > minizlib > rimraf >     │
+│               │ glob > minimatch                                             │
+├───────────────┼──────────────────────────────────────────────────────────────┤
+│ More info     │ https://www.npmjs.com/advisories/1113465                     │
+└───────────────┴──────────────────────────────────────────────────────────────┘
+┌───────────────┬──────────────────────────────────────────────────────────────┐
+│ high          │ minimatch has a ReDoS via repeated wildcards with            │
+│               │ non-matching literal in pattern                              │
+├───────────────┼──────────────────────────────────────────────────────────────┤
+│ Package       │ minimatch                                                    │
+├───────────────┼──────────────────────────────────────────────────────────────┤
+│ Patched in    │ >=9.0.6                                                      │
+├───────────────┼──────────────────────────────────────────────────────────────┤
+│ Dependency of │ @angular/cli                                                 │
+├───────────────┼──────────────────────────────────────────────────────────────┤
+│ Path          │ @angular/cli > pacote > sigstore > @sigstore/tuf > tuf-js >  │
+│               │ @tufjs/models > minimatch                                    │
+├───────────────┼──────────────────────────────────────────────────────────────┤
+│ More info     │ https://www.npmjs.com/advisories/1113465                     │
+└───────────────┴──────────────────────────────────────────────────────────────┘
+┌───────────────┬──────────────────────────────────────────────────────────────┐
+│ high          │ minimatch has a ReDoS via repeated wildcards with            │
+│               │ non-matching literal in pattern                              │
+├───────────────┼──────────────────────────────────────────────────────────────┤
+│ Package       │ minimatch                                                    │
+├───────────────┼──────────────────────────────────────────────────────────────┤
+│ Patched in    │ >=10.2.1                                                     │
+├───────────────┼──────────────────────────────────────────────────────────────┤
+│ Dependency of │ @angular/cli                                                 │
+├───────────────┼──────────────────────────────────────────────────────────────┤
+│ Path          │ @angular/cli > pacote > sigstore > @sigstore/tuf > tuf-js >  │
+│               │ make-fetch-happen > cacache > glob > minimatch               │
+├───────────────┼──────────────────────────────────────────────────────────────┤
+│ More info     │ https://www.npmjs.com/advisories/1113466                     │
+└───────────────┴──────────────────────────────────────────────────────────────┘
+┌───────────────┬──────────────────────────────────────────────────────────────┐
+│ high          │ minimatch has ReDoS: matchOne() combinatorial backtracking   │
+│               │ via multiple non-adjacent GLOBSTAR segments                  │
+├───────────────┼──────────────────────────────────────────────────────────────┤
+│ Package       │ minimatch                                                    │
+├───────────────┼──────────────────────────────────────────────────────────────┤
+│ Patched in    │ >=9.0.7                                                      │
+├───────────────┼──────────────────────────────────────────────────────────────┤
+│ Dependency of │ @angular/cli                                                 │
+├───────────────┼──────────────────────────────────────────────────────────────┤
+│ Path          │ @angular/cli > pacote > sigstore > @sigstore/tuf > tuf-js >  │
+│               │ make-fetch-happen > minipass-fetch > minizlib > rimraf >     │
+│               │ glob > minimatch                                             │
+├───────────────┼──────────────────────────────────────────────────────────────┤
+│ More info     │ https://www.npmjs.com/advisories/1113544                     │
+└───────────────┴──────────────────────────────────────────────────────────────┘
+┌───────────────┬──────────────────────────────────────────────────────────────┐
+│ high          │ minimatch has ReDoS: matchOne() combinatorial backtracking   │
+│               │ via multiple non-adjacent GLOBSTAR segments                  │
+├───────────────┼──────────────────────────────────────────────────────────────┤
+│ Package       │ minimatch                                                    │
+├───────────────┼──────────────────────────────────────────────────────────────┤
+│ Patched in    │ >=9.0.7                                                      │
+├───────────────┼──────────────────────────────────────────────────────────────┤
+│ Dependency of │ @angular/cli                                                 │
+├───────────────┼──────────────────────────────────────────────────────────────┤
+│ Path          │ @angular/cli > pacote > sigstore > @sigstore/tuf > tuf-js >  │
+│               │ @tufjs/models > minimatch                                    │
+├───────────────┼──────────────────────────────────────────────────────────────┤
+│ More info     │ https://www.npmjs.com/advisories/1113544                     │
+└───────────────┴──────────────────────────────────────────────────────────────┘
+┌───────────────┬──────────────────────────────────────────────────────────────┐
+│ high          │ minimatch has ReDoS: matchOne() combinatorial backtracking   │
+│               │ via multiple non-adjacent GLOBSTAR segments                  │
+├───────────────┼──────────────────────────────────────────────────────────────┤
+│ Package       │ minimatch                                                    │
+├───────────────┼──────────────────────────────────────────────────────────────┤
+│ Patched in    │ >=10.2.3                                                     │
+├───────────────┼──────────────────────────────────────────────────────────────┤
+│ Dependency of │ @angular/cli                                                 │
+├───────────────┼──────────────────────────────────────────────────────────────┤
+│ Path          │ @angular/cli > pacote > sigstore > @sigstore/tuf > tuf-js >  │
+│               │ make-fetch-happen > cacache > glob > minimatch               │
+├───────────────┼──────────────────────────────────────────────────────────────┤
+│ More info     │ https://www.npmjs.com/advisories/1113545                     │
+└───────────────┴──────────────────────────────────────────────────────────────┘
+┌───────────────┬──────────────────────────────────────────────────────────────┐
+│ high          │ minimatch ReDoS: nested *() extglobs generate                │
+│               │ catastrophically backtracking regular expressions            │
+├───────────────┼──────────────────────────────────────────────────────────────┤
+│ Package       │ minimatch                                                    │
+├───────────────┼──────────────────────────────────────────────────────────────┤
+│ Patched in    │ >=9.0.7                                                      │
+├───────────────┼──────────────────────────────────────────────────────────────┤
+│ Dependency of │ @angular/cli                                                 │
+├───────────────┼──────────────────────────────────────────────────────────────┤
+│ Path          │ @angular/cli > pacote > sigstore > @sigstore/tuf > tuf-js >  │
+│               │ make-fetch-happen > minipass-fetch > minizlib > rimraf >     │
+│               │ glob > minimatch                                             │
+├───────────────┼──────────────────────────────────────────────────────────────┤
+│ More info     │ https://www.npmjs.com/advisories/1113552                     │
+└───────────────┴──────────────────────────────────────────────────────────────┘
+┌───────────────┬──────────────────────────────────────────────────────────────┐
+│ high          │ minimatch ReDoS: nested *() extglobs generate                │
+│               │ catastrophically backtracking regular expressions            │
+├───────────────┼──────────────────────────────────────────────────────────────┤
+│ Package       │ minimatch                                                    │
+├───────────────┼──────────────────────────────────────────────────────────────┤
+│ Patched in    │ >=9.0.7                                                      │
+├───────────────┼──────────────────────────────────────────────────────────────┤
+│ Dependency of │ @angular/cli                                                 │
+├───────────────┼──────────────────────────────────────────────────────────────┤
+│ Path          │ @angular/cli > pacote > sigstore > @sigstore/tuf > tuf-js >  │
+│               │ @tufjs/models > minimatch                                    │
+├───────────────┼──────────────────────────────────────────────────────────────┤
+│ More info     │ https://www.npmjs.com/advisories/1113552                     │
+└───────────────┴──────────────────────────────────────────────────────────────┘
+┌───────────────┬──────────────────────────────────────────────────────────────┐
+│ high          │ minimatch ReDoS: nested *() extglobs generate                │
+│               │ catastrophically backtracking regular expressions            │
+├───────────────┼──────────────────────────────────────────────────────────────┤
+│ Package       │ minimatch                                                    │
+├───────────────┼──────────────────────────────────────────────────────────────┤
+│ Patched in    │ >=10.2.3                                                     │
+├───────────────┼──────────────────────────────────────────────────────────────┤
+│ Dependency of │ @angular/cli                                                 │
+├───────────────┼──────────────────────────────────────────────────────────────┤
+│ Path          │ @angular/cli > pacote > sigstore > @sigstore/tuf > tuf-js >  │
+│               │ make-fetch-happen > cacache > glob > minimatch               │
+├───────────────┼──────────────────────────────────────────────────────────────┤
+│ More info     │ https://www.npmjs.com/advisories/1113553                     │
+└───────────────┴──────────────────────────────────────────────────────────────┘
+┌───────────────┬──────────────────────────────────────────────────────────────┐
+│ moderate      │ ip-address has XSS in Address6 HTML-emitting methods         │
+├───────────────┼──────────────────────────────────────────────────────────────┤
+│ Package       │ ip-address                                                   │
+├───────────────┼──────────────────────────────────────────────────────────────┤
+│ Patched in    │ >=10.1.1                                                     │
+├───────────────┼──────────────────────────────────────────────────────────────┤
+│ Dependency of │ @angular/cli                                                 │
+├───────────────┼──────────────────────────────────────────────────────────────┤
+│ Path          │ @angular/cli > pacote > sigstore > @sigstore/tuf > tuf-js >  │
+│               │ make-fetch-happen > @npmcli/agent > socks-proxy-agent >      │
+│               │ socks > ip-address                                           │
+├───────────────┼──────────────────────────────────────────────────────────────┤
+│ More info     │ https://www.npmjs.com/advisories/1118827                     │
+└───────────────┴──────────────────────────────────────────────────────────────┘
+┌───────────────┬──────────────────────────────────────────────────────────────┐
+│ high          │ node-tar Vulnerable to Arbitrary File Creation/Overwrite via │
+│               │ Hardlink Path Traversal                                      │
+├───────────────┼──────────────────────────────────────────────────────────────┤
+│ Package       │ tar                                                          │
+├───────────────┼──────────────────────────────────────────────────────────────┤
+│ Patched in    │ >=7.5.7                                                      │
+├───────────────┼──────────────────────────────────────────────────────────────┤
+│ Dependency of │ @angular/cli                                                 │
+├───────────────┼──────────────────────────────────────────────────────────────┤
+│ Path          │ @angular/cli > pacote > @npmcli/run-script > node-gyp > tar  │
+├───────────────┼──────────────────────────────────────────────────────────────┤
+│ More info     │ https://www.npmjs.com/advisories/1112659                     │
+└───────────────┴──────────────────────────────────────────────────────────────┘
+┌───────────────┬──────────────────────────────────────────────────────────────┐
+│ high          │ node-tar Vulnerable to Arbitrary File Creation/Overwrite via │
+│               │ Hardlink Path Traversal                                      │
+├───────────────┼──────────────────────────────────────────────────────────────┤
+│ Package       │ tar                                                          │
+├───────────────┼──────────────────────────────────────────────────────────────┤
+│ Patched in    │ >=7.5.7                                                      │
+├───────────────┼──────────────────────────────────────────────────────────────┤
+│ Dependency of │ @angular/cli                                                 │
+├───────────────┼──────────────────────────────────────────────────────────────┤
+│ Path          │ @angular/cli > pacote > tar                                  │
+├───────────────┼──────────────────────────────────────────────────────────────┤
+│ More info     │ https://www.npmjs.com/advisories/1112659                     │
+└───────────────┴──────────────────────────────────────────────────────────────┘
+┌───────────────┬──────────────────────────────────────────────────────────────┐
+│ high          │ node-tar is Vulnerable to Arbitrary File Overwrite and       │
+│               │ Symlink Poisoning via Insufficient Path Sanitization         │
+├───────────────┼──────────────────────────────────────────────────────────────┤
+│ Package       │ tar                                                          │
+├───────────────┼──────────────────────────────────────────────────────────────┤
+│ Patched in    │ >=7.5.3                                                      │
+├───────────────┼──────────────────────────────────────────────────────────────┤
+│ Dependency of │ @angular/cli                                                 │
+├───────────────┼──────────────────────────────────────────────────────────────┤
+│ Path          │ @angular/cli > pacote > @npmcli/run-script > node-gyp > tar  │
+├───────────────┼──────────────────────────────────────────────────────────────┤
+│ More info     │ https://www.npmjs.com/advisories/1113300                     │
+└───────────────┴──────────────────────────────────────────────────────────────┘
+┌───────────────┬──────────────────────────────────────────────────────────────┐
+│ high          │ node-tar is Vulnerable to Arbitrary File Overwrite and       │
+│               │ Symlink Poisoning via Insufficient Path Sanitization         │
+├───────────────┼──────────────────────────────────────────────────────────────┤
+│ Package       │ tar                                                          │
+├───────────────┼──────────────────────────────────────────────────────────────┤
+│ Patched in    │ >=7.5.3                                                      │
+├───────────────┼──────────────────────────────────────────────────────────────┤
+│ Dependency of │ @angular/cli                                                 │
+├───────────────┼──────────────────────────────────────────────────────────────┤
+│ Path          │ @angular/cli > pacote > tar                                  │
+├───────────────┼──────────────────────────────────────────────────────────────┤
+│ More info     │ https://www.npmjs.com/advisories/1113300                     │
+└───────────────┴──────────────────────────────────────────────────────────────┘
+┌───────────────┬──────────────────────────────────────────────────────────────┐
+│ high          │ Arbitrary File Read/Write via Hardlink Target Escape Through │
+│               │ Symlink Chain in node-tar Extraction                         │
+├───────────────┼──────────────────────────────────────────────────────────────┤
+│ Package       │ tar                                                          │
+├───────────────┼──────────────────────────────────────────────────────────────┤
+│ Patched in    │ >=7.5.8                                                      │
+├───────────────┼──────────────────────────────────────────────────────────────┤
+│ Dependency of │ @angular/cli                                                 │
+├───────────────┼──────────────────────────────────────────────────────────────┤
+│ Path          │ @angular/cli > pacote > @npmcli/run-script > node-gyp > tar  │
+├───────────────┼──────────────────────────────────────────────────────────────┤
+│ More info     │ https://www.npmjs.com/advisories/1113375                     │
+└───────────────┴──────────────────────────────────────────────────────────────┘
+┌───────────────┬──────────────────────────────────────────────────────────────┐
+│ high          │ Arbitrary File Read/Write via Hardlink Target Escape Through │
+│               │ Symlink Chain in node-tar Extraction                         │
+├───────────────┼──────────────────────────────────────────────────────────────┤
+│ Package       │ tar                                                          │
+├───────────────┼──────────────────────────────────────────────────────────────┤
+│ Patched in    │ >=7.5.8                                                      │
+├───────────────┼──────────────────────────────────────────────────────────────┤
+│ Dependency of │ @angular/cli                                                 │
+├───────────────┼──────────────────────────────────────────────────────────────┤
+│ Path          │ @angular/cli > pacote > tar                                  │
+├───────────────┼──────────────────────────────────────────────────────────────┤
+│ More info     │ https://www.npmjs.com/advisories/1113375                     │
+└───────────────┴──────────────────────────────────────────────────────────────┘
+┌───────────────┬──────────────────────────────────────────────────────────────┐
+│ high          │ tar has Hardlink Path Traversal via Drive-Relative Linkpath  │
+├───────────────┼──────────────────────────────────────────────────────────────┤
+│ Package       │ tar                                                          │
+├───────────────┼──────────────────────────────────────────────────────────────┤
+│ Patched in    │ >=7.5.10                                                     │
+├───────────────┼──────────────────────────────────────────────────────────────┤
+│ Dependency of │ @angular/cli                                                 │
+├───────────────┼──────────────────────────────────────────────────────────────┤
+│ Path          │ @angular/cli > pacote > @npmcli/run-script > node-gyp > tar  │
+├───────────────┼──────────────────────────────────────────────────────────────┤
+│ More info     │ https://www.npmjs.com/advisories/1114200                     │
+└───────────────┴──────────────────────────────────────────────────────────────┘
+┌───────────────┬──────────────────────────────────────────────────────────────┐
+│ high          │ tar has Hardlink Path Traversal via Drive-Relative Linkpath  │
+├───────────────┼──────────────────────────────────────────────────────────────┤
+│ Package       │ tar                                                          │
+├───────────────┼──────────────────────────────────────────────────────────────┤
+│ Patched in    │ >=7.5.10                                                     │
+├───────────────┼──────────────────────────────────────────────────────────────┤
+│ Dependency of │ @angular/cli                                                 │
+├───────────────┼──────────────────────────────────────────────────────────────┤
+│ Path          │ @angular/cli > pacote > tar                                  │
+├───────────────┼──────────────────────────────────────────────────────────────┤
+│ More info     │ https://www.npmjs.com/advisories/1114200                     │
+└───────────────┴──────────────────────────────────────────────────────────────┘
+┌───────────────┬──────────────────────────────────────────────────────────────┐
+│ high          │ node-tar Symlink Path Traversal via Drive-Relative Linkpath  │
+├───────────────┼──────────────────────────────────────────────────────────────┤
+│ Package       │ tar                                                          │
+├───────────────┼──────────────────────────────────────────────────────────────┤
+│ Patched in    │ >=7.5.11                                                     │
+├───────────────┼──────────────────────────────────────────────────────────────┤
+│ Dependency of │ @angular/cli                                                 │
+├───────────────┼──────────────────────────────────────────────────────────────┤
+│ Path          │ @angular/cli > pacote > @npmcli/run-script > node-gyp > tar  │
+├───────────────┼──────────────────────────────────────────────────────────────┤
+│ More info     │ https://www.npmjs.com/advisories/1114302                     │
+└───────────────┴──────────────────────────────────────────────────────────────┘
+┌───────────────┬──────────────────────────────────────────────────────────────┐
+│ high          │ node-tar Symlink Path Traversal via Drive-Relative Linkpath  │
+├───────────────┼──────────────────────────────────────────────────────────────┤
+│ Package       │ tar                                                          │
+├───────────────┼──────────────────────────────────────────────────────────────┤
+│ Patched in    │ >=7.5.11                                                     │
+├───────────────┼──────────────────────────────────────────────────────────────┤
+│ Dependency of │ @angular/cli                                                 │
+├───────────────┼──────────────────────────────────────────────────────────────┤
+│ Path          │ @angular/cli > pacote > tar                                  │
+├───────────────┼──────────────────────────────────────────────────────────────┤
+│ More info     │ https://www.npmjs.com/advisories/1114302                     │
+└───────────────┴──────────────────────────────────────────────────────────────┘
+┌───────────────┬──────────────────────────────────────────────────────────────┐
+│ high          │ Race Condition in node-tar Path Reservations via Unicode     │
+│               │ Ligature Collisions on macOS APFS                            │
+├───────────────┼──────────────────────────────────────────────────────────────┤
+│ Package       │ tar                                                          │
+├───────────────┼──────────────────────────────────────────────────────────────┤
+│ Patched in    │ >=7.5.4                                                      │
+├───────────────┼──────────────────────────────────────────────────────────────┤
+│ Dependency of │ @angular/cli                                                 │
+├───────────────┼──────────────────────────────────────────────────────────────┤
+│ Path          │ @angular/cli > pacote > @npmcli/run-script > node-gyp > tar  │
+├───────────────┼──────────────────────────────────────────────────────────────┤
+│ More info     │ https://www.npmjs.com/advisories/1114680                     │
+└───────────────┴──────────────────────────────────────────────────────────────┘
+┌───────────────┬──────────────────────────────────────────────────────────────┐
+│ high          │ Race Condition in node-tar Path Reservations via Unicode     │
+│               │ Ligature Collisions on macOS APFS                            │
+├───────────────┼──────────────────────────────────────────────────────────────┤
+│ Package       │ tar                                                          │
+├───────────────┼──────────────────────────────────────────────────────────────┤
+│ Patched in    │ >=7.5.4                                                      │
+├───────────────┼──────────────────────────────────────────────────────────────┤
+│ Dependency of │ @angular/cli                                                 │
+├───────────────┼──────────────────────────────────────────────────────────────┤
+│ Path          │ @angular/cli > pacote > tar                                  │
+├───────────────┼──────────────────────────────────────────────────────────────┤
+│ More info     │ https://www.npmjs.com/advisories/1114680                     │
+└───────────────┴──────────────────────────────────────────────────────────────┘
+┌───────────────┬──────────────────────────────────────────────────────────────┐
+│ moderate      │ node-tar applies PAX size override to intermediary GNU       │
+│               │ long-name/long-link headers, causing tar parser              │
+│               │ interpretation differential (file smuggling)                 │
+├───────────────┼──────────────────────────────────────────────────────────────┤
+│ Package       │ tar                                                          │
+├───────────────┼──────────────────────────────────────────────────────────────┤
+│ Patched in    │ >=7.5.16                                                     │
+├───────────────┼──────────────────────────────────────────────────────────────┤
+│ Dependency of │ @angular/cli                                                 │
+├───────────────┼──────────────────────────────────────────────────────────────┤
+│ Path          │ @angular/cli > pacote > @npmcli/run-script > node-gyp > tar  │
+├───────────────┼──────────────────────────────────────────────────────────────┤
+│ More info     │ https://www.npmjs.com/advisories/1120782                     │
+└───────────────┴──────────────────────────────────────────────────────────────┘
+┌───────────────┬──────────────────────────────────────────────────────────────┐
+│ moderate      │ node-tar applies PAX size override to intermediary GNU       │
+│               │ long-name/long-link headers, causing tar parser              │
+│               │ interpretation differential (file smuggling)                 │
+├───────────────┼──────────────────────────────────────────────────────────────┤
+│ Package       │ tar                                                          │
+├───────────────┼──────────────────────────────────────────────────────────────┤
+│ Patched in    │ >=7.5.16                                                     │
+├───────────────┼──────────────────────────────────────────────────────────────┤
+│ Dependency of │ @angular/cli                                                 │
+├───────────────┼──────────────────────────────────────────────────────────────┤
+│ Path          │ @angular/cli > pacote > tar                                  │
+├───────────────┼──────────────────────────────────────────────────────────────┤
+│ More info     │ https://www.npmjs.com/advisories/1120782                     │
+└───────────────┴──────────────────────────────────────────────────────────────┘
+┌───────────────┬──────────────────────────────────────────────────────────────┐
+│ high          │ @isaacs/brace-expansion has Uncontrolled Resource            │
+│               │ Consumption                                                  │
+├───────────────┼──────────────────────────────────────────────────────────────┤
+│ Package       │ @isaacs/brace-expansion                                      │
+├───────────────┼──────────────────────────────────────────────────────────────┤
+│ Patched in    │ >=5.0.1                                                      │
+├───────────────┼──────────────────────────────────────────────────────────────┤
+│ Dependency of │ @angular/cli                                                 │
+├───────────────┼──────────────────────────────────────────────────────────────┤
+│ Path          │ @angular/cli > pacote > @npmcli/package-json > glob >        │
+│               │ minimatch > @isaacs/brace-expansion                          │
+├───────────────┼──────────────────────────────────────────────────────────────┤
+│ More info     │ https://www.npmjs.com/advisories/1112954                     │
+└───────────────┴──────────────────────────────────────────────────────────────┘
+┌───────────────┬──────────────────────────────────────────────────────────────┐
+│ high          │ @isaacs/brace-expansion has Uncontrolled Resource            │
+│               │ Consumption                                                  │
+├───────────────┼──────────────────────────────────────────────────────────────┤
+│ Package       │ @isaacs/brace-expansion                                      │
+├───────────────┼──────────────────────────────────────────────────────────────┤
+│ Patched in    │ >=5.0.1                                                      │
+├───────────────┼──────────────────────────────────────────────────────────────┤
+│ Dependency of │ @angular/cli                                                 │
+├───────────────┼──────────────────────────────────────────────────────────────┤
+│ Path          │ @angular/cli > pacote > @npmcli/run-script >                 │
+│               │ @npmcli/package-json > glob > minimatch >                    │
+│               │ @isaacs/brace-expansion                                      │
+├───────────────┼──────────────────────────────────────────────────────────────┤
+│ More info     │ https://www.npmjs.com/advisories/1112954                     │
+└───────────────┴──────────────────────────────────────────────────────────────┘
+┌───────────────┬──────────────────────────────────────────────────────────────┐
+│ high          │ @isaacs/brace-expansion has Uncontrolled Resource            │
+│               │ Consumption                                                  │
+├───────────────┼──────────────────────────────────────────────────────────────┤
+│ Package       │ @isaacs/brace-expansion                                      │
+├───────────────┼──────────────────────────────────────────────────────────────┤
+│ Patched in    │ >=5.0.1                                                      │
+├───────────────┼──────────────────────────────────────────────────────────────┤
+│ Dependency of │ @angular/cli                                                 │
+├───────────────┼──────────────────────────────────────────────────────────────┤
+│ Path          │ @angular/cli > pacote > npm-registry-fetch >                 │
+│               │ make-fetch-happen > cacache > glob > minimatch >             │
+│               │ @isaacs/brace-expansion                                      │
+├───────────────┼──────────────────────────────────────────────────────────────┤
+│ More info     │ https://www.npmjs.com/advisories/1112954                     │
+└───────────────┴──────────────────────────────────────────────────────────────┘
+┌───────────────┬──────────────────────────────────────────────────────────────┐
+│ high          │ @isaacs/brace-expansion has Uncontrolled Resource            │
+│               │ Consumption                                                  │
+├───────────────┼──────────────────────────────────────────────────────────────┤
+│ Package       │ @isaacs/brace-expansion                                      │
+├───────────────┼──────────────────────────────────────────────────────────────┤
+│ Patched in    │ >=5.0.1                                                      │
+├───────────────┼──────────────────────────────────────────────────────────────┤
+│ Dependency of │ @angular/cli                                                 │
+├───────────────┼──────────────────────────────────────────────────────────────┤
+│ Path          │ @angular/cli > pacote > @npmcli/run-script > node-gyp >      │
+│               │ make-fetch-happen > cacache > glob > minimatch >             │
+│               │ @isaacs/brace-expansion                                      │
+├───────────────┼──────────────────────────────────────────────────────────────┤
+│ More info     │ https://www.npmjs.com/advisories/1112954                     │
+└───────────────┴──────────────────────────────────────────────────────────────┘
+┌───────────────┬──────────────────────────────────────────────────────────────┐
+│ high          │ @isaacs/brace-expansion has Uncontrolled Resource            │
+│               │ Consumption                                                  │
+├───────────────┼──────────────────────────────────────────────────────────────┤
+│ Package       │ @isaacs/brace-expansion                                      │
+├───────────────┼──────────────────────────────────────────────────────────────┤
+│ Patched in    │ >=5.0.1                                                      │
+├───────────────┼──────────────────────────────────────────────────────────────┤
+│ Dependency of │ @angular/cli                                                 │
+├───────────────┼──────────────────────────────────────────────────────────────┤
+│ Path          │ @angular/cli > pacote > sigstore > @sigstore/tuf > tuf-js >  │
+│               │ make-fetch-happen > cacache > glob > minimatch >             │
+│               │ @isaacs/brace-expansion                                      │
+├───────────────┼──────────────────────────────────────────────────────────────┤
+│ More info     │ https://www.npmjs.com/advisories/1112954                     │
+└───────────────┴──────────────────────────────────────────────────────────────┘
+┌───────────────┬──────────────────────────────────────────────────────────────┐
+│ low           │ qs's arrayLimit bypass in comma parsing allows denial of     │
+│               │ service                                                      │
+├───────────────┼──────────────────────────────────────────────────────────────┤
+│ Package       │ qs                                                           │
+├───────────────┼──────────────────────────────────────────────────────────────┤
+│ Patched in    │ >=6.14.2                                                     │
+├───────────────┼──────────────────────────────────────────────────────────────┤
+│ Dependency of │ @angular/cli                                                 │
+├───────────────┼──────────────────────────────────────────────────────────────┤
+│ Path          │ @angular/cli > @modelcontextprotocol/sdk > express >         │
+│               │ body-parser > qs                                             │
+├───────────────┼──────────────────────────────────────────────────────────────┤
+│ More info     │ https://www.npmjs.com/advisories/1113161                     │
+└───────────────┴──────────────────────────────────────────────────────────────┘
+┌───────────────┬──────────────────────────────────────────────────────────────┐
+│ low           │ qs's arrayLimit bypass in comma parsing allows denial of     │
+│               │ service                                                      │
+├───────────────┼──────────────────────────────────────────────────────────────┤
+│ Package       │ qs                                                           │
+├───────────────┼──────────────────────────────────────────────────────────────┤
+│ Patched in    │ >=6.14.2                                                     │
+├───────────────┼──────────────────────────────────────────────────────────────┤
+│ Dependency of │ @angular/cli                                                 │
+├───────────────┼──────────────────────────────────────────────────────────────┤
+│ Path          │ @angular/cli > @modelcontextprotocol/sdk > express > qs      │
+├───────────────┼──────────────────────────────────────────────────────────────┤
+│ More info     │ https://www.npmjs.com/advisories/1113161                     │
+└───────────────┴──────────────────────────────────────────────────────────────┘
+┌───────────────┬──────────────────────────────────────────────────────────────┐
+│ moderate      │ qs's arrayLimit bypass in its bracket notation allows DoS    │
+│               │ via memory exhaustion                                        │
+├───────────────┼──────────────────────────────────────────────────────────────┤
+│ Package       │ qs                                                           │
+├───────────────┼──────────────────────────────────────────────────────────────┤
+│ Patched in    │ >=6.14.1                                                     │
+├───────────────┼──────────────────────────────────────────────────────────────┤
+│ Dependency of │ @angular/cli                                                 │
+├───────────────┼──────────────────────────────────────────────────────────────┤
+│ Path          │ @angular/cli > @modelcontextprotocol/sdk > express > qs      │
+├───────────────┼──────────────────────────────────────────────────────────────┤
+│ More info     │ https://www.npmjs.com/advisories/1113719                     │
+└───────────────┴──────────────────────────────────────────────────────────────┘
+┌───────────────┬──────────────────────────────────────────────────────────────┐
+│ moderate      │ qs has a remotely triggerable DoS: qs.stringify crashes with │
+│               │ TypeError on null/undefined entries in comma-format arrays   │
+│               │ when encodeValuesOnly is set                                 │
+├───────────────┼──────────────────────────────────────────────────────────────┤
+│ Package       │ qs                                                           │
+├───────────────┼──────────────────────────────────────────────────────────────┤
+│ Patched in    │ >=6.15.2                                                     │
+├───────────────┼──────────────────────────────────────────────────────────────┤
+│ Dependency of │ @angular/cli                                                 │
+├───────────────┼──────────────────────────────────────────────────────────────┤
+│ Path          │ @angular/cli > @modelcontextprotocol/sdk > express >         │
+│               │ body-parser > qs                                             │
+├───────────────┼──────────────────────────────────────────────────────────────┤
+│ More info     │ https://www.npmjs.com/advisories/1119502                     │
+└───────────────┴──────────────────────────────────────────────────────────────┘
+┌───────────────┬──────────────────────────────────────────────────────────────┐
+│ moderate      │ qs has a remotely triggerable DoS: qs.stringify crashes with │
+│               │ TypeError on null/undefined entries in comma-format arrays   │
+│               │ when encodeValuesOnly is set                                 │
+├───────────────┼──────────────────────────────────────────────────────────────┤
+│ Package       │ qs                                                           │
+├───────────────┼──────────────────────────────────────────────────────────────┤
+│ Patched in    │ >=6.15.2                                                     │
+├───────────────┼──────────────────────────────────────────────────────────────┤
+│ Dependency of │ @angular/cli                                                 │
+├───────────────┼──────────────────────────────────────────────────────────────┤
+│ Path          │ @angular/cli > @modelcontextprotocol/sdk > express > qs      │
+├───────────────┼──────────────────────────────────────────────────────────────┤
+│ More info     │ https://www.npmjs.com/advisories/1119502                     │
+└───────────────┴──────────────────────────────────────────────────────────────┘
+┌───────────────┬──────────────────────────────────────────────────────────────┐
+│ low           │ Hono added timing comparison hardening in basicAuth and      │
+│               │ bearerAuth                                                   │
+├───────────────┼──────────────────────────────────────────────────────────────┤
+│ Package       │ hono                                                         │
+├───────────────┼──────────────────────────────────────────────────────────────┤
+│ Patched in    │ >=4.11.10                                                    │
+├───────────────┼──────────────────────────────────────────────────────────────┤
+│ Dependency of │ @angular/cli                                                 │
+├───────────────┼──────────────────────────────────────────────────────────────┤
+│ Path          │ @angular/cli > @modelcontextprotocol/sdk > hono              │
+├───────────────┼──────────────────────────────────────────────────────────────┤
+│ More info     │ https://www.npmjs.com/advisories/1113311                     │
+└───────────────┴──────────────────────────────────────────────────────────────┘
+┌───────────────┬──────────────────────────────────────────────────────────────┐
+│ moderate      │ Hono Vulnerable to Cookie Attribute Injection via            │
+│               │ Unsanitized domain and path in setCookie()                   │
+├───────────────┼──────────────────────────────────────────────────────────────┤
+│ Package       │ hono                                                         │
+├───────────────┼──────────────────────────────────────────────────────────────┤
+│ Patched in    │ >=4.12.4                                                     │
+├───────────────┼──────────────────────────────────────────────────────────────┤
+│ Dependency of │ @angular/cli                                                 │
+├───────────────┼──────────────────────────────────────────────────────────────┤
+│ Path          │ @angular/cli > @modelcontextprotocol/sdk > hono              │
+├───────────────┼──────────────────────────────────────────────────────────────┤
+│ More info     │ https://www.npmjs.com/advisories/1114004                     │
+└───────────────┴──────────────────────────────────────────────────────────────┘
+┌───────────────┬──────────────────────────────────────────────────────────────┐
+│ moderate      │ Hono Vulnerable to SSE Control Field Injection via CR/LF in  │
+│               │ writeSSE()                                                   │
+├───────────────┼──────────────────────────────────────────────────────────────┤
+│ Package       │ hono                                                         │
+├───────────────┼──────────────────────────────────────────────────────────────┤
+│ Patched in    │ >=4.12.4                                                     │
+├───────────────┼──────────────────────────────────────────────────────────────┤
+│ Dependency of │ @angular/cli                                                 │
+├───────────────┼──────────────────────────────────────────────────────────────┤
+│ Path          │ @angular/cli > @modelcontextprotocol/sdk > hono              │
+├───────────────┼──────────────────────────────────────────────────────────────┤
+│ More info     │ https://www.npmjs.com/advisories/1114005                     │
+└───────────────┴──────────────────────────────────────────────────────────────┘
+┌───────────────┬──────────────────────────────────────────────────────────────┐
+│ high          │ Hono vulnerable to arbitrary file access via serveStatic     │
+│               │ vulnerability                                                │
+├───────────────┼──────────────────────────────────────────────────────────────┤
+│ Package       │ hono                                                         │
+├───────────────┼──────────────────────────────────────────────────────────────┤
+│ Patched in    │ >=4.12.4                                                     │
+├───────────────┼──────────────────────────────────────────────────────────────┤
+│ Dependency of │ @angular/cli                                                 │
+├───────────────┼──────────────────────────────────────────────────────────────┤
+│ Path          │ @angular/cli > @modelcontextprotocol/sdk > hono              │
+├───────────────┼──────────────────────────────────────────────────────────────┤
+│ More info     │ https://www.npmjs.com/advisories/1114006                     │
+└───────────────┴──────────────────────────────────────────────────────────────┘
+┌───────────────┬──────────────────────────────────────────────────────────────┐
+│ moderate      │ Hono vulnerable to Prototype Pollution possible through      │
+│               │ __proto__ key allowed in parseBody({ dot: true })            │
+├───────────────┼──────────────────────────────────────────────────────────────┤
+│ Package       │ hono                                                         │
+├───────────────┼──────────────────────────────────────────────────────────────┤
+│ Patched in    │ >=4.12.7                                                     │
+├───────────────┼──────────────────────────────────────────────────────────────┤
+│ Dependency of │ @angular/cli                                                 │
+├───────────────┼──────────────────────────────────────────────────────────────┤
+│ Path          │ @angular/cli > @modelcontextprotocol/sdk > hono              │
+├───────────────┼──────────────────────────────────────────────────────────────┤
+│ More info     │ https://www.npmjs.com/advisories/1114341                     │
+└───────────────┴──────────────────────────────────────────────────────────────┘
+┌───────────────┬──────────────────────────────────────────────────────────────┐
+│ moderate      │ Hono missing validation of cookie name on write path in      │
+│               │ setCookie()                                                  │
+├───────────────┼──────────────────────────────────────────────────────────────┤
+│ Package       │ hono                                                         │
+├───────────────┼──────────────────────────────────────────────────────────────┤
+│ Patched in    │ >=4.12.12                                                    │
+├───────────────┼──────────────────────────────────────────────────────────────┤
+│ Dependency of │ @angular/cli                                                 │
+├───────────────┼──────────────────────────────────────────────────────────────┤
+│ Path          │ @angular/cli > @modelcontextprotocol/sdk > hono              │
+├───────────────┼──────────────────────────────────────────────────────────────┤
+│ More info     │ https://www.npmjs.com/advisories/1116244                     │
+└───────────────┴──────────────────────────────────────────────────────────────┘
+┌───────────────┬──────────────────────────────────────────────────────────────┐
+│ moderate      │ Hono: Non-breaking space prefix bypass in cookie name        │
+│               │ handling in getCookie()                                      │
+├───────────────┼──────────────────────────────────────────────────────────────┤
+│ Package       │ hono                                                         │
+├───────────────┼──────────────────────────────────────────────────────────────┤
+│ Patched in    │ >=4.12.12                                                    │
+├───────────────┼──────────────────────────────────────────────────────────────┤
+│ Dependency of │ @angular/cli                                                 │
+├───────────────┼──────────────────────────────────────────────────────────────┤
+│ Path          │ @angular/cli > @modelcontextprotocol/sdk > hono              │
+├───────────────┼──────────────────────────────────────────────────────────────┤
+│ More info     │ https://www.npmjs.com/advisories/1116277                     │
+└───────────────┴──────────────────────────────────────────────────────────────┘
+┌───────────────┬──────────────────────────────────────────────────────────────┐
+│ moderate      │ Hono: Path traversal in toSSG() allows writing files outside │
+│               │ the output directory                                         │
+├───────────────┼──────────────────────────────────────────────────────────────┤
+│ Package       │ hono                                                         │
+├───────────────┼──────────────────────────────────────────────────────────────┤
+│ Patched in    │ >=4.12.12                                                    │
+├───────────────┼──────────────────────────────────────────────────────────────┤
+│ Dependency of │ @angular/cli                                                 │
+├───────────────┼──────────────────────────────────────────────────────────────┤
+│ Path          │ @angular/cli > @modelcontextprotocol/sdk > hono              │
+├───────────────┼──────────────────────────────────────────────────────────────┤
+│ More info     │ https://www.npmjs.com/advisories/1116279                     │
+└───────────────┴──────────────────────────────────────────────────────────────┘
+┌───────────────┬──────────────────────────────────────────────────────────────┐
+│ moderate      │ Hono: Middleware bypass via repeated slashes in serveStatic  │
+├───────────────┼──────────────────────────────────────────────────────────────┤
+│ Package       │ hono                                                         │
+├───────────────┼──────────────────────────────────────────────────────────────┤
+│ Patched in    │ >=4.12.12                                                    │
+├───────────────┼──────────────────────────────────────────────────────────────┤
+│ Dependency of │ @angular/cli                                                 │
+├───────────────┼──────────────────────────────────────────────────────────────┤
+│ Path          │ @angular/cli > @modelcontextprotocol/sdk > hono              │
+├───────────────┼──────────────────────────────────────────────────────────────┤
+│ More info     │ https://www.npmjs.com/advisories/1116280                     │
+└───────────────┴──────────────────────────────────────────────────────────────┘
+┌───────────────┬──────────────────────────────────────────────────────────────┐
+│ moderate      │ Hono has incorrect IP matching in ipRestriction() for        │
+│               │ IPv4-mapped IPv6 addresses                                   │
+├───────────────┼──────────────────────────────────────────────────────────────┤
+│ Package       │ hono                                                         │
+├───────────────┼──────────────────────────────────────────────────────────────┤
+│ Patched in    │ >=4.12.12                                                    │
+├───────────────┼──────────────────────────────────────────────────────────────┤
+│ Dependency of │ @angular/cli                                                 │
+├───────────────┼──────────────────────────────────────────────────────────────┤
+│ Path          │ @angular/cli > @modelcontextprotocol/sdk > hono              │
+├───────────────┼──────────────────────────────────────────────────────────────┤
+│ More info     │ https://www.npmjs.com/advisories/1117087                     │
+└───────────────┴──────────────────────────────────────────────────────────────┘
+┌───────────────┬──────────────────────────────────────────────────────────────┐
+│ moderate      │ Hono has CSS Declaration Injection via Style Object Values   │
+│               │ in JSX SSR                                                   │
+├───────────────┼──────────────────────────────────────────────────────────────┤
+│ Package       │ hono                                                         │
+├───────────────┼──────────────────────────────────────────────────────────────┤
+│ Patched in    │ >=4.12.18                                                    │
+├───────────────┼──────────────────────────────────────────────────────────────┤
+│ Dependency of │ @angular/cli                                                 │
+├───────────────┼──────────────────────────────────────────────────────────────┤
+│ Path          │ @angular/cli > @modelcontextprotocol/sdk > hono              │
+├───────────────┼──────────────────────────────────────────────────────────────┤
+│ More info     │ https://www.npmjs.com/advisories/1117915                     │
+└───────────────┴──────────────────────────────────────────────────────────────┘
+┌───────────────┬──────────────────────────────────────────────────────────────┐
+│ low           │ Hono has improper validation of NumericDate claims (exp,     │
+│               │ nbf, iat) in JWT verify()                                    │
+├───────────────┼──────────────────────────────────────────────────────────────┤
+│ Package       │ hono                                                         │
+├───────────────┼──────────────────────────────────────────────────────────────┤
+│ Patched in    │ >=4.12.18                                                    │
+├───────────────┼──────────────────────────────────────────────────────────────┤
+│ Dependency of │ @angular/cli                                                 │
+├───────────────┼──────────────────────────────────────────────────────────────┤
+│ Path          │ @angular/cli > @modelcontextprotocol/sdk > hono              │
+├───────────────┼──────────────────────────────────────────────────────────────┤
+│ More info     │ https://www.npmjs.com/advisories/1118963                     │
+└───────────────┴──────────────────────────────────────────────────────────────┘
+┌───────────────┬──────────────────────────────────────────────────────────────┐
+│ moderate      │ Hono's Cache Middleware ignores Vary: Authorization / Vary:  │
+│               │ Cookie leading to cross-user cache leakage                   │
+├───────────────┼──────────────────────────────────────────────────────────────┤
+│ Package       │ hono                                                         │
+├───────────────┼──────────────────────────────────────────────────────────────┤
+│ Patched in    │ >=4.12.18                                                    │
+├───────────────┼──────────────────────────────────────────────────────────────┤
+│ Dependency of │ @angular/cli                                                 │
+├───────────────┼──────────────────────────────────────────────────────────────┤
+│ Path          │ @angular/cli > @modelcontextprotocol/sdk > hono              │
+├───────────────┼──────────────────────────────────────────────────────────────┤
+│ More info     │ https://www.npmjs.com/advisories/1118964                     │
+└───────────────┴──────────────────────────────────────────────────────────────┘
+┌───────────────┬──────────────────────────────────────────────────────────────┐
+│ moderate      │ Hono: bodyLimit() can be bypassed for chunked /              │
+│               │ unknown-length requests                                      │
+├───────────────┼──────────────────────────────────────────────────────────────┤
+│ Package       │ hono                                                         │
+├───────────────┼──────────────────────────────────────────────────────────────┤
+│ Patched in    │ >=4.12.16                                                    │
+├───────────────┼──────────────────────────────────────────────────────────────┤
+│ Dependency of │ @angular/cli                                                 │
+├───────────────┼──────────────────────────────────────────────────────────────┤
+│ Path          │ @angular/cli > @modelcontextprotocol/sdk > hono              │
+├───────────────┼──────────────────────────────────────────────────────────────┤
+│ More info     │ https://www.npmjs.com/advisories/1118982                     │
+└───────────────┴──────────────────────────────────────────────────────────────┘
+┌───────────────┬──────────────────────────────────────────────────────────────┐
+│ moderate      │ hono/jsx has Unvalidated JSX Tag Names that May Allow HTML   │
+│               │ Injection                                                    │
+├───────────────┼──────────────────────────────────────────────────────────────┤
+│ Package       │ hono                                                         │
+├───────────────┼──────────────────────────────────────────────────────────────┤
+│ Patched in    │ >=4.12.16                                                    │
+├───────────────┼──────────────────────────────────────────────────────────────┤
+│ Dependency of │ @angular/cli                                                 │
+├───────────────┼──────────────────────────────────────────────────────────────┤
+│ Path          │ @angular/cli > @modelcontextprotocol/sdk > hono              │
+├───────────────┼──────────────────────────────────────────────────────────────┤
+│ More info     │ https://www.npmjs.com/advisories/1118983                     │
+└───────────────┴──────────────────────────────────────────────────────────────┘
+┌───────────────┬──────────────────────────────────────────────────────────────┐
+│ moderate      │ Hono: IP Restriction bypasses static deny rules for          │
+│               │ non-canonical IPv6                                           │
+├───────────────┼──────────────────────────────────────────────────────────────┤
+│ Package       │ hono                                                         │
+├───────────────┼──────────────────────────────────────────────────────────────┤
+│ Patched in    │ >=4.12.21                                                    │
+├───────────────┼──────────────────────────────────────────────────────────────┤
+│ Dependency of │ @angular/cli                                                 │
+├───────────────┼──────────────────────────────────────────────────────────────┤
+│ Path          │ @angular/cli > @modelcontextprotocol/sdk > hono              │
+├───────────────┼──────────────────────────────────────────────────────────────┤
+│ More info     │ https://www.npmjs.com/advisories/1120082                     │
+└───────────────┴──────────────────────────────────────────────────────────────┘
+┌───────────────┬──────────────────────────────────────────────────────────────┐
+│ moderate      │ Hono: Cookie helper does not sanitize sameSite and priority, │
+│               │ allowing Set-Cookie injection                                │
+├───────────────┼──────────────────────────────────────────────────────────────┤
+│ Package       │ hono                                                         │
+├───────────────┼──────────────────────────────────────────────────────────────┤
+│ Patched in    │ >=4.12.21                                                    │
+├───────────────┼──────────────────────────────────────────────────────────────┤
+│ Dependency of │ @angular/cli                                                 │
+├───────────────┼──────────────────────────────────────────────────────────────┤
+│ Path          │ @angular/cli > @modelcontextprotocol/sdk > hono              │
+├───────────────┼──────────────────────────────────────────────────────────────┤
+│ More info     │ https://www.npmjs.com/advisories/1120083                     │
+└───────────────┴──────────────────────────────────────────────────────────────┘
+┌───────────────┬──────────────────────────────────────────────────────────────┐
+│ moderate      │ Hono: JWT middleware accepts any Authorization scheme, not   │
+│               │ only Bearer                                                  │
+├───────────────┼──────────────────────────────────────────────────────────────┤
+│ Package       │ hono                                                         │
+├───────────────┼──────────────────────────────────────────────────────────────┤
+│ Patched in    │ >=4.12.21                                                    │
+├───────────────┼──────────────────────────────────────────────────────────────┤
+│ Dependency of │ @angular/cli                                                 │
+├───────────────┼──────────────────────────────────────────────────────────────┤
+│ Path          │ @angular/cli > @modelcontextprotocol/sdk > hono              │
+├───────────────┼──────────────────────────────────────────────────────────────┤
+│ More info     │ https://www.npmjs.com/advisories/1120084                     │
+└───────────────┴──────────────────────────────────────────────────────────────┘
+┌───────────────┬──────────────────────────────────────────────────────────────┐
+│ moderate      │ Hono: app.mount() strips mount prefix using undecoded path,  │
+│               │ causing incorrect routing for percent-encoded paths          │
+├───────────────┼──────────────────────────────────────────────────────────────┤
+│ Package       │ hono                                                         │
+├───────────────┼──────────────────────────────────────────────────────────────┤
+│ Patched in    │ >=4.12.21                                                    │
+├───────────────┼──────────────────────────────────────────────────────────────┤
+│ Dependency of │ @angular/cli                                                 │
+├───────────────┼──────────────────────────────────────────────────────────────┤
+│ Path          │ @angular/cli > @modelcontextprotocol/sdk > hono              │
+├───────────────┼──────────────────────────────────────────────────────────────┤
+│ More info     │ https://www.npmjs.com/advisories/1120085                     │
+└───────────────┴──────────────────────────────────────────────────────────────┘
+┌───────────────┬──────────────────────────────────────────────────────────────┐
+│ moderate      │ hono: Path traversal in `serve-static` on Windows via        │
+│               │ encoded backslash (`%5C`)                                    │
+├───────────────┼──────────────────────────────────────────────────────────────┤
+│ Package       │ hono                                                         │
+├───────────────┼──────────────────────────────────────────────────────────────┤
+│ Patched in    │ >=4.12.25                                                    │
+├───────────────┼──────────────────────────────────────────────────────────────┤
+│ Dependency of │ @angular/cli                                                 │
+├───────────────┼──────────────────────────────────────────────────────────────┤
+│ Path          │ @angular/cli > @modelcontextprotocol/sdk > hono              │
+├───────────────┼──────────────────────────────────────────────────────────────┤
+│ More info     │ https://www.npmjs.com/advisories/1120910                     │
+└───────────────┴──────────────────────────────────────────────────────────────┘
+┌───────────────┬──────────────────────────────────────────────────────────────┐
+│ moderate      │ hono: AWS Lambda adapter merges multiple `Set-Cookie`        │
+│               │ headers into one value, dropping cookies on ALB              │
+│               │ single-header and Lattice                                    │
+├───────────────┼──────────────────────────────────────────────────────────────┤
+│ Package       │ hono                                                         │
+├───────────────┼──────────────────────────────────────────────────────────────┤
+│ Patched in    │ >=4.12.25                                                    │
+├───────────────┼──────────────────────────────────────────────────────────────┤
+│ Dependency of │ @angular/cli                                                 │
+├───────────────┼──────────────────────────────────────────────────────────────┤
+│ Path          │ @angular/cli > @modelcontextprotocol/sdk > hono              │
+├───────────────┼──────────────────────────────────────────────────────────────┤
+│ More info     │ https://www.npmjs.com/advisories/1120911                     │
+└───────────────┴──────────────────────────────────────────────────────────────┘
+┌───────────────┬──────────────────────────────────────────────────────────────┐
+│ high          │ hono: CORS Middleware reflects any Origin with credentials   │
+│               │ when `origin` defaults to the wildcard                       │
+├───────────────┼──────────────────────────────────────────────────────────────┤
+│ Package       │ hono                                                         │
+├───────────────┼──────────────────────────────────────────────────────────────┤
+│ Patched in    │ >=4.12.25                                                    │
+├───────────────┼──────────────────────────────────────────────────────────────┤
+│ Dependency of │ @angular/cli                                                 │
+├───────────────┼──────────────────────────────────────────────────────────────┤
+│ Path          │ @angular/cli > @modelcontextprotocol/sdk > hono              │
+├───────────────┼──────────────────────────────────────────────────────────────┤
+│ More info     │ https://www.npmjs.com/advisories/1120913                     │
+└───────────────┴──────────────────────────────────────────────────────────────┘
+┌───────────────┬──────────────────────────────────────────────────────────────┐
+│ moderate      │ hono: Body Limit Middleware can be bypassed on AWS Lambda by │
+│               │ understating `Content-Length`                                │
+├───────────────┼──────────────────────────────────────────────────────────────┤
+│ Package       │ hono                                                         │
+├───────────────┼──────────────────────────────────────────────────────────────┤
+│ Patched in    │ >=4.12.25                                                    │
+├───────────────┼──────────────────────────────────────────────────────────────┤
+│ Dependency of │ @angular/cli                                                 │
+├───────────────┼──────────────────────────────────────────────────────────────┤
+│ Path          │ @angular/cli > @modelcontextprotocol/sdk > hono              │
+├───────────────┼──────────────────────────────────────────────────────────────┤
+│ More info     │ https://www.npmjs.com/advisories/1120921                     │
+└───────────────┴──────────────────────────────────────────────────────────────┘
+┌───────────────┬──────────────────────────────────────────────────────────────┐
+│ moderate      │ hono: Lambda@Edge adapter keeps only the last value of a     │
+│               │ repeated request header, dropping the rest                   │
+├───────────────┼──────────────────────────────────────────────────────────────┤
+│ Package       │ hono                                                         │
+├───────────────┼──────────────────────────────────────────────────────────────┤
+│ Patched in    │ >=4.12.25                                                    │
+├───────────────┼──────────────────────────────────────────────────────────────┤
+│ Dependency of │ @angular/cli                                                 │
+├───────────────┼──────────────────────────────────────────────────────────────┤
+│ Path          │ @angular/cli > @modelcontextprotocol/sdk > hono              │
+├───────────────┼──────────────────────────────────────────────────────────────┤
+│ More info     │ https://www.npmjs.com/advisories/1120922                     │
+└───────────────┴──────────────────────────────────────────────────────────────┘
+┌───────────────┬──────────────────────────────────────────────────────────────┐
+│ moderate      │ hono Improperly Handles JSX Attribute Names Allows HTML      │
+│               │ Injection in hono/jsx SSR                                    │
+├───────────────┼──────────────────────────────────────────────────────────────┤
+│ Package       │ hono                                                         │
+├───────────────┼──────────────────────────────────────────────────────────────┤
+│ Patched in    │ >=4.12.14                                                    │
+├───────────────┼──────────────────────────────────────────────────────────────┤
+│ Dependency of │ @angular/cli                                                 │
+├───────────────┼──────────────────────────────────────────────────────────────┤
+│ Path          │ @angular/cli > @modelcontextprotocol/sdk > hono              │
+├───────────────┼──────────────────────────────────────────────────────────────┤
+│ More info     │ https://www.npmjs.com/advisories/1121418                     │
+└───────────────┴──────────────────────────────────────────────────────────────┘
+┌───────────────┬──────────────────────────────────────────────────────────────┐
+│ high          │ minimatch has a ReDoS via repeated wildcards with            │
+│               │ non-matching literal in pattern                              │
+├───────────────┼──────────────────────────────────────────────────────────────┤
+│ Package       │ minimatch                                                    │
+├───────────────┼──────────────────────────────────────────────────────────────┤
+│ Patched in    │ >=10.2.1                                                     │
+├───────────────┼──────────────────────────────────────────────────────────────┤
+│ Dependency of │ @angular/cli                                                 │
+├───────────────┼──────────────────────────────────────────────────────────────┤
+│ Path          │ @angular/cli > pacote > @npmcli/package-json > glob >        │
+│               │ minimatch                                                    │
+├───────────────┼──────────────────────────────────────────────────────────────┤
+│ More info     │ https://www.npmjs.com/advisories/1113466                     │
+└───────────────┴──────────────────────────────────────────────────────────────┘
+┌───────────────┬──────────────────────────────────────────────────────────────┐
+│ high          │ minimatch has a ReDoS via repeated wildcards with            │
+│               │ non-matching literal in pattern                              │
+├───────────────┼──────────────────────────────────────────────────────────────┤
+│ Package       │ minimatch                                                    │
+├───────────────┼──────────────────────────────────────────────────────────────┤
+│ Patched in    │ >=10.2.1                                                     │
+├───────────────┼──────────────────────────────────────────────────────────────┤
+│ Dependency of │ @angular/cli                                                 │
+├───────────────┼──────────────────────────────────────────────────────────────┤
+│ Path          │ @angular/cli > pacote > @npmcli/run-script >                 │
+│               │ @npmcli/package-json > glob > minimatch                      │
+├───────────────┼──────────────────────────────────────────────────────────────┤
+│ More info     │ https://www.npmjs.com/advisories/1113466                     │
+└───────────────┴──────────────────────────────────────────────────────────────┘
+┌───────────────┬──────────────────────────────────────────────────────────────┐
+│ high          │ minimatch has ReDoS: matchOne() combinatorial backtracking   │
+│               │ via multiple non-adjacent GLOBSTAR segments                  │
+├───────────────┼──────────────────────────────────────────────────────────────┤
+│ Package       │ minimatch                                                    │
+├───────────────┼──────────────────────────────────────────────────────────────┤
+│ Patched in    │ >=10.2.3                                                     │
+├───────────────┼──────────────────────────────────────────────────────────────┤
+│ Dependency of │ @angular/cli                                                 │
+├───────────────┼──────────────────────────────────────────────────────────────┤
+│ Path          │ @angular/cli > pacote > @npmcli/package-json > glob >        │
+│               │ minimatch                                                    │
+├───────────────┼──────────────────────────────────────────────────────────────┤
+│ More info     │ https://www.npmjs.com/advisories/1113545                     │
+└───────────────┴──────────────────────────────────────────────────────────────┘
+┌───────────────┬──────────────────────────────────────────────────────────────┐
+│ high          │ minimatch has ReDoS: matchOne() combinatorial backtracking   │
+│               │ via multiple non-adjacent GLOBSTAR segments                  │
+├───────────────┼──────────────────────────────────────────────────────────────┤
+│ Package       │ minimatch                                                    │
+├───────────────┼──────────────────────────────────────────────────────────────┤
+│ Patched in    │ >=10.2.3                                                     │
+├───────────────┼──────────────────────────────────────────────────────────────┤
+│ Dependency of │ @angular/cli                                                 │
+├───────────────┼──────────────────────────────────────────────────────────────┤
+│ Path          │ @angular/cli > pacote > @npmcli/run-script >                 │
+│               │ @npmcli/package-json > glob > minimatch                      │
+├───────────────┼──────────────────────────────────────────────────────────────┤
+│ More info     │ https://www.npmjs.com/advisories/1113545                     │
+└───────────────┴──────────────────────────────────────────────────────────────┘
+┌───────────────┬──────────────────────────────────────────────────────────────┐
+│ high          │ minimatch ReDoS: nested *() extglobs generate                │
+│               │ catastrophically backtracking regular expressions            │
+├───────────────┼──────────────────────────────────────────────────────────────┤
+│ Package       │ minimatch                                                    │
+├───────────────┼──────────────────────────────────────────────────────────────┤
+│ Patched in    │ >=10.2.3                                                     │
+├───────────────┼──────────────────────────────────────────────────────────────┤
+│ Dependency of │ @angular/cli                                                 │
+├───────────────┼──────────────────────────────────────────────────────────────┤
+│ Path          │ @angular/cli > pacote > @npmcli/package-json > glob >        │
+│               │ minimatch                                                    │
+├───────────────┼──────────────────────────────────────────────────────────────┤
+│ More info     │ https://www.npmjs.com/advisories/1113553                     │
+└───────────────┴──────────────────────────────────────────────────────────────┘
+┌───────────────┬──────────────────────────────────────────────────────────────┐
+│ high          │ minimatch ReDoS: nested *() extglobs generate                │
+│               │ catastrophically backtracking regular expressions            │
+├───────────────┼──────────────────────────────────────────────────────────────┤
+│ Package       │ minimatch                                                    │
+├───────────────┼──────────────────────────────────────────────────────────────┤
+│ Patched in    │ >=10.2.3                                                     │
+├───────────────┼──────────────────────────────────────────────────────────────┤
+│ Dependency of │ @angular/cli                                                 │
+├───────────────┼──────────────────────────────────────────────────────────────┤
+│ Path          │ @angular/cli > pacote > @npmcli/run-script >                 │
+│               │ @npmcli/package-json > glob > minimatch                      │
+├───────────────┼──────────────────────────────────────────────────────────────┤
+│ More info     │ https://www.npmjs.com/advisories/1113553                     │
+└───────────────┴──────────────────────────────────────────────────────────────┘
+┌───────────────┬──────────────────────────────────────────────────────────────┐
+│ high          │ Rollup 4 has Arbitrary File Write via Path Traversal         │
+├───────────────┼──────────────────────────────────────────────────────────────┤
+│ Package       │ rollup                                                       │
+├───────────────┼──────────────────────────────────────────────────────────────┤
+│ Patched in    │ >=4.59.0                                                     │
+├───────────────┼──────────────────────────────────────────────────────────────┤
+│ Dependency of │ @angular/build                                               │
+├───────────────┼──────────────────────────────────────────────────────────────┤
+│ Path          │ @angular/build > vite > rollup                               │
+├───────────────┼──────────────────────────────────────────────────────────────┤
+│ More info     │ https://www.npmjs.com/advisories/1113515                     │
+└───────────────┴──────────────────────────────────────────────────────────────┘
+┌───────────────┬──────────────────────────────────────────────────────────────┐
+│ moderate      │ ajv has ReDoS when using `$data` option                      │
+├───────────────┼──────────────────────────────────────────────────────────────┤
+│ Package       │ ajv                                                          │
+├───────────────┼──────────────────────────────────────────────────────────────┤
+│ Patched in    │ >=8.18.0                                                     │
+├───────────────┼──────────────────────────────────────────────────────────────┤
+│ Dependency of │ @angular/cli                                                 │
+├───────────────┼──────────────────────────────────────────────────────────────┤
+│ Path          │ @angular/cli > @angular-devkit/core > ajv-formats > ajv      │
+├───────────────┼──────────────────────────────────────────────────────────────┤
+│ More info     │ https://www.npmjs.com/advisories/1113715                     │
+└───────────────┴──────────────────────────────────────────────────────────────┘
+┌───────────────┬──────────────────────────────────────────────────────────────┐
+│ moderate      │ ajv has ReDoS when using `$data` option                      │
+├───────────────┼──────────────────────────────────────────────────────────────┤
+│ Package       │ ajv                                                          │
+├───────────────┼──────────────────────────────────────────────────────────────┤
+│ Patched in    │ >=8.18.0                                                     │
+├───────────────┼──────────────────────────────────────────────────────────────┤
+│ Dependency of │ @angular/build                                               │
+├───────────────┼──────────────────────────────────────────────────────────────┤
+│ Path          │ @angular/build > @angular-devkit/architect >                 │
+│               │ @angular-devkit/core > ajv-formats > ajv                     │
+├───────────────┼──────────────────────────────────────────────────────────────┤
+│ More info     │ https://www.npmjs.com/advisories/1113715                     │
+└───────────────┴──────────────────────────────────────────────────────────────┘
+┌───────────────┬──────────────────────────────────────────────────────────────┐
+│ moderate      │ ajv has ReDoS when using `$data` option                      │
+├───────────────┼──────────────────────────────────────────────────────────────┤
+│ Package       │ ajv                                                          │
+├───────────────┼──────────────────────────────────────────────────────────────┤
+│ Patched in    │ >=8.18.0                                                     │
+├───────────────┼──────────────────────────────────────────────────────────────┤
+│ Dependency of │ @angular/cli                                                 │
+├───────────────┼──────────────────────────────────────────────────────────────┤
+│ Path          │ @angular/cli > @schematics/angular >                         │
+│               │ @angular-devkit/schematics > @angular-devkit/core >          │
+│               │ ajv-formats > ajv                                            │
+├───────────────┼──────────────────────────────────────────────────────────────┤
+│ More info     │ https://www.npmjs.com/advisories/1113715                     │
+└───────────────┴──────────────────────────────────────────────────────────────┘
+┌───────────────┬──────────────────────────────────────────────────────────────┐
+│ moderate      │ ajv has ReDoS when using `$data` option                      │
+├───────────────┼──────────────────────────────────────────────────────────────┤
+│ Package       │ ajv                                                          │
+├───────────────┼──────────────────────────────────────────────────────────────┤
+│ Patched in    │ >=8.18.0                                                     │
+├───────────────┼──────────────────────────────────────────────────────────────┤
+│ Dependency of │ @angular/cli                                                 │
+├───────────────┼──────────────────────────────────────────────────────────────┤
+│ Path          │ @angular/cli > @modelcontextprotocol/sdk > ajv               │
+├───────────────┼──────────────────────────────────────────────────────────────┤
+│ More info     │ https://www.npmjs.com/advisories/1113715                     │
+└───────────────┴──────────────────────────────────────────────────────────────┘
+┌───────────────┬──────────────────────────────────────────────────────────────┐
+│ high          │ @hono/node-server has authorization bypass for protected     │
+│               │ static paths via encoded slashes in Serve Static Middleware  │
+├───────────────┼──────────────────────────────────────────────────────────────┤
+│ Package       │ @hono/node-server                                            │
+├───────────────┼──────────────────────────────────────────────────────────────┤
+│ Patched in    │ >=1.19.10                                                    │
+├───────────────┼──────────────────────────────────────────────────────────────┤
+│ Dependency of │ @angular/cli                                                 │
+├───────────────┼──────────────────────────────────────────────────────────────┤
+│ Path          │ @angular/cli > @modelcontextprotocol/sdk > @hono/node-server │
+├───────────────┼──────────────────────────────────────────────────────────────┤
+│ More info     │ https://www.npmjs.com/advisories/1114170                     │
+└───────────────┴──────────────────────────────────────────────────────────────┘
+┌───────────────┬──────────────────────────────────────────────────────────────┐
+│ moderate      │ @hono/node-server: Middleware bypass via repeated slashes in │
+│               │ serveStatic                                                  │
+├───────────────┼──────────────────────────────────────────────────────────────┤
+│ Package       │ @hono/node-server                                            │
+├───────────────┼──────────────────────────────────────────────────────────────┤
+│ Patched in    │ >=1.19.13                                                    │
+├───────────────┼──────────────────────────────────────────────────────────────┤
+│ Dependency of │ @angular/cli                                                 │
+├───────────────┼──────────────────────────────────────────────────────────────┤
+│ Path          │ @angular/cli > @modelcontextprotocol/sdk > @hono/node-server │
+├───────────────┼──────────────────────────────────────────────────────────────┤
+│ More info     │ https://www.npmjs.com/advisories/1116281                     │
+└───────────────┴──────────────────────────────────────────────────────────────┘
+┌───────────────┬──────────────────────────────────────────────────────────────┐
+│ high          │ express-rate-limit: IPv4-mapped IPv6 addresses bypass        │
+│               │ per-client rate limiting on servers with dual-stack network  │
+├───────────────┼──────────────────────────────────────────────────────────────┤
+│ Package       │ express-rate-limit                                           │
+├───────────────┼──────────────────────────────────────────────────────────────┤
+│ Patched in    │ >=8.2.2                                                      │
+├───────────────┼──────────────────────────────────────────────────────────────┤
+│ Dependency of │ @angular/cli                                                 │
+├───────────────┼──────────────────────────────────────────────────────────────┤
+│ Path          │ @angular/cli > @modelcontextprotocol/sdk >                   │
+│               │ express-rate-limit                                           │
+├───────────────┼──────────────────────────────────────────────────────────────┤
+│ More info     │ https://www.npmjs.com/advisories/1114194                     │
+└───────────────┴──────────────────────────────────────────────────────────────┘
+┌───────────────┬──────────────────────────────────────────────────────────────┐
+│ moderate      │ ip-address has XSS in Address6 HTML-emitting methods         │
+├───────────────┼──────────────────────────────────────────────────────────────┤
+│ Package       │ ip-address                                                   │
+├───────────────┼──────────────────────────────────────────────────────────────┤
+│ Patched in    │ >=10.1.1                                                     │
+├───────────────┼──────────────────────────────────────────────────────────────┤
+│ Dependency of │ @angular/cli                                                 │
+├───────────────┼──────────────────────────────────────────────────────────────┤
+│ Path          │ @angular/cli > @modelcontextprotocol/sdk >                   │
+│               │ express-rate-limit > ip-address                              │
+├───────────────┼──────────────────────────────────────────────────────────────┤
+│ More info     │ https://www.npmjs.com/advisories/1118827                     │
+└───────────────┴──────────────────────────────────────────────────────────────┘
+┌───────────────┬──────────────────────────────────────────────────────────────┐
+│ moderate      │ Picomatch: Method Injection in POSIX Character Classes       │
+│               │ causes incorrect Glob Matching                               │
+├───────────────┼──────────────────────────────────────────────────────────────┤
+│ Package       │ picomatch                                                    │
+├───────────────┼──────────────────────────────────────────────────────────────┤
+│ Patched in    │ >=2.3.2                                                      │
+├───────────────┼──────────────────────────────────────────────────────────────┤
+│ Dependency of │ @angular/build                                               │
+├───────────────┼──────────────────────────────────────────────────────────────┤
+│ Path          │ @angular/build > sass > @parcel/watcher > micromatch >       │
+│               │ picomatch                                                    │
+├───────────────┼──────────────────────────────────────────────────────────────┤
+│ More info     │ https://www.npmjs.com/advisories/1115549                     │
+└───────────────┴──────────────────────────────────────────────────────────────┘
+┌───────────────┬──────────────────────────────────────────────────────────────┐
+│ high          │ Picomatch has a ReDoS vulnerability via extglob quantifiers  │
+├───────────────┼──────────────────────────────────────────────────────────────┤
+│ Package       │ picomatch                                                    │
+├───────────────┼──────────────────────────────────────────────────────────────┤
+│ Patched in    │ >=2.3.2                                                      │
+├───────────────┼──────────────────────────────────────────────────────────────┤
+│ Dependency of │ @angular/build                                               │
+├───────────────┼──────────────────────────────────────────────────────────────┤
+│ Path          │ @angular/build > sass > @parcel/watcher > micromatch >       │
+│               │ picomatch                                                    │
+├───────────────┼──────────────────────────────────────────────────────────────┤
+│ More info     │ https://www.npmjs.com/advisories/1115552                     │
+└───────────────┴──────────────────────────────────────────────────────────────┘
+┌───────────────┬──────────────────────────────────────────────────────────────┐
+│ moderate      │ Picomatch: Method Injection in POSIX Character Classes       │
+│               │ causes incorrect Glob Matching                               │
+├───────────────┼──────────────────────────────────────────────────────────────┤
+│ Package       │ picomatch                                                    │
+├───────────────┼──────────────────────────────────────────────────────────────┤
+│ Patched in    │ >=4.0.4                                                      │
+├───────────────┼──────────────────────────────────────────────────────────────┤
+│ Dependency of │ @angular/build                                               │
+├───────────────┼──────────────────────────────────────────────────────────────┤
+│ Path          │ @angular/build > vite > picomatch                            │
+├───────────────┼──────────────────────────────────────────────────────────────┤
+│ More info     │ https://www.npmjs.com/advisories/1115551                     │
+└───────────────┴──────────────────────────────────────────────────────────────┘
+┌───────────────┬──────────────────────────────────────────────────────────────┐
+│ moderate      │ Picomatch: Method Injection in POSIX Character Classes       │
+│               │ causes incorrect Glob Matching                               │
+├───────────────┼──────────────────────────────────────────────────────────────┤
+│ Package       │ picomatch                                                    │
+├───────────────┼──────────────────────────────────────────────────────────────┤
+│ Patched in    │ >=4.0.4                                                      │
+├───────────────┼──────────────────────────────────────────────────────────────┤
+│ Dependency of │ vitest                                                       │
+├───────────────┼──────────────────────────────────────────────────────────────┤
+│ Path          │ vitest > tinyglobby > picomatch                              │
+├───────────────┼──────────────────────────────────────────────────────────────┤
+│ More info     │ https://www.npmjs.com/advisories/1115551                     │
+└───────────────┴──────────────────────────────────────────────────────────────┘
+┌───────────────┬──────────────────────────────────────────────────────────────┐
+│ moderate      │ Picomatch: Method Injection in POSIX Character Classes       │
+│               │ causes incorrect Glob Matching                               │
+├───────────────┼──────────────────────────────────────────────────────────────┤
+│ Package       │ picomatch                                                    │
+├───────────────┼──────────────────────────────────────────────────────────────┤
+│ Patched in    │ >=4.0.4                                                      │
+├───────────────┼──────────────────────────────────────────────────────────────┤
+│ Dependency of │ @angular/build                                               │
+├───────────────┼──────────────────────────────────────────────────────────────┤
+│ Path          │ @angular/build > vite > tinyglobby > picomatch               │
+├───────────────┼──────────────────────────────────────────────────────────────┤
+│ More info     │ https://www.npmjs.com/advisories/1115551                     │
+└───────────────┴──────────────────────────────────────────────────────────────┘
+┌───────────────┬──────────────────────────────────────────────────────────────┐
+│ moderate      │ Picomatch: Method Injection in POSIX Character Classes       │
+│               │ causes incorrect Glob Matching                               │
+├───────────────┼──────────────────────────────────────────────────────────────┤
+│ Package       │ picomatch                                                    │
+├───────────────┼──────────────────────────────────────────────────────────────┤
+│ Patched in    │ >=4.0.4                                                      │
+├───────────────┼──────────────────────────────────────────────────────────────┤
+│ Dependency of │ @angular/cli                                                 │
+├───────────────┼──────────────────────────────────────────────────────────────┤
+│ Path          │ @angular/cli > pacote > @npmcli/run-script > node-gyp >      │
+│               │ tinyglobby > picomatch                                       │
+├───────────────┼──────────────────────────────────────────────────────────────┤
+│ More info     │ https://www.npmjs.com/advisories/1115551                     │
+└───────────────┴──────────────────────────────────────────────────────────────┘
+┌───────────────┬──────────────────────────────────────────────────────────────┐
+│ moderate      │ Picomatch: Method Injection in POSIX Character Classes       │
+│               │ causes incorrect Glob Matching                               │
+├───────────────┼──────────────────────────────────────────────────────────────┤
+│ Package       │ picomatch                                                    │
+├───────────────┼──────────────────────────────────────────────────────────────┤
+│ Patched in    │ >=4.0.4                                                      │
+├───────────────┼──────────────────────────────────────────────────────────────┤
+│ Dependency of │ vitest                                                       │
+├───────────────┼──────────────────────────────────────────────────────────────┤
+│ Path          │ vitest > picomatch                                           │
+├───────────────┼──────────────────────────────────────────────────────────────┤
+│ More info     │ https://www.npmjs.com/advisories/1115551                     │
+└───────────────┴──────────────────────────────────────────────────────────────┘
+┌───────────────┬──────────────────────────────────────────────────────────────┐
+│ high          │ Picomatch has a ReDoS vulnerability via extglob quantifiers  │
+├───────────────┼──────────────────────────────────────────────────────────────┤
+│ Package       │ picomatch                                                    │
+├───────────────┼──────────────────────────────────────────────────────────────┤
+│ Patched in    │ >=4.0.4                                                      │
+├───────────────┼──────────────────────────────────────────────────────────────┤
+│ Dependency of │ @angular/build                                               │
+├───────────────┼──────────────────────────────────────────────────────────────┤
+│ Path          │ @angular/build > vite > picomatch                            │
+├───────────────┼──────────────────────────────────────────────────────────────┤
+│ More info     │ https://www.npmjs.com/advisories/1115554                     │
+└───────────────┴──────────────────────────────────────────────────────────────┘
+┌───────────────┬──────────────────────────────────────────────────────────────┐
+│ high          │ Picomatch has a ReDoS vulnerability via extglob quantifiers  │
+├───────────────┼──────────────────────────────────────────────────────────────┤
+│ Package       │ picomatch                                                    │
+├───────────────┼──────────────────────────────────────────────────────────────┤
+│ Patched in    │ >=4.0.4                                                      │
+├───────────────┼──────────────────────────────────────────────────────────────┤
+│ Dependency of │ vitest                                                       │
+├───────────────┼──────────────────────────────────────────────────────────────┤
+│ Path          │ vitest > tinyglobby > picomatch                              │
+├───────────────┼──────────────────────────────────────────────────────────────┤
+│ More info     │ https://www.npmjs.com/advisories/1115554                     │
+└───────────────┴──────────────────────────────────────────────────────────────┘
+┌───────────────┬──────────────────────────────────────────────────────────────┐
+│ high          │ Picomatch has a ReDoS vulnerability via extglob quantifiers  │
+├───────────────┼──────────────────────────────────────────────────────────────┤
+│ Package       │ picomatch                                                    │
+├───────────────┼──────────────────────────────────────────────────────────────┤
+│ Patched in    │ >=4.0.4                                                      │
+├───────────────┼──────────────────────────────────────────────────────────────┤
+│ Dependency of │ @angular/build                                               │
+├───────────────┼──────────────────────────────────────────────────────────────┤
+│ Path          │ @angular/build > vite > tinyglobby > picomatch               │
+├───────────────┼──────────────────────────────────────────────────────────────┤
+│ More info     │ https://www.npmjs.com/advisories/1115554                     │
+└───────────────┴──────────────────────────────────────────────────────────────┘
+┌───────────────┬──────────────────────────────────────────────────────────────┐
+│ high          │ Picomatch has a ReDoS vulnerability via extglob quantifiers  │
+├───────────────┼──────────────────────────────────────────────────────────────┤
+│ Package       │ picomatch                                                    │
+├───────────────┼──────────────────────────────────────────────────────────────┤
+│ Patched in    │ >=4.0.4                                                      │
+├───────────────┼──────────────────────────────────────────────────────────────┤
+│ Dependency of │ @angular/cli                                                 │
+├───────────────┼──────────────────────────────────────────────────────────────┤
+│ Path          │ @angular/cli > pacote > @npmcli/run-script > node-gyp >      │
+│               │ tinyglobby > picomatch                                       │
+├───────────────┼──────────────────────────────────────────────────────────────┤
+│ More info     │ https://www.npmjs.com/advisories/1115554                     │
+└───────────────┴──────────────────────────────────────────────────────────────┘
+┌───────────────┬──────────────────────────────────────────────────────────────┐
+│ high          │ Picomatch has a ReDoS vulnerability via extglob quantifiers  │
+├───────────────┼──────────────────────────────────────────────────────────────┤
+│ Package       │ picomatch                                                    │
+├───────────────┼──────────────────────────────────────────────────────────────┤
+│ Patched in    │ >=4.0.4                                                      │
+├───────────────┼──────────────────────────────────────────────────────────────┤
+│ Dependency of │ vitest                                                       │
+├───────────────┼──────────────────────────────────────────────────────────────┤
+│ Path          │ vitest > picomatch                                           │
+├───────────────┼──────────────────────────────────────────────────────────────┤
+│ More info     │ https://www.npmjs.com/advisories/1115554                     │
+└───────────────┴──────────────────────────────────────────────────────────────┘
+┌───────────────┬──────────────────────────────────────────────────────────────┐
+│ high          │ path-to-regexp vulnerable to Denial of Service via           │
+│               │ sequential optional groups                                   │
+├───────────────┼──────────────────────────────────────────────────────────────┤
+│ Package       │ path-to-regexp                                               │
+├───────────────┼──────────────────────────────────────────────────────────────┤
+│ Patched in    │ >=8.4.0                                                      │
+├───────────────┼──────────────────────────────────────────────────────────────┤
+│ Dependency of │ @angular/cli                                                 │
+├───────────────┼──────────────────────────────────────────────────────────────┤
+│ Path          │ @angular/cli > @modelcontextprotocol/sdk > express > router  │
+│               │ > path-to-regexp                                             │
+├───────────────┼──────────────────────────────────────────────────────────────┤
+│ More info     │ https://www.npmjs.com/advisories/1115573                     │
+└───────────────┴──────────────────────────────────────────────────────────────┘
+┌───────────────┬──────────────────────────────────────────────────────────────┐
+│ moderate      │ path-to-regexp vulnerable to Regular Expression Denial of    │
+│               │ Service via multiple wildcards                               │
+├───────────────┼──────────────────────────────────────────────────────────────┤
+│ Package       │ path-to-regexp                                               │
+├───────────────┼──────────────────────────────────────────────────────────────┤
+│ Patched in    │ >=8.4.0                                                      │
+├───────────────┼──────────────────────────────────────────────────────────────┤
+│ Dependency of │ @angular/cli                                                 │
+├───────────────┼──────────────────────────────────────────────────────────────┤
+│ Path          │ @angular/cli > @modelcontextprotocol/sdk > express > router  │
+│               │ > path-to-regexp                                             │
+├───────────────┼──────────────────────────────────────────────────────────────┤
+│ More info     │ https://www.npmjs.com/advisories/1115582                     │
+└───────────────┴──────────────────────────────────────────────────────────────┘
+┌───────────────┬──────────────────────────────────────────────────────────────┐
+│ moderate      │ PostCSS has XSS via Unescaped </style> in its CSS Stringify  │
+│               │ Output                                                       │
+├───────────────┼──────────────────────────────────────────────────────────────┤
+│ Package       │ postcss                                                      │
+├───────────────┼──────────────────────────────────────────────────────────────┤
+│ Patched in    │ >=8.5.10                                                     │
+├───────────────┼──────────────────────────────────────────────────────────────┤
+│ Dependency of │ @angular/build                                               │
+├───────────────┼──────────────────────────────────────────────────────────────┤
+│ Path          │ @angular/build > beasties > postcss                          │
+├───────────────┼──────────────────────────────────────────────────────────────┤
+│ More info     │ https://www.npmjs.com/advisories/1117015                     │
+└───────────────┴──────────────────────────────────────────────────────────────┘
+┌───────────────┬──────────────────────────────────────────────────────────────┐
+│ moderate      │ PostCSS has XSS via Unescaped </style> in its CSS Stringify  │
+│               │ Output                                                       │
+├───────────────┼──────────────────────────────────────────────────────────────┤
+│ Package       │ postcss                                                      │
+├───────────────┼──────────────────────────────────────────────────────────────┤
+│ Patched in    │ >=8.5.10                                                     │
+├───────────────┼──────────────────────────────────────────────────────────────┤
+│ Dependency of │ @angular/build                                               │
+├───────────────┼──────────────────────────────────────────────────────────────┤
+│ Path          │ @angular/build > vite > postcss                              │
+├───────────────┼──────────────────────────────────────────────────────────────┤
+│ More info     │ https://www.npmjs.com/advisories/1117015                     │
+└───────────────┴──────────────────────────────────────────────────────────────┘
+┌───────────────┬──────────────────────────────────────────────────────────────┐
+│ high          │ fast-uri vulnerable to path traversal via percent-encoded    │
+│               │ dot segments                                                 │
+├───────────────┼──────────────────────────────────────────────────────────────┤
+│ Package       │ fast-uri                                                     │
+├───────────────┼──────────────────────────────────────────────────────────────┤
+│ Patched in    │ >=3.1.1                                                      │
+├───────────────┼──────────────────────────────────────────────────────────────┤
+│ Dependency of │ @angular/cli                                                 │
+├───────────────┼──────────────────────────────────────────────────────────────┤
+│ Path          │ @angular/cli > @angular-devkit/core > ajv > fast-uri         │
+├───────────────┼──────────────────────────────────────────────────────────────┤
+│ More info     │ https://www.npmjs.com/advisories/1117870                     │
+└───────────────┴──────────────────────────────────────────────────────────────┘
+┌───────────────┬──────────────────────────────────────────────────────────────┐
+│ high          │ fast-uri vulnerable to path traversal via percent-encoded    │
+│               │ dot segments                                                 │
+├───────────────┼──────────────────────────────────────────────────────────────┤
+│ Package       │ fast-uri                                                     │
+├───────────────┼──────────────────────────────────────────────────────────────┤
+│ Patched in    │ >=3.1.1                                                      │
+├───────────────┼──────────────────────────────────────────────────────────────┤
+│ Dependency of │ @angular/build                                               │
+├───────────────┼──────────────────────────────────────────────────────────────┤
+│ Path          │ @angular/build > @angular-devkit/architect >                 │
+│               │ @angular-devkit/core > ajv > fast-uri                        │
+├───────────────┼──────────────────────────────────────────────────────────────┤
+│ More info     │ https://www.npmjs.com/advisories/1117870                     │
+└───────────────┴──────────────────────────────────────────────────────────────┘
+┌───────────────┬──────────────────────────────────────────────────────────────┐
+│ high          │ fast-uri vulnerable to path traversal via percent-encoded    │
+│               │ dot segments                                                 │
+├───────────────┼──────────────────────────────────────────────────────────────┤
+│ Package       │ fast-uri                                                     │
+├───────────────┼──────────────────────────────────────────────────────────────┤
+│ Patched in    │ >=3.1.1                                                      │
+├───────────────┼──────────────────────────────────────────────────────────────┤
+│ Dependency of │ @angular/cli                                                 │
+├───────────────┼──────────────────────────────────────────────────────────────┤
+│ Path          │ @angular/cli > @schematics/angular >                         │
+│               │ @angular-devkit/schematics > @angular-devkit/core > ajv >    │
+│               │ fast-uri                                                     │
+├───────────────┼──────────────────────────────────────────────────────────────┤
+│ More info     │ https://www.npmjs.com/advisories/1117870                     │
+└───────────────┴──────────────────────────────────────────────────────────────┘
+┌───────────────┬──────────────────────────────────────────────────────────────┐
+│ high          │ fast-uri vulnerable to host confusion via percent-encoded    │
+│               │ authority delimiters                                         │
+├───────────────┼──────────────────────────────────────────────────────────────┤
+│ Package       │ fast-uri                                                     │
+├───────────────┼──────────────────────────────────────────────────────────────┤
+│ Patched in    │ >=3.1.2                                                      │
+├───────────────┼──────────────────────────────────────────────────────────────┤
+│ Dependency of │ @angular/cli                                                 │
+├───────────────┼──────────────────────────────────────────────────────────────┤
+│ Path          │ @angular/cli > @angular-devkit/core > ajv > fast-uri         │
+├───────────────┼──────────────────────────────────────────────────────────────┤
+│ More info     │ https://www.npmjs.com/advisories/1117884                     │
+└───────────────┴──────────────────────────────────────────────────────────────┘
+┌───────────────┬──────────────────────────────────────────────────────────────┐
+│ high          │ fast-uri vulnerable to host confusion via percent-encoded    │
+│               │ authority delimiters                                         │
+├───────────────┼──────────────────────────────────────────────────────────────┤
+│ Package       │ fast-uri                                                     │
+├───────────────┼──────────────────────────────────────────────────────────────┤
+│ Patched in    │ >=3.1.2                                                      │
+├───────────────┼──────────────────────────────────────────────────────────────┤
+│ Dependency of │ @angular/build                                               │
+├───────────────┼──────────────────────────────────────────────────────────────┤
+│ Path          │ @angular/build > @angular-devkit/architect >                 │
+│               │ @angular-devkit/core > ajv > fast-uri                        │
+├───────────────┼──────────────────────────────────────────────────────────────┤
+│ More info     │ https://www.npmjs.com/advisories/1117884                     │
+└───────────────┴──────────────────────────────────────────────────────────────┘
+┌───────────────┬──────────────────────────────────────────────────────────────┐
+│ high          │ fast-uri vulnerable to host confusion via percent-encoded    │
+│               │ authority delimiters                                         │
+├───────────────┼──────────────────────────────────────────────────────────────┤
+│ Package       │ fast-uri                                                     │
+├───────────────┼──────────────────────────────────────────────────────────────┤
+│ Patched in    │ >=3.1.2                                                      │
+├───────────────┼──────────────────────────────────────────────────────────────┤
+│ Dependency of │ @angular/cli                                                 │
+├───────────────┼──────────────────────────────────────────────────────────────┤
+│ Path          │ @angular/cli > @schematics/angular >                         │
+│               │ @angular-devkit/schematics > @angular-devkit/core > ajv >    │
+│               │ fast-uri                                                     │
+├───────────────┼──────────────────────────────────────────────────────────────┤
+│ More info     │ https://www.npmjs.com/advisories/1117884                     │
+└───────────────┴──────────────────────────────────────────────────────────────┘
+┌───────────────┬──────────────────────────────────────────────────────────────┐
+│ moderate      │ @sigstore/core has DSSE payloadType type-binding failure     │
+├───────────────┼──────────────────────────────────────────────────────────────┤
+│ Package       │ @sigstore/core                                               │
+├───────────────┼──────────────────────────────────────────────────────────────┤
+│ Patched in    │ >=3.2.1                                                      │
+├───────────────┼──────────────────────────────────────────────────────────────┤
+│ Dependency of │ @angular/cli                                                 │
+├───────────────┼──────────────────────────────────────────────────────────────┤
+│ Path          │ @angular/cli > pacote > sigstore > @sigstore/core            │
+├───────────────┼──────────────────────────────────────────────────────────────┤
+│ More info     │ https://www.npmjs.com/advisories/1121792                     │
+└───────────────┴──────────────────────────────────────────────────────────────┘
+┌───────────────┬──────────────────────────────────────────────────────────────┐
+│ moderate      │ @sigstore/core has DSSE payloadType type-binding failure     │
+├───────────────┼──────────────────────────────────────────────────────────────┤
+│ Package       │ @sigstore/core                                               │
+├───────────────┼──────────────────────────────────────────────────────────────┤
+│ Patched in    │ >=3.2.1                                                      │
+├───────────────┼──────────────────────────────────────────────────────────────┤
+│ Dependency of │ @angular/cli                                                 │
+├───────────────┼──────────────────────────────────────────────────────────────┤
+│ Path          │ @angular/cli > pacote > sigstore > @sigstore/sign >          │
+│               │ @sigstore/core                                               │
+├───────────────┼──────────────────────────────────────────────────────────────┤
+│ More info     │ https://www.npmjs.com/advisories/1121792                     │
+└───────────────┴──────────────────────────────────────────────────────────────┘
+┌───────────────┬──────────────────────────────────────────────────────────────┐
+│ low           │ @babel/core: Arbitrary File Read via sourceMappingURL        │
+│               │ Comment                                                      │
+├───────────────┼──────────────────────────────────────────────────────────────┤
+│ Package       │ @babel/core                                                  │
+├───────────────┼──────────────────────────────────────────────────────────────┤
+│ Patched in    │ >=7.29.6                                                     │
+├───────────────┼──────────────────────────────────────────────────────────────┤
+│ Dependency of │ @angular/build                                               │
+├───────────────┼──────────────────────────────────────────────────────────────┤
+│ Path          │ @angular/build > @babel/core                                 │
+├───────────────┼──────────────────────────────────────────────────────────────┤
+│ More info     │ https://www.npmjs.com/advisories/1120793                     │
+└───────────────┴──────────────────────────────────────────────────────────────┘
+139 vulnerabilities found - Packages audited: 830
+Severity: 10 Low | 51 Moderate | 78 High
+Done in 1.11s.
+kushal@fedora:~/src/angular/angulareighteen.github.io$ 
 
