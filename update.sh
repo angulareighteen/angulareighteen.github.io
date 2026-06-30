@@ -19,9 +19,10 @@
 #   • Appends network probes to ping.txt (as before).
 #   • Upgrades Node to the latest LTS, installs the global @angular/cli + yarn,
 #     records `ng version`, installs deps, runs `ng update`, refreshes the
-#     browserslist DB, builds for production, runs the unit tests, bumps the
-#     patch version, runs export.sh to refresh docs/llm/dump.txt, then rebases
-#     from and pushes to origin on the current branch.
+#     browserslist + Baseline databases, builds for production, runs the unit
+#     tests, bumps the patch version, runs export.sh to refresh
+#     docs/llm/dump.txt, then rebases from and pushes to origin on the current
+#     branch.
 #
 # ERROR-HANDLING NOTE:
 #   This script intentionally does NOT use `set -e`. Like the original, it is a
@@ -231,10 +232,19 @@ time yarn run ng update "${NG_UPDATE_PKGS[@]}" || true
 gc "end prepare to update angular"
 
 # ===========================================================================
-# 5. Refresh the browserslist DB
+# 5. Refresh the browser-targeting databases
+#    - caniuse-lite / browserslist   (update-browserslist-db)
+#    - baseline-browser-mapping       (consulted by @angular/build; without a
+#      refresh the build prints "the data in this module is over two months old")
+#    `update-browserslist-db` only touches caniuse-lite, so the Baseline data is
+#    refreshed separately. `yarn add -D` records it in package.json + yarn.lock;
+#    npm is a fallback if yarn refuses for any reason.
 # ===========================================================================
 md_code bash
 time npx update-browserslist-db@latest >> "$LOG" 2>&1 || true
+time yarn add --dev baseline-browser-mapping@latest >> "$LOG" 2>&1 \
+    || time npm install --save-dev baseline-browser-mapping@latest >> "$LOG" 2>&1 \
+    || true
 md_endcode
 
 # ===========================================================================
@@ -249,13 +259,14 @@ gc "end prepare to build angular"
 
 # ===========================================================================
 # 7. Unit tests (logged to the test log).
-#    NOTE: `ng test` can run Karma in watch mode unless your angular.json /
-#    karma.conf disables it; the command is kept identical to the original.
+#    Angular 20+ runs unit tests with Vitest (builder: @angular/build:unit-test),
+#    not Karma. `--watch=false` guarantees a single, non-interactive run in a
+#    headless/CI context so the script never blocks in watch mode.
 # ===========================================================================
 printf '```bash\n' > "$TEST_LOG"
 ping_probe
 gc "begin prepare to unit test angular"
-time yarn run ng test >> "$TEST_LOG" || true
+time yarn run ng test --watch=false >> "$TEST_LOG" || true
 printf '```\n' >> "$TEST_LOG"
 ping_probe
 gc "end prepare to unit test angular"

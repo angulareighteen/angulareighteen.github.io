@@ -12,74 +12,82 @@ on:
 jobs:
   test-unit:
     runs-on: ubuntu-latest
-    
+
     steps:
     - name: Checkout repository
       uses: actions/checkout@v7
-      
+
     - name: Setup Node.js
       uses: actions/setup-node@v6
       with:
         node-version: '24.x'  # Use latest LTS
         cache: 'yarn'
-    
+
     - name: Install dependencies
       run: yarn install --frozen-lockfile
-      
+
+    # Angular 20+ runs unit tests with Vitest (builder: @angular/build:unit-test),
+    # NOT Karma. Vitest uses `--coverage` (not `--code-coverage`) and runs in jsdom
+    # by default, so there is no `--browsers` flag. jsdom and @vitest/coverage-v8
+    # are already in devDependencies.
     - name: Run unit tests with coverage
-      run: yarn ng test --watch=false --code-coverage --browsers=ChromeHeadless
-      
+      run: yarn ng test --watch=false --coverage
+
     - name: Upload coverage reports
       uses: actions/upload-artifact@v7
+      if: always()
       with:
         name: coverage-report
         path: coverage/
         retention-days: 30
-        
+      continue-on-error: true
+
     - name: Display coverage summary
+      if: always()
       run: |
-        if [ -f coverage/lcov-report/index.html ]; then
-          echo "Coverage report generated successfully"
-          # Extract coverage percentage if possible
-          if [ -f coverage/lcov.info ]; then
-            echo "Coverage summary:"
-            npx lcov-summary coverage/lcov.info || true
-          fi
+        if [ -f coverage/lcov.info ]; then
+          echo "Coverage summary:"
+          npx lcov-summary coverage/lcov.info || true
+        else
+          echo "No lcov.info produced (Vitest default reporters); coverage HTML/JSON was uploaded as an artifact."
         fi
 
-  test-browsers:
+  e2e:
     runs-on: ubuntu-latest
-    
+
     strategy:
       fail-fast: false  # Don't cancel other jobs if one fails
       matrix:
-        browser: [ChromeHeadless, FirefoxHeadless]
-        node-version: [24.x, 26.x]  # Testing across compatible Node versions
-    
+        browser: [chromium, firefox, webkit]
+
     steps:
     - name: Checkout repository
       uses: actions/checkout@v7
-      
-    - name: Setup Node.js ${{ matrix.node-version }}
+
+    - name: Setup Node.js
       uses: actions/setup-node@v6
       with:
-        node-version: ${{ matrix.node-version }}
+        node-version: '24.x'
         cache: 'yarn'
-        
+
     - name: Install dependencies
       run: yarn install --frozen-lockfile
-      
-    - name: Setup Firefox
-      if: matrix.browser == 'FirefoxHeadless'
-      uses: browser-actions/setup-firefox@latest
-      
-    - name: Setup Chrome
-      if: matrix.browser == 'ChromeHeadless'
-      uses: browser-actions/setup-chrome@latest
-      
-    - name: Run tests in ${{ matrix.browser }}
-      run: yarn ng test --watch=false --browsers=${{ matrix.browser }}
-      
-    - name: Test results summary
+
+    # Real cross-browser testing is done with Playwright e2e (already configured in
+    # this repo). This replaces the old "ng test --browsers=ChromeHeadless/FirefoxHeadless"
+    # runs, which the Vitest-based unit-test builder does not support without an extra
+    # browser provider package.
+    - name: Install Playwright browser (${{ matrix.browser }})
+      run: npx playwright install --with-deps ${{ matrix.browser }}
+
+    - name: Run e2e tests in ${{ matrix.browser }}
+      run: npx playwright test --project=${{ matrix.browser }}
+
+    - name: Upload Playwright report
+      uses: actions/upload-artifact@v7
       if: always()
-      run: echo "Tests completed for ${{ matrix.browser }}"
+      with:
+        name: playwright-report-${{ matrix.browser }}
+        path: playwright-report/
+        retention-days: 7
+      continue-on-error: true

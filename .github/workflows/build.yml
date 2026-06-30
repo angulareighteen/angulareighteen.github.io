@@ -12,52 +12,53 @@ on:
 jobs:
   build:
     runs-on: ubuntu-latest
-    
+
     strategy:
       fail-fast: false  # Don't cancel other jobs if one fails
       matrix:
         node-version: [24.x, 26.x]  # Removed 18.x - not compatible with Angular 20
-    
+
     steps:
     - name: Checkout repository
       uses: actions/checkout@v7
-      
+
     - name: Setup Node.js ${{ matrix.node-version }}
       uses: actions/setup-node@v6
       with:
         node-version: ${{ matrix.node-version }}
         cache: 'yarn'
-    
+
     - name: Install dependencies
       run: yarn install --frozen-lockfile
-      
+
     - name: Check Angular CLI version
       run: yarn ng version
-      
+
+    # Only run `ng lint` if a lint target actually exists in angular.json.
     - name: Lint code
       run: |
-        if yarn ng lint --help >/dev/null 2>&1; then
+        if node -e "const a=require('./angular.json');const p=a.projects||{};process.exit(Object.values(p).some(x=>(x.architect&&x.architect.lint)||(x.targets&&x.targets.lint))?0:1)"; then
           echo "Running linter..."
           yarn ng lint
         else
           echo "Linting not configured. Skipping..."
-          echo "To add linting, run: ng add @angular-eslint/schematics"
+          echo "To add ESLint, run: ng add angular-eslint"
         fi
       continue-on-error: true  # Don't fail build on lint errors
-      
+
     - name: Build application (development)
       run: yarn ng build
-      
+
     - name: Build application (production)
       run: yarn ng build --configuration=production
-      
+
     - name: Upload build artifacts
       uses: actions/upload-artifact@v7
       with:
         name: dist-node-${{ matrix.node-version }}
         path: public/browser/
         retention-days: 7
-        
+
     - name: Check bundle size
       run: |
         echo "Bundle sizes:"
