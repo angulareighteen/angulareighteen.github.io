@@ -1,14 +1,12 @@
-import { DatePipe, DecimalPipe, UpperCasePipe } from '@angular/common';
+import { DecimalPipe, UpperCasePipe } from '@angular/common';
 import { ChangeDetectionStrategy, Component, computed, inject, input, signal } from '@angular/core';
 import { toObservable, toSignal } from '@angular/core/rxjs-interop';
 import { MatButtonModule } from '@angular/material/button';
 import { MatCardModule } from '@angular/material/card';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { MatStepperModule } from '@angular/material/stepper';
-import { MatToolbarModule } from '@angular/material/toolbar';
 import { Title } from '@angular/platform-browser';
-import { Router, RouterLink } from '@angular/router';
-import { MenuComponent } from '../menu/menu.component';
+import { Router } from '@angular/router';
 import { map, switchMap, tap } from 'rxjs';
 import { HoneynutCheeriosService } from '../honeynut-cheerios.service';
 import { Option } from '../option';
@@ -16,17 +14,7 @@ import { QuizService } from '../quiz.service';
 
 @Component({
   selector: 'app-quiz',
-  imports: [
-    DatePipe,
-    DecimalPipe,
-    UpperCasePipe,
-    RouterLink,
-    MatButtonModule,
-    MatCardModule,
-    MatStepperModule,
-    MatToolbarModule,
-    MenuComponent,
-  ],
+  imports: [DecimalPipe, UpperCasePipe, MatButtonModule, MatCardModule, MatStepperModule],
   templateUrl: './quiz.component.html',
   styleUrl: './quiz.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,

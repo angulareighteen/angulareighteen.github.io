@@ -1,0 +1,40 @@
+<mat-toolbar color="primary" class="app-nav">
+  <nav class="app-nav__links">
+    @for (item of items; track item.label) {
+      @switch (item.kind) {
+        @case ('link') {
+          
+            mat-button
+            [routerLink]="item.path"
+            routerLinkActive="app-nav__link--active"
+            [routerLinkActiveOptions]="{ exact: item.exact }"
+          >
+            @if (item.icon) {
+              <mat-icon>{{ item.icon }}</mat-icon>
+            }
+            {{ item.label }}
+          </a>
+        }
+        @case ('group') {
+          <button mat-button [matMenuTriggerFor]="menu">
+            @if (item.icon) {
+              <mat-icon>{{ item.icon }}</mat-icon>
+            }
+            {{ item.label }}
+            <mat-icon>arrow_drop_down</mat-icon>
+          </button>
+          <mat-menu #menu="matMenu">
+            @for (child of item.children; track child.path) {
+              <a mat-menu-item [routerLink]="child.path" routerLinkActive="app-nav__link--active">
+                @if (child.icon) {
+                  <mat-icon>{{ child.icon }}</mat-icon>
+                }
+                {{ child.label }}
+              </a>
+            }
+          </mat-menu>
+        }
+      }
+    }
+  </nav>
+</mat-toolbar>

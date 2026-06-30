@@ -1,0 +1,24 @@
+.app-nav {
+  // The home page renders a fixed decorative globe at z-index: 0; keep the
+  // navigation above it so every link stays clickable on every route.
+  position: relative;
+  z-index: 1;
+  display: flex;
+  gap: 0.25rem;
+
+  &__links {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 0.25rem;
+  }
+
+  &__link--active {
+    font-weight: 700;
+    text-decoration: underline;
+  }
+
+  mat-icon {
+    margin-right: 0.25rem;
+  }
+}

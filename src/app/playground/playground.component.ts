@@ -1,4 +1,5 @@
-import { ChangeDetectionStrategy, Component } from '@angular/core';
+import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
+import { Title } from '@angular/platform-browser';
 
 @Component({
   selector: 'app-playground',
@@ -7,4 +8,8 @@ import { ChangeDetectionStrategy, Component } from '@angular/core';
   styleUrl: './playground.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class PlaygroundComponent {}
+export class PlaygroundComponent {
+  constructor() {
+    inject(Title).setTitle('Playground');
+  }
+}

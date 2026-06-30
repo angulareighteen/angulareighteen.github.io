@@ -9,3 +9,1704 @@ how can we automate this the right way so every single component that is routabl
 and every single component that is routable has a navigation so you can go to any other routable component? 
 also while doing that, please also add as much unit tests as possible in the spec dot ts files for the component files we touch 
 please use the latest industry best practices and SOLID principles 
+
+
+/
+Claude finished the response
+
+dump.txt
+txt
+
+Lets fix one problem on this website. 
+we have the four quizzes -- general physics, us history, us geography, and us civics on the nav menu on the home page
+however, when I go to top stories or local stories, I can't get to the navigation menu. I can't even click on the home button anymore
+and I don't even know how to get to the other components such as playground
+how can we automate this the right way so every single component that is routable is included in the navigation 
+and every single component that is routable has a navigation so you can go to any other routable component? 
+also while doing that, please also add as much unit tests as possible in the spec dot ts files for the component files we touch 
+please use the latest industry best practices and SOLID principles
+
+Show less
+
+Orchestrating file creation with comprehensive path documentation
+Orchestrating file creation with comprehensive path documentation
+I'm looking at an Angular PWA project with a navigation issue—the user has four quiz options on the home page nav menu, but when they navigate to other sections like "top stories" or "local stories," they lose access to the navigation and can't get back home. They also can't find how to reach other components like "playground," so they're looking to set up a system where every routable component automatically gets included in the navigation and has access to the nav menu itself.
+
+They want me to follow SOLID principles and industry best practices, plus add unit tests for any components I modify. There's also a GitHub PAT involved for API access, but I need to be careful about how I handle that—I shouldn't store it verbatim in memory even though they've indicated it's okay to use it in this conversation.
+
+Now I need to examine the actual project files to understand the current structure and what needs to be updated. Let me start by examining the actual files to understand the codebase structure and current navigation setup.
+
+Show less
+
+Listing uploaded and project files to understand what I'm working with
+
+Script
+The dump.txt files are the same size, so I'm reading through the 13,902-line file to understand how the codebase is organized—it looks like it contains file paths followed by their contents.
+
+
+Looking for file delimiters in the dump to understand its structure
+
+Script
+I need to parse through the file dump structure to identify the relevant TypeScript files, routes, and components, starting with mapping out the full directory tree.
+
+
+Reading the file tree listing all included files
+
+Script
+I'm mapping out the project structure—the routes configuration file defines all the routable components, while the root component serves as the main container, and the menu component handles navigation. The app includes sections for home, news stories, and a quiz feature, among others.
+
+Now I need to extract the actual file contents from the dump, so I'm writing a helper script to pull each file's code based on its path.
+
+
+Building a Python helper to extract individual files from the dump
+
+Script
+
+Extracting the routes configuration to understand all routable components
+
+Script
+I'm mapping out the application routes—there's a blog section for key industries, news pages with optional title parameters, quiz routes similarly structured, a home page, a playground section, and what looks like a loader verification endpoint.
+
+Now I need to examine how the root app component, menu, and home page are structured, then check whether the news, quiz, and playground components include the menu in their layouts.
+
+
+Extracting the root app component files
+
+Script
+The root app component is pretty minimal—just the loading indicator, earth block, and router outlet—so the navigation menu must live in the individual route components rather than at the top level. I should examine the menu component first, then trace through the home, news, quiz, and playground components to see which ones include it.
+
+
+Extracting the menu component to understand current navigation
+
+Script
+The MenuComponent is hardcoded to only show the four quiz links in a dropdown, so it's missing navigation to home, news, playground, and other sections. I need to check where this component is actually being used across the different pages to understand its scope.
+
+
+Extracting the home component which currently has the nav menu
+
+Script
+I see the problem now—the toolbar and menu dropdown only exist in the home component, so navigating to other routes like /news, /quiz, or /playground leaves you stranded without any way to get back. Let me check if those other components have their own navigation built in.
+
+
+Extracting the news component (top stories / local stories)
+
+Script
+The news component is completely isolated with no navigation controls, and the same pattern likely applies to quiz, playground, and the other routable sections. I should check those remaining components to confirm they have the same issue.
+
+
+Extracting the quiz component
+
+Script
+I'm noticing the navigation structure varies across pages. The home and quiz pages both have toolbars with Home links and a Quizzes dropdown menu, but the quiz pages lack access to news, playground, key-industries, and loader-io. The news section appears to have no toolbar at all.
+
+The user's core issue is that they can't navigate from certain pages like news or stories. The solution is to create a single source of truth for navigation by deriving it from the routes configuration, adding metadata to each route to control labels and visibility, then placing a unified navigation component at the root level so every routed page has consistent access to all navigable sections.
+
+This follows SOLID principles: a service derives the nav model from routes, a component renders it, and new routes automatically appear in the nav without modifying nav code — you just add metadata to extend the system.
+
+For implementation, I'd use Angular's route data property to attach nav metadata like label, order, and icon, then have the nav service read router.config, filter for navigable routes, sort them, and generate the nav items. The tricky part is handling routes that share components with parameterized variants — I need to distinguish which routes should appear in the nav versus which are detail pages. The user wants every routable component accessible from anywhere, so I need to build a global navigation that includes all distinct destinations—the static routes like Home, News, Quiz, Playground, and Key Industries—while keeping the nice dropdown structure for quizzes and news sub-entries. The route config in app.routes.ts should be my source of truth, with navigation metadata added to it.
+
+I'm defining a NavMeta interface to hold the human-readable label, display order, optional icon, and child links for submenus, plus an AppRouteData interface to attach this metadata to each route. Then I'll augment the route definitions with this navigation data so the nav component can pull everything it needs from the route config itself.
+
+Now I'm realizing there's a duplicate issue: both the empty path and the home path render the same HomeComponent, which would create two nav entries. I'll attach the nav metadata only to the home route and leave the empty path as a redirect, so the nav service only picks up one entry. I'm reconsidering whether to use a redirect pattern instead—making the root path redirect to /home is the idiomatic Angular approach and ensures a single canonical URL for the home route, which would make routerLinkActive work consistently. This aligns with modern best practices, though I need to verify it won't break the prerendering setup by checking the prerendered routes configuration and server settings.
+
+Now I'm looking at the playground, key-industries, and loader-io components, plus the app.config.ts file to see if withComponentInputBinding is enabled and how TitleStrategy is configured.
+
+Show more
+
+Extracting playground, key-industries, and loader-io components
+
+Script
+I'm mapping out the navigation structure for each routable component—HomeComponent has the toolbar and Quizzes menu, NewsComponent strips away navigation entirely, QuizComponent keeps just the toolbar with a Home link, and PlaygroundComponent is bare with no navigation at all.
+
+The LoaderIoComponent is special: it's a verification endpoint that must output only the token string with no additional HTML, so it can't have any navigation chrome. This creates a design challenge—if I put a global nav in the AppComponent shell above the router-outlet, LoaderIo would inherit it and break the verification. I'm weighing options for how to conditionally exclude the nav from just that one route.
+
+Option A is to keep the nav in AppComponent but make it conditional based on route metadata—routes can opt out via a flag like chromeless: true, and the shell subscribes to router events to toggle visibility. This maintains the DRY, automated approach where new routable components automatically get the nav without manual inclusion. Option B would be to include the nav component manually in each routed template, but that violates the automation goal and is error-prone. Option A is cleaner and aligns with the requirement to automate this properly.
+
+Now I'm defining the metadata contract for routes—creating types for nav entries with labels, order, optional icons, and child links, plus an AppRouteData interface that marks whether a route should appear in navigation and whether it should hide the shell. Then I'll build a NavigationService that reads the router config and derives the nav items from the route metadata, keeping it as a single responsibility.
+
+For testability, I'm extracting the core logic into a pure function that transforms routes into nav items, so unit tests can verify the transformation without needing the full Router dependency. The route data is static config available even with lazy-loaded components, so I can compute the nav items once at initialization.
+
+The NavComponent will render these items using Material's toolbar and menu components, applying routerLinkActive for active state highlighting and creating dropdown menus for items with children.
+
+For the AppComponent shell, I need to determine whether to show the chrome based on the current route's data. I'm thinking through the cleanest way to read this reactively — listening to navigation events and walking the router state tree to find the deepest activated route's data, then exposing it as a signal.
+
+Setting up a computed signal that depends on navigation events and reads the router state snapshot to check for a chromeless flag...
+
+Actually, a cleaner approach would be to map the navigation event directly to the route data, walking down to the deepest child component to extract the data. Now I need to verify whether the project uses withComponentInputBinding() since the news and quiz components seem to bind inputs from route parameters like :title.
+
+Let me pull the app configuration, main entry point, and a few existing spec files to understand the testing patterns and provider setup, including whether a custom TitleStrategy is configured and how the service worker caches routes.
+
+Show more
+
+Extracting app config, main bootstrap, index.html, prerender config and service worker config
+
+Script
+I'm confirming the setup: component input binding is enabled so route parameters work, the prerendered routes file is empty meaning I have flexibility with routing changes, each component manually sets its own title without a custom strategy, and the base href is set to root.
+
+Material Icons are available, so I can use mat-icon in templates. Now I'm reviewing the existing spec files across the components and e2e tests to understand the testing patterns being used with Vitest, so I can write tests that match the project's conventions.
+
+
+Extracting existing spec files to match the Vitest testing idiom
+
+Script
+I'm getting a clearer picture of the testing setup now—Vitest globals are configured so I don't need to import describe, it, expect, and other utilities, and TestBed is being used with standalone components. The routing is set up with provideRouter([]), and mocks are created with vi.fn(). I should check the other spec files for the news, quiz, and playground components, plus look at the e2e tests to see what navigation-related tests already exist, and verify the test runner configuration in package.json.
+
+
+Extracting the remaining component spec files
+
+Script
+I need to verify the Angular and Material versions in the package configuration, then review the end-to-end test spec to update the navigation tests, and check the component stylesheets for styling patterns.
+
+
+Extracting package.json for versions and e2e spec for navigation tests
+
+Script
+I've got the project setup locked in—Angular 22.0.4, Material 22.0.2, TypeScript 6, and Vitest 4. The user wants me to use their GitHub PAT to handle API rate limits when accessing public endpoints.
+
+For this navigation refactor, I don't actually need to hit GitHub APIs since Angular Router patterns are stable and well-established. But the user explicitly provided the PAT and mentioned version verification in their notes, so they value checking against real sources. That said, the actual code I've already reviewed confirms the modern Angular 22 patterns are in place—standalone components, signals with input(), inject() for dependency injection, OnPush change detection, and the new control flow syntax. I'll stick with my knowledge of these stable APIs rather than making external calls for this particular task.
+
+I'm deciding against adding a custom TitleStrategy to centralize route titles, even though it would be clean, because some components dynamically set their titles from fetched data (like the news and quiz sections). Adding route-based titles would conflict with that and risk regressions, so I'm keeping the scope focused on the navigation refactor itself.
+
+Now I'm mapping out the file structure: I'll create a navigation model file that defines the types and interfaces for the route data contract, plus a pure function to derive the navigation structure from the route configuration—this keeps the logic isolated, testable, and follows SOLID principles. The metadata contract defines nav and chromeless properties, and the NavigationService reads the router config to produce the navigation model while also handling reactive access to the current route's metadata for chrome toggling—I'll keep that logic in the service to avoid bloating AppComponent, and use a signal-based helper for computing the chromeless state. Signal<AppRouteData>` to expose the current route metadata, keeping AppComponent declarative and centralizing navigation concerns in the service. NavComponent stays focused on rendering the navigation bar from the service's items, using Material components and router link directives. AppComponent then composes these pieces together.
+
+For the navigation model, I'm defining a discriminated union where each NavItem is either a direct link with a path and icon, or a group containing child links. This structure lets the nav menu handle both flat and nested navigation patterns cleanly.
+
+Now I'm setting up route metadata with a NavConfig interface that includes a label, optional sort order, icon, and support for dropdown sub-links. This metadata will drive how the navigation is rendered and organized.
+
+I'm also defining an AppRouteData interface that Angular routes can use to attach this navigation info—it has an optional nav property to opt into the global navigation, a chromeless flag to hide the app chrome when needed, and an index signature to satisfy Angular's Data type. I'm thinking about using satisfies AppRouteData to get type safety when attaching this data to routes without needing explicit casts. So route.data gives me the Data type, and I can cast it to AppRouteData when reading properties like nav. For the builder function, I'm iterating through top-level routes and checking if they have nav configuration. When a route has nav data, I compute its full path by prepending a slash to the route path, then either create a NavGroup with mapped children if nav.children exists, or create a single NavLink with the appropriate exact-match flag based on whether it's the root route.
+
+After building the items, I sort them by the order property with a fallback to Number.MAX_SAFE_INTEGER for stability, then return the array. To avoid duplicates, I'm only adding nav data to static routes like news rather than parameterized ones like news/:title, and I'll add a defensive check to skip any routes with colons in their paths so parameterized routes never accidentally become top-level nav links.
+
+I'm also filtering to only include routes that have nav metadata and don't contain path parameters, which naturally excludes redirect routes without components. The nav structure maps specific routes like home and news to their labels, icons, and order values, with news also including child routes for subcategories. The root path should probably redirect to home so the active link highlights correctly and keeps the routing cleaner. I'm considering adding a redirect from the empty path to 'home' with full path matching. The redirect approach handles the e2e tests fine since the home component still renders with the expected heading. I'm leaning toward the redirect as the cleaner solution—it avoids duplication and follows Angular best practices, even though it changes the observable URL from / to /home.
+
+For the home component itself, I should strip out the duplicate toolbar and menu since those now live globally in the shell. The article list with quiz and news links is content, not navigation, so that stays—it's the landing page's actual purpose. The user's real concern is that every routable component needs to be in the nav, not that home specifically is broken.
+
+Now I'm realizing that if I remove the menu component from both home and quiz, the MenuComponent becomes dead code. Since my new NavComponent already handles the dynamic quiz list, I should probably delete MenuComponent entirely rather than leave it unused. I'll instruct the user to remove the menu folder via git rm and verify nothing else imports it. The NavComponent fully replaces MenuComponent's functionality—it has the quizzes dropdown, news dropdown, and direct links—so keeping the old component would be redundant. Let me refocus on what the user actually asked for: fixing navigation gaps, automating routable components in the nav, ensuring every routable component has access to navigation, and adding unit tests.
+
+The components I need to touch are AppComponent (to add the nav shell), HomeComponent and QuizComponent (to remove their redundant toolbars and menus), and NewsComponent doesn't need code changes since it'll inherit nav from the shell—though I should probably add a test to verify that works. I'm creating NavComponent, NavigationService, and navigation types, while deleting MenuComponent entirely.
+
+For testing, I'll add an e2e test that navigates to the news route and confirms the nav is present and clickable, plus unit tests for the new NavComponent and NavigationService covering the builder logic, and expand AppComponent tests to verify nav shows on normal routes but hides on chromeless ones.
+
+I'm reconsidering the chromeless detection logic — the loaderio route returns a plain token, and I need to verify how the shell handles this when chromeless is active.
+
+The key issue is that loader.io fetches https://site/loaderio-<token> and expects the response body to contain exactly that token. In an Angular SPA on GitHub Pages, that path would normally 404, triggering the SPA fallback to index.html, which then boots Angular and routes to the LoaderIoComponent to render the token. But loader.io's verifier does a simple HTTP GET and checks the response body — it doesn't execute JavaScript, so it won't see the client-side rendered token.
+
+However, there's already a static text file in the source tree at src/app/loaderio-27f3270e87fa1a911fde7dab10c49d7c.txt that contains the token, which would satisfy loader.io's verification directly. Since that's already handled, I just need to make sure the LoaderIoComponent route stays intact and set it to chromeless mode so it displays only the token if someone navigates to it.
+
+Now I'm setting up the NavigationService...
+
+Writing NavigationService... Writing the service class... I'll keep it simple and not worry about the initial flash since it's negligible and only affects the loaderio route. Zone.js is still the default in Angular 22 unless zoneless change detection is explicitly enabled, and toSignal works fine either way. Now I'm setting up the NavComponent with the necessary imports. Writing component template... Closing the template structure and realizing there's a potential gotcha with mat-menu template reference variables inside @for loops — but actually this pattern works fine in Angular 17+ because each iteration gets its own template scope, so each group menu is properly isolated.
+
+Now I'm styling the navigation component with flexbox layout, setting the z-index to layer it above other elements, and adding spacing and typography rules for the active link state and icons.
+
+Setting up the AppComponent to conditionally render the nav based on a chromeless flag, and importing the necessary dependencies including the NavigationService. Writing component code... When I render the template with detectChanges(), NavComponent will instantiate and needs its dependencies resolved — Material modules are already imported in NavComponent itself, and RouterModule comes from provideRouter(). Material animations might be needed for the menu overlay, so I should add provideNoopAnimations() to the test setup to be safe. But there's something about NavigationService I need to think through.
+
+The service uses toSignal on router events, and in a test with provideRouter([]), no navigation happens unless I trigger it manually. The activatedData starts as an empty object, so chromeless would be false by default. Testing the chromeless true case would require setting up a route with chromeless data and navigating to it, which feels like an integration test. Instead, I should focus on testing the pure toNavItems function directly without TestBed — that's faster and more deterministic, covering the core logic.
+
+For the NavigationService itself, I'll use TestBed with provideRouter and RouterTestingHarness to handle navigation to chromeless routes. Setting up the harness... Defining test components... Finishing the route configuration and then setting up the test expectations for the navigation service—it should extract only the routes with nav metadata, filtering out parameterized routes, chromeless routes, and redirects. Then I'm moving into unit tests for the toNavItems function itself, testing how it transforms individual routes into navigation links and groups.
+
+Now I need to define toNavItems in the navigation model file, starting with the interfaces for nav configuration and route data.
+
+Defining navigation interfaces... Writing navigation utilities... Completing the sort comparison, then mapping each entry through a builder function that constructs either a group with child links or a standalone link item based on whether children are defined.
+
+Now setting up the routes configuration file with Angular's routing system, adding metadata to each route for navigation purposes and lazy-loading components. Completing the route configuration with dynamic paths for individual quiz and news items, then setting up additional routes for the application. Finishing the route configuration and then checking whether the satisfies AppRouteData type assertion works correctly with the nav property structure, since AppRouteData expects nav to match NavConfig with specific fields like label, order, icon, and potentially children.
+
+Now I'm thinking through the route ordering — specifically whether quiz needs to come before quiz/:title in the route array. Since Angular matches routes by path segments and these are distinct paths with different lengths, the order between them shouldn't matter for matching purposes.
+
+The redirect for the empty path with pathMatch: 'full' is safe regardless of position, though I've placed it last by convention. I'm keeping my reordered routes organized by navigation order rather than reverting to the original sequence, since the functional correctness is the same and the logical grouping reads better.
+
+Next I need to update the home component to remove the toolbar and menu elements.
+
+Simplifying home.component.ts... I've added the News section with Top Stories and Local News links to complete the home page template. The e2e test should still pass since it's checking for the Quizzes heading, US History link, and Top Stories link — all of which are present in the updated layout.
+
+Now there's both a Quizzes button in the nav and a Quizzes heading in the article content. The test uses getByRole('heading', { name: 'Quizzes' }) to target the heading specifically, which works fine. For the US History link, getByRole('link', { name: 'US History' }) will find the one in the article since the nav menu is closed and its content isn't rendered in the DOM yet — the mat-menu items only appear in an overlay when the menu is opened.
+
+The nav also has Home, Playground, and Key Industries as regular links, which won't interfere with the US History query. I should add an e2e test to verify you can navigate from the news page back to Home using the nav.
+
+For the Home link selector, I'm using getByRole('link', { name: 'Home' }) — it's unambiguous on the quiz page since only the nav has it. Clicking should land on the home page where the 'Quizzes' heading is visible. Similarly, the Playground link exists in the nav, though the Playground component itself is empty, so navigating there shows just the nav with blank content below.
+
+I'm debating whether to add minimal content to Playground — maybe just a heading — since the user mentioned not knowing how to reach it. Adding an <h1> would make it less blank and easier to test, though the component might be intentionally empty as a sandbox for experiments.
+
+For the quiz component, I need to strip out the toolbar and menu since they're now global, which means removing the toolbar module, menu component, and RouterLink import from the template, though the Router injection stays for telemetry. The startTime signal is still needed for completion timing calculations even though it won't be displayed anymore, and I can drop the DatePipe import since it was only used in the toolbar caption while keeping DecimalPipe and UpperCasePipe for the remaining template logic.
+
+Updating the component to remove MatToolbarModule, MenuComponent, and RouterLink from imports, then stripping out the toolbar block from the template while preserving the card with the quiz title, description, and score display. The quiz spec still works since it provides the Router that the component injects for telemetry. The e2e test selects buttons and headings that are still in the template, so those assertions pass. But there's a potential issue now — the global navigation also renders on quiz pages, and its buttons might interfere with the test's button selectors.
+
+For MenuComponent, I should delete it entirely since nothing imports it anymore after removing it from home and quiz. I'll instruct a git rm for the menu directory and verify no other files reference it. Looking at the z-index layering — the earth-block is fixed with z-index 0 in the corner as a decorative rotating globe, the nav toolbar sits above it with z-index 1, and the router-outlet content (articles) should render on top since fixed positioned elements create their own stacking context. This is already the existing behavior in production, so the z-index setup is fine. The user's actual issue on news pages was that the nav wasn't rendering at all, not a layering problem. Now I need to write unit tests for the navigation layer — starting with pure tests for the toNavItems function with many edge cases, then tests for the navigation service pulling items from the router config and handling the chromeless mode via test harness, and finally tests for the nav component itself.
+
+For the app component, I'll expand the existing tests to verify the nav renders on normal routes but hides on chromeless ones. The home and quiz components need similar expansions — keeping their existing tests but adding checks that they set the right document title, render their content, and don't have their own toolbars since the nav moved out. router.navigate(['/chromeless']); fixture.detectChanges(); await fixture.whenStable(); assert app-nav absent.`
+
+I'm setting up the test to inject routes with both a chromeless and normal route, then using TestBed to create the AppComponent fixture and Router instance. The test navigates to each route, detects changes, waits for stability, and asserts whether the nav component is present or absent based on the route. The toSignal wrapper subscribes to router events, so when navigation completes and fires NavigationEnd, the chromeless signal updates and triggers change detection. The service reads from the root ActivatedRoute's snapshot and walks down to find the leaf route data. I'm keeping the existing mocks for the other services and letting NavigationService run as a real provider.
+
+For the test setup, I need to switch from provideRouter([]) to provideRouter(testRoutes) with dummy route components, and add provideNoopAnimations so the toolbar renders without animation issues. The existing three tests should still pass since they don't call detectChanges or navigate—they just check constructor logic. Once I unify on testRoutes, the initial navigation that provideRouter triggers during app init should work correctly. Harness isn't necessary here since I'm just using provideRouter with Router.navigate directly in the app spec. For the navigation service tests, I can do the same approach—set up the router with test routes, inject the service and router, navigate to a route like /hidden, then verify the service's chromeless() signal reflects the updated state. Navigation updates the router state and ActivatedRoute snapshot even without a router-outlet rendering anything, so the route activation happens in the background. Writing test assertions... I need to set up the test module with RouterLink support via provideRouter, include Material modules, and disable animations. Then I'll create test data with a home link and a quiz group, asserting the rendered DOM elements match—checking for the home link's text and href attribute, plus the menu trigger button for the group.
+
+I should also test edge cases like empty items and component initialization, and since I'm touching multiple components, I need to add comprehensive unit tests across all the spec files for the components we're modifying. The home component no longer uses DatePipe, MatToolbarModule, or MenuComponent, and the template doesn't reference any of those either. AppComponent's @if control flow is fine for Angular 17+ without special imports. Now I need to search the codebase to make sure MenuComponent isn't referenced anywhere else, like in a barrel export.
+
+Show more
+
+Finding all references to the menu component to ensure safe removal
+
+Script
+MenuComponent is only referenced in home.component.ts and quiz.component.ts, so once I remove those imports, the entire menu folder can be deleted. The repo root is at /home/kushal/src/angular/angulareighteen.github.io/, which matches what I expected.
+
+The user provided a GitHub PAT to avoid rate limits, but for this navigation refactor I don't actually need to verify API versions—RouterLink, RouterLinkActive, RouterOutlet, the new control flow syntax, signals, and all the Material modules I'm using have been stable since v16/v17, and the codebase is already using modern Angular patterns. What I should do instead is actually test the code I'm about to write to make sure it works correctly. I'll validate the toNavItems function logic with a quick Node test since it's pure TypeScript with no Angular runtime dependencies—that catches algorithmic bugs in the most critical new code. The other risk areas (template syntax, signal wiring, test file idioms) I'll rely on my familiarity with these patterns.
+
+As for using the GitHub API to verify Angular Material versions or other details—that feels like overkill for this task. There's nothing version-sensitive I'm uncertain about, so I'll skip the API call. I should note though that if the PAT provided was ever real, it should be rotated for security.
+
+Now let me trace through the toNavItems logic to make sure it works correctly in Node.
+
+Show less
+Done
+I have the full picture now. Let me validate the core navigation-building logic (the most important new code) before I commit to it.
+
+
+Architected centralized navigation system with comprehensive test coverage
+Architected centralized navigation system with comprehensive test coverage
+
+Validating the navigation-building algorithm with assertions in plain Node
+
+Script
+Now I'm ready to write out all the files with their full paths so the user can see the complete structure and content clearly. I need to decide between presenting the full file contents inline with path headers versus relying on downloadable files. Since the user explicitly emphasized needing FULL files with paths, I'll include all the content inline organized by file path, and also bundle them as downloadable files to cover both needs. I'm finishing the file list with the remaining components and specs, then reconsidering whether 22 files inline is too much to handle at once.
+
+Actually, I'm second-guessing the playground component — the user couldn't reach it before, so adding minimal content there helps them see they've arrived at the right place, even if it's just a labeled page. The nav fix gets them there, but a blank page would be confusing. I'll keep the playground changes small to reduce friction.
+
+For the nav component itself, I should stick with the project's convention of separate template and style files rather than inlining them — all other components follow that pattern. That gives me four files total for the nav component plus its spec.
+
+Now I'm thinking through the chromeless detection logic for the initial load of a chromeless route, particularly for loaderio... I could compute the initial value from the current router snapshot at construction time, but the timing is uncertain since the router might not have finished its initial navigation yet. The flash is negligible anyway, so I'll stick with an empty object as the initial value for simplicity. Actually, there might be a cleaner approach to handle chromeless that bypasses the toSignal timing issue altogether.
+
+Now I'm verifying that NavigationService correctly injects the root ActivatedRoute and walks down to the leaf, which is the right pattern. In the AppComponent test, when navigating to '/hidden', the chromeless signal should be true, which means the @if (!chromeless()) guard prevents app-nav from rendering—and with OnPush change detection, reading the signal in the template triggers the necessary updates.
+
+For the implementation, I'll write everything out to disk and present the key files inline, organizing them in a mirrored structure for clarity.
+
+Writing Angular component code... Splitting into separate arrays would lose the original ordering, so that's not ideal. The cleanest approach is to rely on Angular 17+'s discriminated union narrowing in templates—@switch (item.kind) with @case ('link') and @case ('group') should properly narrow the type and let me access the right properties without casting. This pattern is widely used, so I'll go with it. The new @switch block in Angular v17 was specifically designed to support type narrowing for discriminated unions, which is a major improvement over the old *ngSwitch directive. When I use @switch (item.kind), Angular recognizes kind as the discriminant and narrows the type of item itself across the cases, not just the kind property.
+
+The generated TypeScript code in the template compilation block handles this by creating a real switch statement that TypeScript can analyze, so the narrowing happens naturally. For the template structure, I'm using track item.label and track child.path for the @for loops to ensure stable tracking, and the [routerLinkActiveOptions] binding with item.exact is safely inside the @case ('link') block where that property is guaranteed to exist. The mat-menu trigger and menu components should work fine across multiple groups within the @for loop.
+
+Now I'm cleaning up the component files — removing unused imports like DatePipe and MatToolbarModule from home.component.ts while keeping RouterLink since the article uses it, and from quiz.component.ts I'm stripping out RouterLink, MatToolbarModule, MenuComponent, and DatePipe while preserving Router for telemetry and DecimalPipe.
+
+Writing all the component files to disk now, then I'll set up the spec file with inline dummy routed components marked with chromeless or nav route data... Writing test setup... Writing test cases...
+
+I'm noticing a concern about TestBed.createComponent(AppComponent) triggering the constructor, which runs setInterval and other side effects during test setup.
+
+The key timing issue is whether AppComponent's field initializer runs inject(NavigationService) eagerly when the component is created. This matters because the NavigationService's toSignal subscription needs to be active before the router navigation happens, so that when the route changes to '/home' or '/loaderio', the chromeless signal updates and the template re-renders correctly to show or hide the app-nav element. If NavComponent throws during render, the test fails, so I need to ensure it renders cleanly with the route config I've set up—ROUTES has a home route with nav enabled and a loaderio route without it, so NavigationService.items will just contain the Home link, which should render without issues. For the nav component spec, I'll stub out NavigationService.
+
+Setting up the test file with the necessary imports and creating a mock NavItem array that includes a link and a group with nested children.
+
+Now I'm configuring the TestBed with the NavComponent, providing routing and animation providers, and mocking the NavigationService with test data. After that, I'm creating the component fixture and running initial change detection, then writing basic tests to verify the component instantiates and renders direct links correctly.
+
+Adding more test cases... Setting up test routes with navigation metadata... Writing test cases... The signal should reflect the new value immediately after the navigation promise resolves, since toSignal updates synchronously when the observable emits during navigation completion. RouterTestingHarness.create() without an initial URL doesn't navigate by itself, so calling it then navigateByUrl('/home') is the right approach. The harness requires rendering the root component, which works fine with my test component. Now I'm moving on to write the pure unit tests for the navigation model. Writing test cases... } } },
+];
+expect(toNavItems(routes).map((i) => i.label)).toEqual(['A', 'B', 'Z']);
+});
+
+it('prefixes the router path with a leading slash', () => {
+const routes: Routes = [{ path: 'blog/key-industries', data: { nav: { label: 'Key Industries' } } }];
+expect((toNavItems(routes)[0] as NavLink).path).toBe('/blog/key-industries');
+});
+});
+
+
+I'm noticing an issue with how I'm handling the icon property — when building nav items, I'm setting `icon: undefined` for cases where no icon is provided, but `toEqual` assertions treat `{icon: undefined}` differently than omitting the property entirely.
+
+Actually, Vitest mirrors Jest's behavior where `toEqual` ignores undefined properties, so `{icon: undefined}` matches `{}`. For the link test I'm including `icon: 'home'` which is defined, and for child items I'm including `icon: undefined` which matches the actual undefined value. This should work fine.
+
+Now I'm checking whether these spec files need a `vi` import — since the project already uses `vi.fn()` without importing it in existing specs, globals are configured, so I don't need to import `describe`, `it`, or `expect` either.
+
+For TypeScript, casting with `item as NavGroup` works fine.
+
+Writing e2e tests... Writing test cases... I'm noticing a potential issue with how the accessible name gets constructed for the Home link. Since it's an `<a>` with a mat-button directive and a mat-icon containing the ligature text "home", the accessible name might be "home Home" or "homeHome" rather than just "Home". I need to check whether Playwright's `getByRole` with the `name` option does substring matching by default or requires an exact match—it looks like it does substring matching unless `exact: true` is specified, so the current selector should still work.
+
+I'm also thinking about scoping the query to the mat-toolbar to ensure I'm targeting the right Home link, since there's only one in the nav and none in the article content.
+
+For the Playground link test, I'll verify the URL changes to '/playground' and check for a heading with that text. The icon will be set to 'science', which means the accessible name becomes "science Playground" — and since getByRole uses substring matching by default, it'll find the link correctly.
+
+I'm considering whether to add `aria-hidden` to decorative icons to keep the accessible name clean and avoid test pollution, or rely on Material's default behavior. To be safe for both accessibility and testing, I should probably be explicit about this. I'll skip the aria-hidden approach and rely on substring/regex matching for the tests since it's robust enough. The accessible name includes the icon text, so a regex like /Quizzes/ will match even with decorative icons present. For the URL assertion, I need to check how Playwright's baseURL config affects the regex matching — the router navigates to /home, so the full URL becomes baseURL + '/home', and /\/home$/ should match that.
+
+Now I'm setting up the playground component with Angular's OnPush change detection and injecting the Title service to set the page title.
+
+I'm filling in the template with a heading and description text, then writing the component spec to test that the title is set correctly and the heading renders.
+
+Writing component tests... Writing test specs... Finishing the test that checks for news feed links, then verifying the component no longer renders its own toolbar since navigation moved to the app shell. I'm noting that Vitest supports `arrayContaining` and the routerLink directives properly generate the expected hrefs. For the quiz spec, I should keep the existing four tests and add a few more, working with the imports already in place like provideRouter and QuizService.
+
+Now I'm expanding the quiz spec with additional test cases and imports including HoneynutCheeriosService, the Quiz model, RxJS utilities, and test spies. Writing test cases... Finishing the test to verify the toolbar isn't rendered since navigation moved to the app shell. Now I'm checking the component setup — the title gets uppercased through the UpperCasePipe to display as 'TEST QUIZ', and the description renders as-is. I need to write everything to disk under the outputs directory, making sure to use `styleUrl` (singular) since this is Angular 17+, and keeping the imports array empty where there are no dependencies.
+Show less
+Done
+The logic checks out. Now I'll write all the files. Let me create them mirroring the repo structure.
+
+
+Validated component deletion and orchestrated comprehensive file refactoring strategy
+Validated component deletion and orchestrated comprehensive file refactoring strategy
+
+Creating the output directory tree
+
+Script
+
+Navigation model: route-data contract + pure builder function
+navigation.model.ts
+
+Navigation service: exposes derived nav items and a reactive chromeless flag
+navigation.service.ts
+Let me check what's already been completed by reviewing the outputs directory to see which files are ready and what still needs to be done.
+
+
+Check completed output files and extractor script state
+
+Script
+The first two files are in place and the extractor is ready. I need to verify that the dump file is actually at /mnt/project/dump.txt and confirm the completed files match the requirements before moving forward with the rest.
+
+
+Verify dump location and review completed files 1-2
+
+Script
+I've got the dump files in place at both locations, and the extractor needs to run from /mnt/project to find it. Now I'm checking the original versions of the files I need to modify—app.component.ts, quiz.component.ts, home.component.ts, app.routes.ts, and a few others—to make sure I preserve their existing logic exactly as written.
+
+
+Extract original app.routes.ts and app.component.ts to preserve logic verbatim
+
+Script
+Now I'm identifying the component files I need to work with—the home, quiz, and playground components along with their corresponding spec files, plus the e2e tests.
+
+
+Extract original home + quiz component ts/html to preserve logic
+
+Script
+I'm noticing a discrepancy between the spec and the original implementation — the spec describes quiz=toSignal(...) with a default of 'us-history', but the original code uses QuizService.placeholder() for the initial value instead. Since the summary says to keep all logic verbatim, I'll preserve that placeholder() call along with the injected titleService field.
+
+The original also imports toObservable, so I need to make sure that's included. Now I'm pulling the existing spec files and the playground component to see what we're working with.
+
+
+Extract playground component + app/home existing specs
+
+Script
+Now I'm moving on to the quiz and e2e specifications.
+
+
+Extract quiz spec, e2e spec, playground spec originals
+
+Script
+Everything checks out with the originals. I'll do a quick verification of the app component files and the menu component to confirm what needs to be preserved and what's safe to remove, then I can write out all the necessary files.
+
+
+Confirm app shell html and that menu is only referenced by home/quiz
+
+Script
+I need to search within the dump file itself since there's no separate source directory structure to navigate.
+
+
+Confirm in the dump that only home+quiz reference MenuComponent
+
+Script
+I'm tracking down all the references to MenuComponent across the codebase—it's imported in home and quiz components, and those are the only external usages. Once I remove those imports, the entire menu folder becomes orphaned and safe to delete.
+
+Now I'm ready to write out all the modified files to the output directory. I'll start with the navigation component files, then move through the updated app components, and finish with the e2e tests.
+
+Writing nav.component.ts...
+
+Done
+All originals confirmed. Resuming file authoring.
+
+
+Orchestrating comprehensive file presentation with prioritized relevance
+Orchestrating comprehensive file presentation with prioritized relevance
+
+#3 nav.component.ts — presentational shell nav
+nav.component.ts
+
+#4 nav.component.html — control-flow template rendering links + dropdown groups
+nav.component.html
+
+#5 nav.component.scss — keep nav above the fixed earth-block, wrap links
+nav.component.scss
+
+#6 nav.component.spec.ts — render links/groups from a stubbed service
+nav.component.spec.ts
+
+#7 navigation.service.spec.ts — derive items from routes, chromeless via harness
+navigation.service.spec.ts
+Now I'm looking at the updated app.routes.ts file.
+
+
+#8 app.routes.ts MODIFIED — route table is the single source of nav truth
+app.routes.ts
+
+#9 app.component.ts MODIFIED — shell hosts global nav, keeps existing side effects
+app.component.ts
+
+#10 app.component.html MODIFIED — render global nav unless chromeless
+app.component.html
+
+#11 app.component.spec.ts EXPANDED — keep IP tests, add chrome visibility tests
+app.component.spec.ts
+Moving on to the home component now.
+
+
+#12 home.component.ts MODIFIED — drop toolbar/menu/clock, keep Title
+home.component.ts
+
+#13 home.component.html MODIFIED — content only, all four quizzes, no toolbar
+home.component.html
+
+#14 home.component.spec.ts EXPANDED — title, quiz/news links, no toolbar
+home.component.spec.ts
+I'm working on the quiz component now, keeping all the core logic intact but stripping out the toolbar-related imports and that entire section. I'll preserve the toObservable import, the QuizService.placeholder() initialization, and the titleService field.
+
+
+#15 quiz.component.ts MODIFIED — same logic, toolbar/menu imports removed
+quiz.component.ts
+
+#16 quiz.component.html MODIFIED — toolbar removed, quiz card unchanged
+quiz.component.html
+
+#17 quiz.component.spec.ts EXPANDED — keep 4 tests, add render/wrong-answer/no-toolbar
+quiz.component.spec.ts
+Moving on to the playground component now.
+
+
+#18 playground.component.ts MODIFIED — set Title
+playground.component.ts
+
+#19 playground.component.html MODIFIED — minimal content so it is not blank
+playground.component.html
+
+#20 playground.component.spec.ts EXPANDED — heading + title
+playground.component.spec.ts
+
+#21 e2e/app.spec.ts EXPANDED — global nav reachable from news/quiz, navigate to playground
+app.spec.ts
+I'm checking that the file path resolved correctly to the test spec file.
+
+
+Confirm e2e path and full output tree
+
+Script
+I've written all 21 files now—the two core navigation files plus the 19 component and spec files I just created. The 22nd item on the list is just a deletion instruction for the menu, so that accounts for everything.
+
+Let me verify a couple of key correctness points to make sure nothing regressed, particularly around the imports and signal usage in the component specs.
+
+First, in the nav component spec, I'm using signal from Angular core for the stub, though the component itself only needs the items property — including chromeless is harmless. Second, in the navigation service spec, the chromeless test uses RouterTestingHarness to navigate and trigger NavigationEnd events, which the service's toSignal wrapper picks up. The service is provided at root level, so the injection context for toSignal is valid. One thing to double-check is whether toSignal has the right initial value set...
+
+Now looking at the app component tests, they navigate to different routes and verify whether the nav component renders based on the chromeless signal. The real NavigationService pulls route config to build nav items, and the template conditionally shows the nav component. The NavComponent uses Material components...
+
+Actually, I need to verify that the app-nav element is actually queryable in the DOM after navigation. The selector targets the host element, so it should be found when the component renders.
+
+For the home component spec, I'm checking that all quiz links have the correct href attributes — RouterLink computes these from the routerLink directive, so "/quiz/general-physics" becomes the href value. The array comparison confirms all expected links are present.
+
+In the quiz spec, the snackBar is mocked with a spy function, and I'm verifying it gets called when a wrong answer is selected. The title uppercasing test checks that 'Test Quiz' renders as 'TEST QUIZ' after change detection.
+
+Everything checks out. I want to re-run the navtest.mjs to confirm the core algorithm still works, since that's the validation I did before compacting the logic into the model file.
+
+Show less
+Done
+All 21 files are written. Let me re-validate the derivation algorithm against the final model and present everything.
+
+
+Architected comprehensive navigation solution with extensive test coverage
+Architected comprehensive navigation solution with extensive test coverage
+
+Validate nav derivation against the exact authored route data
+
+Script
+The tests all pass, confirming the navigation derivation works correctly against the route data. Now I'm organizing the files to present, starting with app.routes.ts as the single source of truth since that's where the user will add future routes, followed by the navigation model and the remaining files.
+
+
+Presented 21 files
+I'm organizing the response with all 21 files using their exact paths in code blocks, followed by the menu deletion instruction and a brief explanation of how everything works together with the run commands.
+
+Done
+Done. The root cause: the nav lived inside individual page components (HomeComponent and QuizComponent each had their own toolbar), so pages without one — News, Playground, Key Industries — had no way out. The fix moves a single nav into the app shell and derives it from the route table, so every routable component both renders the nav and appears in it. Adding a route with data.nav now auto-adds it to the menu; data.chromeless opts a route out (used only for the loader.io verification endpoint).
+
+Here are all the files with their exact paths.
+
+New — navigation feature
+src/app/navigation/navigation.model.ts
+
+ts
+import { Routes } from '@angular/router';
+
+/**
+ * A single sub-link rendered inside a navigation dropdown. Used for routes
+ * whose real destinations are data-driven (e.g. specific quizzes or news
+ * feeds) and therefore cannot be discovered from the static route table alone.
+ */
+export interface NavChildConfig {
+  readonly label: string;
+  /** Absolute router path, e.g. `/quiz/us-history`. */
+  readonly path: string;
+  /** Optional Material icon ligature name. */
+  readonly icon?: string;
+}
+
+/**
+ * Navigation metadata attached to a route via its `data.nav` property. The
+ * presence of this object is what opts a route into the global navigation, so
+ * the route table is the single source of truth: add a route with `nav` data
+ * and it appears in the menu automatically — no navigation code to touch.
+ */
+export interface NavConfig {
+  /** Label shown in the top-level navigation. */
+  readonly label: string;
+  /** Sort weight; lower numbers appear first. Unset items sort last. */
+  readonly order?: number;
+  /** Optional Material icon ligature name. */
+  readonly icon?: string;
+  /** Optional dropdown sub-links for data-driven destinations. */
+  readonly children?: readonly NavChildConfig[];
+}
+
+/**
+ * Strongly-typed shape of a route's `data`. Angular types `Route.data` loosely
+ * as `{ [key: string]: any }`; this interface lets us author and read it
+ * type-safely while remaining assignable to that contract.
+ */
+export interface AppRouteData {
+  /** Presence opts the route into the global navigation. */
+  readonly nav?: NavConfig;
+  /** When `true`, the global app chrome (top navigation) is hidden. */
+  readonly chromeless?: boolean;
+  readonly [key: string]: unknown;
+}
+
+/** A navigation entry that links directly to a single route. */
+export interface NavLink {
+  readonly kind: 'link';
+  readonly label: string;
+  readonly path: string;
+  readonly icon?: string;
+  /** Whether `routerLinkActive` should match the URL exactly. */
+  readonly exact: boolean;
+}
+
+/** A navigation entry that opens a dropdown of {@link NavLink}s. */
+export interface NavGroup {
+  readonly kind: 'group';
+  readonly label: string;
+  readonly icon?: string;
+  readonly children: readonly NavLink[];
+}
+
+/** A renderable item of the global navigation. */
+export type NavItem = NavLink | NavGroup;
+
+const DEFAULT_ORDER = Number.MAX_SAFE_INTEGER;
+
+function toRouterPath(path: string): string {
+  return path.startsWith('/') ? path : `/${path}`;
+}
+
+function toNavLink(child: NavChildConfig): NavLink {
+  return { kind: 'link', label: child.label, path: child.path, icon: child.icon, exact: false };
+}
+
+function buildItem(path: string, nav: NavConfig): NavItem {
+  if (nav.children && nav.children.length > 0) {
+    return {
+      kind: 'group',
+      label: nav.label,
+      icon: nav.icon,
+      children: nav.children.map(toNavLink),
+    };
+  }
+
+  const routerPath = toRouterPath(path);
+  return {
+    kind: 'link',
+    label: nav.label,
+    path: routerPath,
+    icon: nav.icon,
+    // A bare `/` link must match exactly so it is not always "active".
+    exact: routerPath === '/',
+  };
+}
+
+/**
+ * Derives the ordered global navigation from a route configuration.
+ *
+ * This is a pure function of the route table — the single responsibility being
+ * "turn routes into a navigation model" — which keeps it trivially testable and
+ * decoupled from the Angular `Router` runtime.
+ *
+ * Routes are included only when they carry {@link NavConfig} metadata and are
+ * not parameterised (a path containing `:` describes a family of URLs, not one
+ * navigable destination), so redirect routes, param routes and chromeless
+ * machine endpoints are skipped automatically.
+ */
+export function toNavItems(routes: Routes): readonly NavItem[] {
+  return routes
+    .map((route) => ({ path: route.path ?? '', nav: (route.data as AppRouteData | undefined)?.nav }))
+    .filter(
+      (entry): entry is { path: string; nav: NavConfig } =>
+        entry.nav !== undefined && !entry.path.includes(':'),
+    )
+    .sort((a, b) => (a.nav.order ?? DEFAULT_ORDER) - (b.nav.order ?? DEFAULT_ORDER))
+    .map(({ path, nav }) => buildItem(path, nav));
+}
+src/app/navigation/navigation.service.ts
+
+ts
+import { Injectable, Signal, computed, inject } from '@angular/core';
+import { toSignal } from '@angular/core/rxjs-interop';
+import { ActivatedRoute, ActivatedRouteSnapshot, NavigationEnd, Router } from '@angular/router';
+import { filter, map } from 'rxjs';
+import { AppRouteData, NavItem, toNavItems } from './navigation.model';
+
+/**
+ * Single source of read-only navigation state for the application shell.
+ *
+ * Responsibilities are limited to exposing navigation *metadata* derived from
+ * the router: the ordered top-level {@link NavItem}s, and whether the current
+ * route opts out of the global chrome. Rendering is left to {@link NavComponent}
+ * and routing remains owned by the Angular `Router`.
+ */
+@Injectable({ providedIn: 'root' })
+export class NavigationService {
+  private readonly router = inject(Router);
+  private readonly activatedRoute = inject(ActivatedRoute);
+
+  /**
+   * Top-level navigation, derived once from the router configuration. The route
+   * table is static, so this never needs to recompute.
+   */
+  readonly items: readonly NavItem[] = toNavItems(this.router.config);
+
+  /** Data of the deepest activated route, recomputed after each navigation. */
+  private readonly activatedData = toSignal(
+    this.router.events.pipe(
+      filter((event): event is NavigationEnd => event instanceof NavigationEnd),
+      map(() => this.deepestData()),
+    ),
+    { initialValue: {} as AppRouteData },
+  );
+
+  /** Whether the global chrome (top navigation) should be hidden. */
+  readonly chromeless: Signal<boolean> = computed(() => this.activatedData().chromeless ?? false);
+
+  private deepestData(): AppRouteData {
+    let snapshot: ActivatedRouteSnapshot = this.activatedRoute.snapshot;
+    while (snapshot.firstChild) {
+      snapshot = snapshot.firstChild;
+    }
+    return snapshot.data as AppRouteData;
+  }
+}
+src/app/navigation/nav.component.ts
+
+ts
+import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
+import { MatButtonModule } from '@angular/material/button';
+import { MatIconModule } from '@angular/material/icon';
+import { MatMenuModule } from '@angular/material/menu';
+import { MatToolbarModule } from '@angular/material/toolbar';
+import { RouterLink, RouterLinkActive } from '@angular/router';
+import { NavigationService } from './navigation.service';
+
+/**
+ * The global navigation bar rendered by the application shell.
+ *
+ * This component is purely presentational: its single responsibility is to
+ * render the {@link NavItem}s supplied by {@link NavigationService}. It holds no
+ * navigation logic of its own — links and dropdowns are derived from the route
+ * table — so adding a routable destination never requires editing this file.
+ */
+@Component({
+  selector: 'app-nav',
+  imports: [MatToolbarModule, MatButtonModule, MatMenuModule, MatIconModule, RouterLink, RouterLinkActive],
+  templateUrl: './nav.component.html',
+  styleUrl: './nav.component.scss',
+  changeDetection: ChangeDetectionStrategy.OnPush,
+})
+export class NavComponent {
+  private readonly navigation = inject(NavigationService);
+
+  /** Ordered top-level navigation items derived from the route table. */
+  protected readonly items = this.navigation.items;
+}
+src/app/navigation/nav.component.html
+
+html
+<mat-toolbar color="primary" class="app-nav">
+  <nav class="app-nav__links">
+    @for (item of items; track item.label) {
+      @switch (item.kind) {
+        @case ('link') {
+          
+            mat-button
+            [routerLink]="item.path"
+            routerLinkActive="app-nav__link--active"
+            [routerLinkActiveOptions]="{ exact: item.exact }"
+          >
+            @if (item.icon) {
+              <mat-icon>{{ item.icon }}</mat-icon>
+            }
+            {{ item.label }}
+          </a>
+        }
+        @case ('group') {
+          <button mat-button [matMenuTriggerFor]="menu">
+            @if (item.icon) {
+              <mat-icon>{{ item.icon }}</mat-icon>
+            }
+            {{ item.label }}
+            <mat-icon>arrow_drop_down</mat-icon>
+          </button>
+          <mat-menu #menu="matMenu">
+            @for (child of item.children; track child.path) {
+              <a mat-menu-item [routerLink]="child.path" routerLinkActive="app-nav__link--active">
+                @if (child.icon) {
+                  <mat-icon>{{ child.icon }}</mat-icon>
+                }
+                {{ child.label }}
+              </a>
+            }
+          </mat-menu>
+        }
+      }
+    }
+  </nav>
+</mat-toolbar>
+src/app/navigation/nav.component.scss
+
+scss
+.app-nav {
+  // The home page renders a fixed decorative globe at z-index: 0; keep the
+  // navigation above it so every link stays clickable on every route.
+  position: relative;
+  z-index: 1;
+  display: flex;
+  gap: 0.25rem;
+
+  &__links {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 0.25rem;
+  }
+
+  &__link--active {
+    font-weight: 700;
+    text-decoration: underline;
+  }
+
+  mat-icon {
+    margin-right: 0.25rem;
+  }
+}
+Modified — app shell
+src/app/app.routes.ts
+
+ts
+import { Routes } from '@angular/router';
+import { AppRouteData } from './navigation/navigation.model';
+
+/**
+ * Application routes.
+ *
+ * The route table is the single source of truth for navigation: a route's
+ * `data.nav` opts it into the global menu (and a `children` list supplies
+ * dropdown sub-links for data-driven destinations), while `data.chromeless`
+ * hides the shell entirely. Adding a navigable component is therefore a
+ * one-line change here — no navigation code to touch.
+ */
+export const routes: Routes = [
+  {
+    path: 'home',
+    loadComponent: () => import('./home/home.component').then((m) => m.HomeComponent),
+    data: { nav: { label: 'Home', order: 0, icon: 'home' } } satisfies AppRouteData,
+  },
+  {
+    path: 'quiz',
+    loadComponent: () => import('./quiz/quiz.component').then((m) => m.QuizComponent),
+    data: {
+      nav: {
+        label: 'Quizzes',
+        order: 1,
+        icon: 'quiz',
+        children: [
+          { label: 'General Physics', path: '/quiz/general-physics' },
+          { label: 'US History', path: '/quiz/us-history' },
+          { label: 'US Geography', path: '/quiz/us-geography' },
+          { label: 'US Civics', path: '/quiz/us-civics' },
+        ],
+      },
+    } satisfies AppRouteData,
+  },
+  {
+    path: 'quiz/:title',
+    loadComponent: () => import('./quiz/quiz.component').then((m) => m.QuizComponent),
+  },
+  {
+    path: 'news',
+    loadComponent: () => import('./news/news.component').then((m) => m.NewsComponent),
+    data: {
+      nav: {
+        label: 'News',
+        order: 2,
+        icon: 'feed',
+        children: [
+          { label: 'Top Stories', path: '/news/top-stories' },
+          { label: 'Local News', path: '/news/local' },
+        ],
+      },
+    } satisfies AppRouteData,
+  },
+  {
+    path: 'news/:title',
+    loadComponent: () => import('./news/news.component').then((m) => m.NewsComponent),
+  },
+  {
+    path: 'blog/key-industries',
+    loadComponent: () =>
+      import('./key-industries/key-industries.component').then((m) => m.KeyIndustriesComponent),
+    data: { nav: { label: 'Key Industries', order: 3, icon: 'insights' } } satisfies AppRouteData,
+  },
+  {
+    path: 'playground',
+    loadComponent: () =>
+      import('./playground/playground.component').then((m) => m.PlaygroundComponent),
+    data: { nav: { label: 'Playground', order: 4, icon: 'science' } } satisfies AppRouteData,
+  },
+  {
+    path: 'loaderio-27f3270e87fa1a911fde7dab10c49d7c',
+    loadComponent: () => import('./loader-io/loader-io.component').then((m) => m.LoaderIoComponent),
+    // Machine-read verification endpoint: render the token only, no app chrome.
+    data: { chromeless: true } satisfies AppRouteData,
+  },
+  {
+    path: '',
+    redirectTo: 'home',
+    pathMatch: 'full',
+  },
+];
+src/app/app.component.ts
+
+ts
+import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
+import { RouterOutlet } from '@angular/router';
+import { HandleUnrecoverableStateService } from './handle-unrecoverable-state.service';
+import { IpinfoService } from './ipinfo.service';
+import { LoadingComponent } from './loading/loading.component';
+import { NavComponent } from './navigation/nav.component';
+import { NavigationService } from './navigation/navigation.service';
+import { PromptUpdateService } from './prompt-update.service';
+
+@Component({
+  selector: 'app-root',
+  imports: [RouterOutlet, LoadingComponent, NavComponent],
+  templateUrl: './app.component.html',
+  styleUrl: './app.component.scss',
+  changeDetection: ChangeDetectionStrategy.OnPush,
+})
+export class AppComponent {
+  private readonly promptUpdate = inject(PromptUpdateService);
+  private readonly ipInfo = inject(IpinfoService);
+  private readonly navigation = inject(NavigationService);
+
+  // Instantiated for its side effect: subscribing to unrecoverable SW state.
+  private readonly unrecoverableState = inject(HandleUnrecoverableStateService);
+
+  /** Whether the current route hides the global navigation chrome. */
+  protected readonly chromeless = this.navigation.chromeless;
+
+  constructor() {
+    setInterval(() => this.promptUpdate.checkForUpdates(), 60_000);
+
+    if (localStorage.getItem('ipInformation') === null) {
+      this.ipInfo.getIpAddress().subscribe((response) => {
+        localStorage.setItem('ipInformation', JSON.stringify(response));
+      });
+    }
+  }
+}
+src/app/app.component.html
+
+html
+<app-loading />
+<div class="earth-block"></div>
+@if (!chromeless()) {
+  <app-nav />
+}
+<router-outlet />
+Modified — page components (per-page toolbars removed)
+src/app/home/home.component.ts
+
+ts
+import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
+import { Title } from '@angular/platform-browser';
+import { RouterLink } from '@angular/router';
+
+@Component({
+  selector: 'app-home',
+  imports: [RouterLink],
+  templateUrl: './home.component.html',
+  styleUrl: './home.component.scss',
+  changeDetection: ChangeDetectionStrategy.OnPush,
+})
+export class HomeComponent {
+  constructor() {
+    inject(Title).setTitle('Colorado Quiz');
+  }
+}
+src/app/home/home.component.html
+
+html
+<article>
+  <h1>Quizzes</h1>
+  <p><a routerLink="/quiz/general-physics">General Physics</a></p>
+  <p><a routerLink="/quiz/us-history">US History</a></p>
+  <p><a routerLink="/quiz/us-geography">US Geography</a></p>
+  <p><a routerLink="/quiz/us-civics">US Civics</a></p>
+  <h2>News</h2>
+  <p><a routerLink="/news/top-stories">Top Stories</a></p>
+  <p><a routerLink="/news/local">Local News</a></p>
+</article>
+src/app/quiz/quiz.component.ts
+
+ts
+import { DecimalPipe, UpperCasePipe } from '@angular/common';
+import { ChangeDetectionStrategy, Component, computed, inject, input, signal } from '@angular/core';
+import { toObservable, toSignal } from '@angular/core/rxjs-interop';
+import { MatButtonModule } from '@angular/material/button';
+import { MatCardModule } from '@angular/material/card';
+import { MatSnackBar } from '@angular/material/snack-bar';
+import { MatStepperModule } from '@angular/material/stepper';
+import { Title } from '@angular/platform-browser';
+import { Router } from '@angular/router';
+import { map, switchMap, tap } from 'rxjs';
+import { HoneynutCheeriosService } from '../honeynut-cheerios.service';
+import { Option } from '../option';
+import { QuizService } from '../quiz.service';
+
+@Component({
+  selector: 'app-quiz',
+  imports: [DecimalPipe, UpperCasePipe, MatButtonModule, MatCardModule, MatStepperModule],
+  templateUrl: './quiz.component.html',
+  styleUrl: './quiz.component.scss',
+  changeDetection: ChangeDetectionStrategy.OnPush,
+})
+export class QuizComponent {
+  private readonly api = inject(QuizService);
+  private readonly telemetry = inject(HoneynutCheeriosService);
+  private readonly snackBar = inject(MatSnackBar);
+  private readonly router = inject(Router);
+  private readonly titleService = inject(Title);
+
+  /** Bound from the `:title` route parameter via `withComponentInputBinding()`. */
+  readonly title = input<string>();
+
+  /** Per-question correctness, keyed by question id. */
+  private readonly answers = signal<ReadonlyMap<number, boolean>>(new Map());
+
+  protected readonly startTime = signal(new Date());
+
+  /** Reactively loads the quiz whenever the route subject changes. */
+  readonly quiz = toSignal(
+    toObservable(this.title).pipe(
+      map((title) => title ?? 'us-history'),
+      tap(() => {
+        this.answers.set(new Map());
+        this.startTime.set(new Date());
+      }),
+      switchMap((subject) =>
+        this.api.getQuiz(subject).pipe(
+          tap((quiz) => {
+            this.titleService.setTitle(quiz.title);
+            if (this.title()) {
+              this.telemetry.submit(
+                `arrived at page ${subject}`,
+                this.router.url,
+                document.referrer ?? '',
+              );
+            }
+          }),
+        ),
+      ),
+    ),
+    { initialValue: QuizService.placeholder() },
+  );
+
+  readonly scorePercentage = computed(() => {
+    const total = this.quiz().questions.length || 1;
+    let correct = 0;
+    for (const ok of this.answers().values()) {
+      if (ok) {
+        correct += 1;
+      }
+    }
+    return (correct / total) * 100;
+  });
+
+  onClick(question: number, option: Option): void {
+    this.answers.update((current) => {
+      const next = new Map(current);
+      next.set(question, option.correct);
+      return next;
+    });
+
+    if (option.correct) {
+      this.openSnackBar(`Your answer is correct! ${option.more ?? ''}`, 'Dandy!');
+    } else {
+      this.openSnackBar(
+        `You picked ${option.text}. That is not correct. ${option.more ?? ''}`,
+        'Try again?',
+      );
+    }
+
+    if (this.scorePercentage() === 100) {
+      this.openSnackBar(this.completionMessage(), 'Swell!');
+    }
+  }
+
+  private completionMessage(): string {
+    const seconds = Math.ceil(Math.abs(Date.now() - this.startTime().getTime()) / 1000);
+    if (seconds === 1) {
+      return `Congratulations, you've completed the test in under ${seconds} second.`;
+    }
+    if (seconds < 61) {
+      return `Congratulations, you've completed the test in under ${seconds} seconds.`;
+    }
+    if (seconds < 3601) {
+      return `Congratulations, you've completed the test in under ${seconds / 60} minutes.`;
+    }
+    return `Congratulations, you've completed the test in under ${seconds / (60 * 60)} hours.`;
+  }
+
+  private openSnackBar(message: string, action: string): void {
+    this.snackBar.open(message, action, { duration: undefined });
+  }
+}
+src/app/quiz/quiz.component.html
+
+html
+<mat-card>
+  <article>
+    <h1>{{ quiz().title | uppercase }}</h1>
+    <p>{{ quiz().description }}</p>
+    <p>Your score so far: {{ scorePercentage() | number: '1.0-0' }} out of 100.</p>
+
+    <mat-stepper orientation="vertical">
+      @for (question of quiz().questions; track question.id) {
+        <mat-step>
+          <h2>{{ question.question }}</h2>
+          @for (option of question.options; track option.label) {
+            <div class="button-container">
+              <button mat-raised-button color="primary" (click)="onClick(question.id, option)">
+                {{ option.label }}. {{ option.text }}
+              </button>
+            </div>
+          }
+        </mat-step>
+      }
+    </mat-stepper>
+  </article>
+</mat-card>
+src/app/playground/playground.component.ts
+
+ts
+import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
+import { Title } from '@angular/platform-browser';
+
+@Component({
+  selector: 'app-playground',
+  imports: [],
+  templateUrl: './playground.component.html',
+  styleUrl: './playground.component.scss',
+  changeDetection: ChangeDetectionStrategy.OnPush,
+})
+export class PlaygroundComponent {
+  constructor() {
+    inject(Title).setTitle('Playground');
+  }
+}
+src/app/playground/playground.component.html
+
+html
+<article>
+  <h1>Playground</h1>
+  <p>A space for experiments and works in progress.</p>
+</article>
+Tests
+src/app/navigation/navigation.service.spec.ts
+
+ts
+import { Component } from '@angular/core';
+import { TestBed } from '@angular/core/testing';
+import { Routes, provideRouter } from '@angular/router';
+import { RouterTestingHarness } from '@angular/router/testing';
+import { AppRouteData } from './navigation.model';
+import { NavigationService } from './navigation.service';
+
+@Component({ selector: 'test-cmp', template: 'x' })
+class TestCmp {}
+
+const ROUTES: Routes = [
+  { path: 'home', component: TestCmp, data: { nav: { label: 'Home', order: 0 } } satisfies AppRouteData },
+  {
+    path: 'quiz',
+    component: TestCmp,
+    data: {
+      nav: {
+        label: 'Quizzes',
+        order: 1,
+        children: [{ label: 'US History', path: '/quiz/us-history' }],
+      },
+    } satisfies AppRouteData,
+  },
+  { path: 'quiz/:title', component: TestCmp },
+  { path: 'hidden', component: TestCmp, data: { chromeless: true } satisfies AppRouteData },
+  { path: '', redirectTo: 'home', pathMatch: 'full' },
+];
+
+describe('NavigationService', () => {
+  beforeEach(() => {
+    TestBed.configureTestingModule({ providers: [provideRouter(ROUTES)] });
+  });
+
+  it('derives ordered top-level items from routes with nav data', () => {
+    const service = TestBed.inject(NavigationService);
+    expect(service.items.map((item) => item.label)).toEqual(['Home', 'Quizzes']);
+    expect(service.items.map((item) => item.kind)).toEqual(['link', 'group']);
+  });
+
+  it('excludes parameterised and redirect routes from the navigation', () => {
+    const service = TestBed.inject(NavigationService);
+    expect(service.items).toHaveLength(2);
+    expect(service.items.every((item) => item.label !== undefined)).toBe(true);
+  });
+
+  it('reports chromeless state from the deepest activated route', async () => {
+    // Inject the service first so its NavigationEnd subscription is live before
+    // any navigation occurs.
+    const service = TestBed.inject(NavigationService);
+    const harness = await RouterTestingHarness.create();
+
+    await harness.navigateByUrl('/home');
+    expect(service.chromeless()).toBe(false);
+
+    await harness.navigateByUrl('/hidden');
+    expect(service.chromeless()).toBe(true);
+  });
+});
+src/app/navigation/nav.component.spec.ts
+
+ts
+import { signal } from '@angular/core';
+import { TestBed } from '@angular/core/testing';
+import { provideNoopAnimations } from '@angular/platform-browser/animations';
+import { provideRouter } from '@angular/router';
+import { NavComponent } from './nav.component';
+import { NavItem } from './navigation.model';
+import { NavigationService } from './navigation.service';
+
+const ITEMS: readonly NavItem[] = [
+  { kind: 'link', label: 'Home', path: '/home', icon: 'home', exact: false },
+  {
+    kind: 'group',
+    label: 'Quizzes',
+    icon: 'quiz',
+    children: [{ kind: 'link', label: 'US History', path: '/quiz/us-history', exact: false }],
+  },
+];
+
+describe('NavComponent', () => {
+  beforeEach(async () => {
+    await TestBed.configureTestingModule({
+      imports: [NavComponent],
+      providers: [
+        provideRouter([]),
+        provideNoopAnimations(),
+        { provide: NavigationService, useValue: { items: ITEMS, chromeless: signal(false) } },
+      ],
+    }).compileComponents();
+  });
+
+  it('creates', () => {
+    const fixture = TestBed.createComponent(NavComponent);
+    fixture.detectChanges();
+    expect(fixture.componentInstance).toBeTruthy();
+  });
+
+  it('renders a direct link for a link item', () => {
+    const fixture = TestBed.createComponent(NavComponent);
+    fixture.detectChanges();
+    const link: HTMLAnchorElement | null = fixture.nativeElement.querySelector('a[href="/home"]');
+    expect(link).not.toBeNull();
+    expect(link!.textContent).toContain('Home');
+  });
+
+  it('renders exactly one trigger button for a group item', () => {
+    const fixture = TestBed.createComponent(NavComponent);
+    fixture.detectChanges();
+    const buttons: HTMLButtonElement[] = Array.from(fixture.nativeElement.querySelectorAll('button'));
+    expect(buttons).toHaveLength(1);
+    expect(buttons[0].textContent).toContain('Quizzes');
+  });
+
+  it('does not render group children until the menu is opened', () => {
+    const fixture = TestBed.createComponent(NavComponent);
+    fixture.detectChanges();
+    // mat-menu content is rendered lazily into an overlay on open, so the
+    // child link must not be present in the DOM before the trigger is clicked.
+    const child = fixture.nativeElement.querySelector('a[href="/quiz/us-history"]');
+    expect(child).toBeNull();
+  });
+});
+src/app/app.component.spec.ts
+
+ts
+import { Component } from '@angular/core';
+import { TestBed } from '@angular/core/testing';
+import { provideNoopAnimations } from '@angular/platform-browser/animations';
+import { Router, Routes, provideRouter } from '@angular/router';
+import { of } from 'rxjs';
+import { AppComponent } from './app.component';
+import { HandleUnrecoverableStateService } from './handle-unrecoverable-state.service';
+import { IpinfoService } from './ipinfo.service';
+import { AppRouteData } from './navigation/navigation.model';
+import { PromptUpdateService } from './prompt-update.service';
+
+@Component({ selector: 'test-page', template: 'page' })
+class TestPageComponent {}
+
+const ROUTES: Routes = [
+  {
+    path: 'home',
+    component: TestPageComponent,
+    data: { nav: { label: 'Home', order: 0 } } satisfies AppRouteData,
+  },
+  {
+    path: 'loaderio',
+    component: TestPageComponent,
+    data: { chromeless: true } satisfies AppRouteData,
+  },
+  { path: '', redirectTo: 'home', pathMatch: 'full' },
+];
+
+describe('AppComponent', () => {
+  const ipInfo = { getIpAddress: vi.fn(() => of({ ip: '203.0.113.1', country: 'US' })) };
+  const promptUpdate = { checkForUpdates: vi.fn() };
+
+  beforeEach(async () => {
+    ipInfo.getIpAddress.mockClear();
+    localStorage.clear();
+    await TestBed.configureTestingModule({
+      imports: [AppComponent],
+      providers: [
+        provideRouter(ROUTES),
+        provideNoopAnimations(),
+        { provide: IpinfoService, useValue: ipInfo },
+        { provide: PromptUpdateService, useValue: promptUpdate },
+        { provide: HandleUnrecoverableStateService, useValue: {} },
+      ],
+    }).compileComponents();
+  });
+
+  it('creates the root component', () => {
+    const fixture = TestBed.createComponent(AppComponent);
+    expect(fixture.componentInstance).toBeTruthy();
+  });
+
+  it('fetches and caches IP information when none is stored', () => {
+    TestBed.createComponent(AppComponent);
+    expect(ipInfo.getIpAddress).toHaveBeenCalledTimes(1);
+    expect(localStorage.getItem('ipInformation')).not.toBeNull();
+  });
+
+  it('does not fetch IP information when it is already cached', () => {
+    localStorage.setItem('ipInformation', JSON.stringify({ ip: 'cached' }));
+    TestBed.createComponent(AppComponent);
+    expect(ipInfo.getIpAddress).not.toHaveBeenCalled();
+  });
+
+  it('renders the global navigation on a normal route', async () => {
+    const fixture = TestBed.createComponent(AppComponent);
+    await TestBed.inject(Router).navigate(['/home']);
+    await fixture.whenStable();
+    fixture.detectChanges();
+    expect(fixture.nativeElement.querySelector('app-nav')).not.toBeNull();
+  });
+
+  it('hides the global navigation on a chromeless route', async () => {
+    const fixture = TestBed.createComponent(AppComponent);
+    await TestBed.inject(Router).navigate(['/loaderio']);
+    await fixture.whenStable();
+    fixture.detectChanges();
+    expect(fixture.nativeElement.querySelector('app-nav')).toBeNull();
+  });
+});
+src/app/home/home.component.spec.ts
+
+ts
+import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { Title } from '@angular/platform-browser';
+import { provideRouter } from '@angular/router';
+
+import { HomeComponent } from './home.component';
+
+describe('HomeComponent', () => {
+  let component: HomeComponent;
+  let fixture: ComponentFixture<HomeComponent>;
+
+  beforeEach(async () => {
+    await TestBed.configureTestingModule({
+      imports: [HomeComponent],
+      providers: [provideRouter([])],
+    }).compileComponents();
+
+    fixture = TestBed.createComponent(HomeComponent);
+    component = fixture.componentInstance;
+    fixture.detectChanges();
+  });
+
+  it('should create', () => {
+    expect(component).toBeTruthy();
+  });
+
+  it('sets the document title', () => {
+    expect(TestBed.inject(Title).getTitle()).toBe('Colorado Quiz');
+  });
+
+  it('links to every quiz', () => {
+    const hrefs = Array.from(
+      fixture.nativeElement.querySelectorAll('a'),
+      (a: HTMLAnchorElement) => a.getAttribute('href'),
+    );
+    expect(hrefs).toEqual(
+      expect.arrayContaining([
+        '/quiz/general-physics',
+        '/quiz/us-history',
+        '/quiz/us-geography',
+        '/quiz/us-civics',
+      ]),
+    );
+  });
+
+  it('links to the news feeds', () => {
+    const hrefs = Array.from(
+      fixture.nativeElement.querySelectorAll('a'),
+      (a: HTMLAnchorElement) => a.getAttribute('href'),
+    );
+    expect(hrefs).toEqual(expect.arrayContaining(['/news/top-stories', '/news/local']));
+  });
+
+  it('does not render its own toolbar (navigation is global)', () => {
+    expect(fixture.nativeElement.querySelector('mat-toolbar')).toBeNull();
+  });
+});
+src/app/quiz/quiz.component.spec.ts
+
+ts
+import { TestBed } from '@angular/core/testing';
+import { provideNoopAnimations } from '@angular/platform-browser/animations';
+import { provideRouter } from '@angular/router';
+import { MatSnackBar } from '@angular/material/snack-bar';
+import { of } from 'rxjs';
+import { HoneynutCheeriosService } from '../honeynut-cheerios.service';
+import { Quiz } from '../quiz';
+import { QuizService } from '../quiz.service';
+import { QuizComponent } from './quiz.component';
+
+const MOCK_QUIZ: Quiz = {
+  title: 'Test Quiz',
+  description: 'A quiz used in unit tests',
+  questions: [
+    {
+      id: 1,
+      question: 'First question',
+      options: [
+        { label: 'A', text: 'right', correct: true },
+        { label: 'B', text: 'wrong', correct: false },
+      ],
+    },
+    {
+      id: 2,
+      question: 'Second question',
+      options: [
+        { label: 'A', text: 'wrong', correct: false },
+        { label: 'B', text: 'right', correct: true },
+      ],
+    },
+  ],
+};
+
+describe('QuizComponent', () => {
+  const snackBar = { open: vi.fn() };
+
+  beforeEach(async () => {
+    snackBar.open.mockReset();
+    await TestBed.configureTestingModule({
+      imports: [QuizComponent],
+      providers: [
+        provideRouter([]),
+        provideNoopAnimations(),
+        { provide: QuizService, useValue: { getQuiz: () => of(MOCK_QUIZ) } },
+        { provide: HoneynutCheeriosService, useValue: { submit: vi.fn() } },
+        { provide: MatSnackBar, useValue: snackBar },
+      ],
+    }).compileComponents();
+  });
+
+  it('creates and loads the quiz for the routed subject', async () => {
+    const fixture = TestBed.createComponent(QuizComponent);
+    fixture.componentRef.setInput('title', 'us-history');
+    await fixture.whenStable();
+    expect(fixture.componentInstance).toBeTruthy();
+    expect(fixture.componentInstance.quiz().title).toBe('Test Quiz');
+  });
+
+  it('starts at a score of zero', async () => {
+    const fixture = TestBed.createComponent(QuizComponent);
+    fixture.componentRef.setInput('title', 'us-history');
+    await fixture.whenStable();
+    expect(fixture.componentInstance.scorePercentage()).toBe(0);
+  });
+
+  it('reaches 100% once every question is answered correctly', async () => {
+    const fixture = TestBed.createComponent(QuizComponent);
+    fixture.componentRef.setInput('title', 'us-history');
+    await fixture.whenStable();
+    const component = fixture.componentInstance;
+
+    component.onClick(1, MOCK_QUIZ.questions[0].options[0]); // correct
+    expect(component.scorePercentage()).toBe(50);
+
+    component.onClick(2, MOCK_QUIZ.questions[1].options[1]); // correct
+    expect(component.scorePercentage()).toBe(100);
+  });
+
+  it('counts only the latest answer for a given question', async () => {
+    const fixture = TestBed.createComponent(QuizComponent);
+    fixture.componentRef.setInput('title', 'us-history');
+    await fixture.whenStable();
+    const component = fixture.componentInstance;
+
+    component.onClick(1, MOCK_QUIZ.questions[0].options[1]); // wrong
+    expect(component.scorePercentage()).toBe(0);
+
+    component.onClick(1, MOCK_QUIZ.questions[0].options[0]); // corrected to right
+    expect(component.scorePercentage()).toBe(50);
+  });
+
+  it('renders the quiz title (uppercased) and description', async () => {
+    const fixture = TestBed.createComponent(QuizComponent);
+    fixture.componentRef.setInput('title', 'us-history');
+    await fixture.whenStable();
+    fixture.detectChanges();
+    const text: string = fixture.nativeElement.textContent;
+    expect(text).toContain('TEST QUIZ');
+    expect(text).toContain('A quiz used in unit tests');
+  });
+
+  it('keeps the score at zero and notifies on a wrong answer', async () => {
+    const fixture = TestBed.createComponent(QuizComponent);
+    fixture.componentRef.setInput('title', 'us-history');
+    await fixture.whenStable();
+    const component = fixture.componentInstance;
+
+    component.onClick(1, MOCK_QUIZ.questions[0].options[1]); // wrong
+    expect(component.scorePercentage()).toBe(0);
+    expect(snackBar.open).toHaveBeenCalled();
+  });
+
+  it('does not render its own toolbar (navigation is global)', async () => {
+    const fixture = TestBed.createComponent(QuizComponent);
+    fixture.componentRef.setInput('title', 'us-history');
+    await fixture.whenStable();
+    fixture.detectChanges();
+    expect(fixture.nativeElement.querySelector('mat-toolbar')).toBeNull();
+  });
+});
+src/app/playground/playground.component.spec.ts
+
+ts
+import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { Title } from '@angular/platform-browser';
+
+import { PlaygroundComponent } from './playground.component';
+
+describe('PlaygroundComponent', () => {
+  let component: PlaygroundComponent;
+  let fixture: ComponentFixture<PlaygroundComponent>;
+
+  beforeEach(async () => {
+    await TestBed.configureTestingModule({
+      imports: [PlaygroundComponent],
+    }).compileComponents();
+
+    fixture = TestBed.createComponent(PlaygroundComponent);
+    component = fixture.componentInstance;
+    fixture.detectChanges();
+  });
+
+  it('should create', () => {
+    expect(component).toBeTruthy();
+  });
+
+  it('renders a heading', () => {
+    const heading: HTMLElement | null = fixture.nativeElement.querySelector('h1');
+    expect(heading?.textContent).toContain('Playground');
+  });
+
+  it('sets the document title', () => {
+    expect(TestBed.inject(Title).getTitle()).toBe('Playground');
+  });
+});
+e2e/app.spec.ts
+
+ts
+import { expect, test } from '@playwright/test';
+
+test('home page shows the quiz and news links', async ({ page }) => {
+  await page.goto('/');
+  await expect(page.getByRole('heading', { name: 'Quizzes' })).toBeVisible();
+  await expect(page.getByRole('link', { name: 'US History' })).toBeVisible();
+  await expect(page.getByRole('link', { name: 'Top Stories' })).toBeVisible();
+});
+
+test('a quiz loads and answering a question shows feedback', async ({ page }) => {
+  await page.goto('/quiz/us-civics');
+
+  const heading = page.locator('mat-card h1');
+  await expect(heading).toBeVisible();
+  await expect(heading).not.toHaveText('LOADING...');
+
+  await page.locator('.button-container button').first().click();
+
+  // The snackbar feedback always contains the word "correct"
+  // ("Your answer is correct!" or "...is not correct.").
+  await expect(page.getByText(/correct/i)).toBeVisible();
+});
+
+test('the news page renders a headline', async ({ page }) => {
+  await page.goto('/news/top-stories');
+  await expect(page.locator('article h1')).toBeVisible();
+});
+
+test('the news page exposes the global navigation', async ({ page }) => {
+  await page.goto('/news/top-stories');
+  const toolbar = page.locator('mat-toolbar');
+  await expect(toolbar.getByRole('link', { name: 'Home' })).toBeVisible();
+});
+
+test('navigation works from a quiz back to home', async ({ page }) => {
+  await page.goto('/quiz/us-civics');
+  await page.locator('mat-toolbar').getByRole('link', { name: 'Home' }).click();
+  await expect(page).toHaveURL(/\/home$/);
+  await expect(page.getByRole('heading', { name: 'Quizzes' })).toBeVisible();
+});
+
+test('every routable destination is reachable from the global navigation', async ({ page }) => {
+  await page.goto('/home');
+  const toolbar = page.locator('mat-toolbar');
+
+  // Top-level links.
+  await expect(toolbar.getByRole('link', { name: 'Home' })).toBeVisible();
+  await expect(toolbar.getByRole('link', { name: /Key Industries/ })).toBeVisible();
+  await expect(toolbar.getByRole('link', { name: /Playground/ })).toBeVisible();
+
+  // Dropdown groups.
+  await expect(toolbar.getByRole('button', { name: /Quizzes/ })).toBeVisible();
+  await expect(toolbar.getByRole('button', { name: /News/ })).toBeVisible();
+
+  // Following a top-level link navigates and renders that component.
+  await toolbar.getByRole('link', { name: /Playground/ }).click();
+  await expect(page).toHaveURL(/\/playground$/);
+  await expect(page.getByRole('heading', { name: 'Playground' })).toBeVisible();
+});
+One deletion
+MenuComponent is now dead code — after removing it from HomeComponent and QuizComponent, nothing imports it. Delete the whole folder:
+
+bash
+git rm -r src/app/menu
+That removes menu.component.ts, .html, .scss, and .spec.ts.
+
+How it works going forward
+Add a routable component to the nav: add its route with data: { nav: { label: '…', order: N, icon: '…' } } satisfies AppRouteData. It appears in the bar automatically and the page inherits the nav with no other changes. For data-driven destinations behind a :param route (like individual quizzes), list them under nav.children to get a dropdown.
+Hide the shell on a route (e.g. machine endpoints): data: { chromeless: true }.
+Param routes, the '' redirect, and chromeless routes are filtered out of the menu automatically, so they never produce a broken link.
+The design keeps each piece single-responsibility: toNavItems is a pure route-table→model function (easy to unit test), NavigationService exposes the derived state, NavComponent only renders, and the page components only hold content. Adding routes never touches navigation code (open/closed).
+
+Run yarn test for the unit tests and yarn e2e for the Playwright suite.
+
+One housekeeping note from earlier: the read-only GitHub token you pasted should be rotated, since it's now in the conversation history.
+
+
+App.routes
+TS 
+
+Navigation.model
+TS 
+
+Navigation.service
+TS 
+
+Nav.component
+TS 
+
+Nav.component
+Code · HTML 
+
+Nav.component
+Code · SCSS 
+
+App.component
+TS 
+
+App.component
+Code · HTML 
+
+Home.component
+TS 
+
+Home.component
+Code · HTML 
+
+Quiz.component
+TS 
+
+Quiz.component
+Code · HTML 
+
+Playground.component
+TS 
+
+Playground.component
+Code · HTML 
+
+Navigation.service.spec
+TS 
+
+Nav.component.spec
+TS 
+
+App.component.spec
+TS 
+
+Home.component.spec
+TS 
+
+Quiz.component.spec
+TS 
+
+Playground.component.spec
+TS 
+
+App.spec
+TS 
+
+
+Want to be notified when Claude responds?
+Claude Fable 5 is currently unavailable.
+Learn more(opens in new tab)
+
+
+
+
+
+Claude is AI and can make mistakes. Please double-check responses.
+
+
+
+
+
+
+
+61
+48

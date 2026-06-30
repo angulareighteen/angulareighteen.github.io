@@ -88,4 +88,33 @@ describe('QuizComponent', () => {
     component.onClick(1, MOCK_QUIZ.questions[0].options[0]); // corrected to right
     expect(component.scorePercentage()).toBe(50);
   });
+
+  it('renders the quiz title (uppercased) and description', async () => {
+    const fixture = TestBed.createComponent(QuizComponent);
+    fixture.componentRef.setInput('title', 'us-history');
+    await fixture.whenStable();
+    fixture.detectChanges();
+    const text: string = fixture.nativeElement.textContent;
+    expect(text).toContain('TEST QUIZ');
+    expect(text).toContain('A quiz used in unit tests');
+  });
+
+  it('keeps the score at zero and notifies on a wrong answer', async () => {
+    const fixture = TestBed.createComponent(QuizComponent);
+    fixture.componentRef.setInput('title', 'us-history');
+    await fixture.whenStable();
+    const component = fixture.componentInstance;
+
+    component.onClick(1, MOCK_QUIZ.questions[0].options[1]); // wrong
+    expect(component.scorePercentage()).toBe(0);
+    expect(snackBar.open).toHaveBeenCalled();
+  });
+
+  it('does not render its own toolbar (navigation is global)', async () => {
+    const fixture = TestBed.createComponent(QuizComponent);
+    fixture.componentRef.setInput('title', 'us-history');
+    await fixture.whenStable();
+    fixture.detectChanges();
+    expect(fixture.nativeElement.querySelector('mat-toolbar')).toBeNull();
+  });
 });

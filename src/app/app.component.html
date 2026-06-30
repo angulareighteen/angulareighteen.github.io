@@ -1,3 +1,6 @@
 <app-loading />
 <div class="earth-block"></div>
+@if (!chromeless()) {
+  <app-nav />
+}
 <router-outlet />
