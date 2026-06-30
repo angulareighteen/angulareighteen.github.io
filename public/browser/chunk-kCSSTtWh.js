@@ -1,2 +1,0 @@
-import {B as Bv,r as rE}from'./main-YS4WI2CN.js';var a=class o{static \u0275fac=function(e){return new(e||o)};static \u0275cmp=Bv({type:o,selectors:[["app-loader-io"]],decls:1,vars:0,template:function(e,r){e&1&&rE(0,`loaderio-27f3270e87fa1a911fde7dab10c49d7c
-`);},encapsulation:2})};export{a as LoaderIoComponent};

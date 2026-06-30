@@ -1,1 +1,0 @@
-import {B as Bv}from'./main-YS4WI2CN.js';var t=class e{static \u0275fac=function(n){return new(n||e)};static \u0275cmp=Bv({type:e,selectors:[["app-playground"]],decls:0,vars:0,template:function(n,p){},encapsulation:2})};export{t as PlaygroundComponent};
