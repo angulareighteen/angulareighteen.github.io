@@ -84,3 +84,91 @@ info All dependencies
 Done in 0.95s.
 ```
 ```bash
+yarn run v1.22.22
+$ ng build --configuration production
+❯ Building...
+✔ Building...
+Application bundle generation failed. [1.239 seconds] - 2026-06-30T13:18:15.458Z
+
+[33m▲ [43;33m[[43;30mWARNING[43;33m][0m [1mNG8113: RouterLink is not used within the template of NavComponent[0m [1m[35m[plugin angular-compiler][0m
+
+    src/app/navigation/nav.component.ts:19:77:
+[37m      19 │ ...dule, MatMenuModule, MatIconModule, [32mRouterLink[37m, RouterLinkActive],
+         ╵                                        [32m~~~~~~~~~~[0m
+
+
+[33m▲ [43;33m[[43;30mWARNING[43;33m][0m [1mNG8113: RouterLinkActive is not used within the template of NavComponent[0m [1m[35m[plugin angular-compiler][0m
+
+    src/app/navigation/nav.component.ts:19:89:
+[37m      19 │ ...dule, MatMenuModule, MatIconModule, RouterLink, [32mRouterLinkActive[37m],
+         ╵                                                    [32m~~~~~~~~~~~~~~~~[0m
+
+
+[31m✘ [41;31m[[41;97mERROR[41;31m][0m [1mNG5002: Unclosed block "for"[0m [1m[35m[plugin angular-compiler][0m
+
+    src/app/navigation/nav.component.html:3:4:
+[37m      3 │     [32m@for (item of items; track item.label) {[37m
+        ╵     [32m~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~[0m
+
+  Error occurs in the template of component NavComponent.
+
+    src/app/navigation/nav.component.ts:20:15:
+[37m      20 │   templateUrl: [32m'./nav.component.html'[37m,
+         ╵                [32m~~~~~~~~~~~~~~~~~~~~~~[0m
+
+
+[31m✘ [41;31m[[41;97mERROR[41;31m][0m [1mNG5002: Unclosed block "switch"[0m [1m[35m[plugin angular-compiler][0m
+
+    src/app/navigation/nav.component.html:4:6:
+[37m      4 │       [32m@switch (item.kind) {[37m
+        ╵       [32m~~~~~~~~~~~~~~~~~~~~~[0m
+
+  Error occurs in the template of component NavComponent.
+
+    src/app/navigation/nav.component.ts:20:15:
+[37m      20 │   templateUrl: [32m'./nav.component.html'[37m,
+         ╵                [32m~~~~~~~~~~~~~~~~~~~~~~[0m
+
+
+[31m✘ [41;31m[[41;97mERROR[41;31m][0m [1mNG5002: Unclosed block "case"[0m [1m[35m[plugin angular-compiler][0m
+
+    src/app/navigation/nav.component.html:5:8:
+[37m      5 │         [32m@case ('link') {[37m
+        ╵         [32m~~~~~~~~~~~~~~~~[0m
+
+  Error occurs in the template of component NavComponent.
+
+    src/app/navigation/nav.component.ts:20:15:
+[37m      20 │   templateUrl: [32m'./nav.component.html'[37m,
+         ╵                [32m~~~~~~~~~~~~~~~~~~~~~~[0m
+
+
+[31m✘ [41;31m[[41;97mERROR[41;31m][0m [1mNG5002: Invalid ICU message. Missing '}'.[0m [1m[35m[plugin angular-compiler][0m
+
+    src/app/navigation/nav.component.html:41:0:
+[37m      41 │ [32m[37m
+         ╵ [32m^[0m
+
+  Error occurs in the template of component NavComponent.
+
+    src/app/navigation/nav.component.ts:20:15:
+[37m      20 │   templateUrl: [32m'./nav.component.html'[37m,
+         ╵                [32m~~~~~~~~~~~~~~~~~~~~~~[0m
+
+
+[31m✘ [41;31m[[41;97mERROR[41;31m][0m [1mNG5002: Unexpected character "EOF" (Do you have an unescaped "{" in your template? Use "{{ '{' }}") to escape it.)[0m [1m[35m[plugin angular-compiler][0m
+
+    src/app/navigation/nav.component.html:41:0:
+[37m      41 │ [32m[37m
+         ╵ [32m^[0m
+
+  Error occurs in the template of component NavComponent.
+
+    src/app/navigation/nav.component.ts:20:15:
+[37m      20 │   templateUrl: [32m'./nav.component.html'[37m,
+         ╵                [32m~~~~~~~~~~~~~~~~~~~~~~[0m
+
+
+error Command failed with exit code 1.
+info Visit https://yarnpkg.com/en/docs/cli/run for documentation about this command.
+```
