@@ -297,29 +297,29 @@ fi
 note "done."
 
 ==> Node version manager: fnm
-[master a2e0f07] add timestamp
- 2 files changed, 25 insertions(+), 343 deletions(-)
-[master 6f757ab] begin add system status
+[master c178297] add timestamp
+ 2 files changed, 25 insertions(+), 391 deletions(-)
+[master 35386b9] begin add system status
  2 files changed, 38 insertions(+)
-[master b6c9034] add system status
+[master 595549f] add system status
  1 file changed, 6 insertions(+)
-[master 84a253b] end add system status
+[master 9628fd9] end add system status
  1 file changed, 1 insertion(+)
-[master dae3165] begin update node
+[master 4f4a878] begin update node
  2 files changed, 28 insertions(+)
 Installing Node v24.18.0 (x64)
 warning: Version already installed at "/home/kushal/.local/share/fnm/node-versions/v24.18.0"
 
-real	0m0.110s
-user	0m0.006s
-sys	0m0.010s
+real	0m0.096s
+user	0m0.007s
+sys	0m0.008s
 Using Node for alias lts-latest
 
 real	0m0.001s
-user	0m0.001s
-sys	0m0.000s
+user	0m0.000s
+sys	0m0.002s
 
-changed 278 packages in 5s
+changed 278 packages in 2s
 
 69 packages are looking for funding
   run `npm fund` for details
@@ -328,21 +328,21 @@ npm warn allow-scripts   yarn@1.22.22 (preinstall: :; (node ./preinstall.js > /d
 npm warn allow-scripts
 npm warn allow-scripts Run `npm approve-scripts --allow-scripts-pending` to review, or `npm approve-scripts <pkg>` to allow.
 
-real	0m5.527s
-user	0m3.314s
-sys	0m1.764s
+real	0m2.376s
+user	0m2.816s
+sys	0m1.678s
 
-real	0m0.384s
-user	0m0.315s
-sys	0m0.111s
+real	0m0.360s
+user	0m0.310s
+sys	0m0.112s
 
-real	0m0.215s
-user	0m0.241s
-sys	0m0.046s
-[master 393818f] end update node
- 2 files changed, 69 insertions(+)
+real	0m0.210s
+user	0m0.226s
+sys	0m0.057s
+[master 5ca6c07] end update node
+ 2 files changed, 70 insertions(+)
 On branch master
-Your branch is ahead of 'origin/master' by 10 commits.
+Your branch is ahead of 'origin/master' by 8 commits.
   (use "git push" to publish your local commits)
 
 nothing to commit, working tree clean
@@ -355,194 +355,102 @@ Fetching dependency metadata from registry...
 Package '@angular/core' is already up to date.
 Package '@angular/cli' is already up to date.
 Package '@angular/material' is already up to date.
-Done in 3.29s.
+Done in 3.25s.
 
-real	0m3.392s
-user	0m1.692s
-sys	0m0.551s
+real	0m3.358s
+user	0m1.667s
+sys	0m0.550s
 On branch master
-Your branch is ahead of 'origin/master' by 10 commits.
+Your branch is ahead of 'origin/master' by 8 commits.
   (use "git push" to publish your local commits)
 
 nothing to commit, working tree clean
 
 real	0m1.004s
-user	0m0.706s
-sys	0m0.210s
+user	0m0.728s
+sys	0m0.184s
 
-real	0m1.070s
-user	0m1.274s
-sys	0m0.495s
-[master dd22b4f] begin prepare to build angular
+real	0m1.062s
+user	0m1.226s
+sys	0m0.549s
+[master 53fb316] begin prepare to build angular
  2 files changed, 50 insertions(+)
 
-real	0m1.840s
-user	0m3.392s
-sys	0m0.574s
-[master d56b0a8] end prepare to build angular
- 38 files changed, 88 insertions(+), 12454 deletions(-)
- delete mode 100644 public/3rdpartylicenses.txt
- delete mode 100644 public/browser/assets/icons/icon-128x128.png
- delete mode 100644 public/browser/assets/icons/icon-144x144.png
- delete mode 100644 public/browser/assets/icons/icon-152x152.png
- delete mode 100644 public/browser/assets/icons/icon-192x192.png
- delete mode 100644 public/browser/assets/icons/icon-384x384.png
- delete mode 100644 public/browser/assets/icons/icon-512x512.png
- delete mode 100644 public/browser/assets/icons/icon-72x72.png
- delete mode 100644 public/browser/assets/icons/icon-96x96.png
- delete mode 100644 public/browser/assets/images/2021-02-15_17-08-33_231.png
- delete mode 100644 public/browser/assets/images/2021-02-17_05-26-59_080.heic
- delete mode 100644 public/browser/assets/images/2021-02-17_05-26-59_080.jpeg
- delete mode 100644 public/browser/assets/images/2021-02-17_16-29-21_636.heic
- delete mode 100644 public/browser/assets/images/2021-02-17_16-29-21_636.png
- delete mode 100644 public/browser/assets/images/dice.png
- delete mode 100644 public/browser/assets/images/globe.svg
- delete mode 100755 public/browser/assets/images/lgi-homes.jpeg
- delete mode 100644 public/browser/assets/images/person1.svg
- delete mode 100644 public/browser/assets/images/person2.svg
- delete mode 100644 public/browser/assets/images/person3.svg
- delete mode 100644 public/browser/assets/news/local.json
- delete mode 100644 public/browser/assets/news/top-stories.json
- delete mode 100644 public/browser/assets/quiz/general-physics.json
- delete mode 100644 public/browser/assets/quiz/us-civics.json
- delete mode 100644 public/browser/assets/quiz/us-geography.json
- delete mode 100644 public/browser/assets/quiz/us-history.json
- delete mode 100644 public/browser/assets/text/pendo.markdown
- delete mode 100644 public/browser/assets/videos/spookydiscord.webm
- delete mode 100644 public/browser/favicon.ico
- delete mode 100644 public/browser/index.html
- delete mode 100644 public/browser/manifest.webmanifest
- delete mode 100755 public/browser/ngsw-worker.js
- delete mode 100644 public/browser/ngsw.json
- delete mode 100755 public/browser/safety-worker.js
- delete mode 100644 public/browser/styles-AX2II72J.css
- delete mode 100755 public/browser/worker-basic.min.js
- delete mode 100644 public/prerendered-routes.json
-[master a63c300] begin prepare to unit test angular
- 2 files changed, 27 insertions(+), 33 deletions(-)
-▲ [WARNING] NG8113: RouterLink is not used within the template of NavComponent [plugin angular-compiler]
+real	0m3.411s
+user	0m5.638s
+sys	0m0.723s
+[master f033336] end prepare to build angular
+ 1 file changed, 26 insertions(+)
+[master 9e1abd4] begin prepare to unit test angular
+ 2 files changed, 27 insertions(+), 8 deletions(-)
 
-    src/app/navigation/nav.component.ts:19:77:
-      19 │ ...dule, MatMenuModule, MatIconModule, RouterLink, RouterLinkActive],
-         ╵                                        ~~~~~~~~~~
+⎯⎯⎯⎯⎯⎯ Failed Suites 1 ⎯⎯⎯⎯⎯⎯⎯
 
+ FAIL   angulareighteen  src/app/app.spec.ts [ src/app/app.spec.ts ]
+Error: Playwright Test did not expect test() to be called here.
+Most common reasons include:
+- You are calling test() in a configuration file.
+- You are calling test() in a file that is imported by the configuration file.
+- You have two different versions of @playwright/test. This usually happens
+  when one of the dependencies in your package.json depends on @playwright/test.
+- You are calling test() from an async test.describe() block. Only sync ones are supported.
+ ❯ _TestTypeImpl._currentSuite node_modules/playwright/lib/common/index.js:2257:13
+ ❯ _TestTypeImpl._createTest node_modules/playwright/lib/common/index.js:2271:24
+ ❯ node_modules/playwright/lib/common/index.js:1220:12
+ ❯ src/app/app.spec.ts:3:1
+      1| import { expect, test } from '@playwright/test';
+      2|
+      3| test('home page shows the quiz and news links', async ({ page }) => {
+       | ^
+      4|   await page.goto('/');
+      5|   await expect(page.getByRole('heading', { name: 'Quizzes' })).toBeVis…
 
-▲ [WARNING] NG8113: RouterLinkActive is not used within the template of NavComponent [plugin angular-compiler]
-
-    src/app/navigation/nav.component.ts:19:89:
-      19 │ ...dule, MatMenuModule, MatIconModule, RouterLink, RouterLinkActive],
-         ╵                                                    ~~~~~~~~~~~~~~~~
-
-
-✘ [ERROR] NG5002: Unclosed block "for" [plugin angular-compiler]
-
-    src/app/navigation/nav.component.html:3:4:
-      3 │     @for (item of items; track item.label) {
-        ╵     ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-
-  Error occurs in the template of component NavComponent.
-
-    src/app/navigation/nav.component.ts:20:15:
-      20 │   templateUrl: './nav.component.html',
-         ╵                ~~~~~~~~~~~~~~~~~~~~~~
-
-
-✘ [ERROR] NG5002: Unclosed block "switch" [plugin angular-compiler]
-
-    src/app/navigation/nav.component.html:4:6:
-      4 │       @switch (item.kind) {
-        ╵       ~~~~~~~~~~~~~~~~~~~~~
-
-  Error occurs in the template of component NavComponent.
-
-    src/app/navigation/nav.component.ts:20:15:
-      20 │   templateUrl: './nav.component.html',
-         ╵                ~~~~~~~~~~~~~~~~~~~~~~
-
-
-✘ [ERROR] NG5002: Unclosed block "case" [plugin angular-compiler]
-
-    src/app/navigation/nav.component.html:5:8:
-      5 │         @case ('link') {
-        ╵         ~~~~~~~~~~~~~~~~
-
-  Error occurs in the template of component NavComponent.
-
-    src/app/navigation/nav.component.ts:20:15:
-      20 │   templateUrl: './nav.component.html',
-         ╵                ~~~~~~~~~~~~~~~~~~~~~~
-
-
-✘ [ERROR] NG5002: Invalid ICU message. Missing '}'. [plugin angular-compiler]
-
-    src/app/navigation/nav.component.html:41:0:
-      41 │ 
-         ╵ ^
-
-  Error occurs in the template of component NavComponent.
-
-    src/app/navigation/nav.component.ts:20:15:
-      20 │   templateUrl: './nav.component.html',
-         ╵                ~~~~~~~~~~~~~~~~~~~~~~
-
-
-✘ [ERROR] NG5002: Unexpected character "EOF" (Do you have an unescaped "{" in your template? Use "{{ '{' }}") to escape it.) [plugin angular-compiler]
-
-    src/app/navigation/nav.component.html:41:0:
-      41 │ 
-         ╵ ^
-
-  Error occurs in the template of component NavComponent.
-
-    src/app/navigation/nav.component.ts:20:15:
-      20 │   templateUrl: './nav.component.html',
-         ╵                ~~~~~~~~~~~~~~~~~~~~~~
-
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/1]⎯
 
 error Command failed with exit code 1.                                                                                                                                                                             
 
-real	0m1.833s
-user	0m3.608s
-sys	0m0.492s
-[master 8924d0e] end prepare to unit test angular
- 2 files changed, 35 insertions(+)
+real	0m4.380s
+user	0m22.829s
+sys	0m4.869s
+[master 91c67e6] end prepare to unit test angular
+ 2 files changed, 62 insertions(+)
 
-real	0m0.148s
-user	0m0.098s
-sys	0m0.057s
-[master ab8bfa1] add timestamp
+real	0m0.155s
+user	0m0.088s
+sys	0m0.058s
+[master 5a994da] add timestamp
  2 files changed, 32 insertions(+)
 
 ==> running export.sh (refresh docs/llm/dump.txt)
-[master 6dc5347] add repo context dump
- 1 file changed, 1098 insertions(+), 5752 deletions(-)
+[master 90bcea2] add repo context dump
+ 1 file changed, 343 insertions(+), 261 deletions(-)
 
 ==> syncing with origin/master
 From github.com:angulareighteen/angulareighteen.github.io
  * branch            master     -> FETCH_HEAD
 Current branch master is up to date.
 On branch master
-Your branch is ahead of 'origin/master' by 17 commits.
+Your branch is ahead of 'origin/master' by 15 commits.
   (use "git push" to publish your local commits)
 
 nothing to commit, working tree clean
-Enumerating objects: 144, done.
-Counting objects: 100% (144/144), done.
+Enumerating objects: 100, done.
+Counting objects: 100% (100/100), done.
 Delta compression using up to 16 threads
-Compressing objects: 100% (102/102), done.
-Writing objects: 100% (118/118), 62.37 KiB | 7.80 MiB/s, done.
-Total 118 (delta 59), reused 1 (delta 0), pack-reused 0 (from 0)
-remote: Resolving deltas: 100% (59/59), completed with 13 local objects.
+Compressing objects: 100% (71/71), done.
+Writing objects: 100% (85/85), 27.09 KiB | 6.77 MiB/s, done.
+Total 85 (delta 49), reused 1 (delta 0), pack-reused 0 (from 0)
+remote: Resolving deltas: 100% (49/49), completed with 10 local objects.
 remote: 
 remote: GitHub found 1 vulnerability on angulareighteen/angulareighteen.github.io's default branch (1 low). To find out more, visit:
 remote:      https://github.com/angulareighteen/angulareighteen.github.io/security/dependabot/63
 remote: 
 To github.com:angulareighteen/angulareighteen.github.io.git
-   1bffb88..6dc5347  master -> master
+   6dc5347..90bcea2  master -> master
 
 ==> done.
 
-real	0m43.107s
-user	0m16.657s
-sys	0m7.152s
+real	0m44.208s
+user	0m37.451s
+sys	0m11.696s
 kushal@fedora:~/src/angular/angulareighteen.github.io$ 
