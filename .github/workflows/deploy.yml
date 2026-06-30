@@ -1,0 +1,71 @@
+name: Deploy to GitHub Pages
+
+on:
+  push:
+    branches: [ master ]   # Deploy only from the production branch
+  workflow_dispatch:        # Allow manual deploys from the Actions tab
+
+# Grant GITHUB_TOKEN the permissions required to deploy to Pages
+# and to verify the deployment's origin via OIDC.
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+# Allow only one concurrent Pages deployment. Do NOT cancel an in-progress
+# run, so a production deploy is always allowed to finish.
+concurrency:
+  group: "pages"
+  cancel-in-progress: false
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v7
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v6
+        with:
+          node-version: '24.x'   # Active LTS; within the Angular 22 engine range
+          cache: 'yarn'
+
+      - name: Install dependencies
+        run: yarn install --frozen-lockfile
+
+      - name: Configure Pages
+        uses: actions/configure-pages@v6
+
+      # Build fresh. The committed public/ snapshot is .gitignored and may be
+      # stale, so remove it first to guarantee a clean, source-of-truth build.
+      - name: Build application (production)
+        run: |
+          rm -rf public
+          yarn ng build --configuration=production
+
+      # GitHub Pages has no server-side rewrites. Copy index.html to 404.html so
+      # client-side routes (e.g. /quiz/us-civics, /news/:title) resolve correctly
+      # on a direct hit or page refresh.
+      - name: Add SPA 404 fallback
+        run: cp public/browser/index.html public/browser/404.html
+
+      # Serve the output verbatim (skip Jekyll processing of files/folders).
+      - name: Disable Jekyll
+        run: touch public/browser/.nojekyll
+
+      - name: Upload Pages artifact
+        uses: actions/upload-pages-artifact@v5
+        with:
+          path: public/browser   # Angular (@angular/build) emits the browser bundle here
+
+  deploy:
+    needs: build
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v5

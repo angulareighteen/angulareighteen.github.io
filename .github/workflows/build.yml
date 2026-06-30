@@ -1,3 +1,6 @@
+# CI build validation only. This workflow does NOT deploy.
+# Publishing to GitHub Pages is handled by .github/workflows/deploy.yml
+# (push to master). This job just verifies the app builds across Node versions.
 name: Build Angular Application
 
 on:
@@ -16,7 +19,7 @@ jobs:
     strategy:
       fail-fast: false  # Don't cancel other jobs if one fails
       matrix:
-        node-version: [24.x, 26.x]  # Removed 18.x - not compatible with Angular 20
+        node-version: [24.x, 26.x]  # 24 = Active LTS, 26 = Current; both satisfy the Angular 22 engine range
 
     steps:
     - name: Checkout repository
@@ -52,6 +55,8 @@ jobs:
     - name: Build application (production)
       run: yarn ng build --configuration=production
 
+    # CI artifact for download/inspection from the run page only.
+    # This is NOT the GitHub Pages deployment (see deploy.yml).
     - name: Upload build artifacts
       uses: actions/upload-artifact@v7
       with:
