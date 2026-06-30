@@ -3,7 +3,7 @@
     @for (item of items; track item.label) {
       @switch (item.kind) {
         @case ('link') {
-          
+          <a
             mat-button
             [routerLink]="item.path"
             routerLinkActive="app-nav__link--active"
