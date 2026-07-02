@@ -87,3 +87,29 @@ info All dependencies
 Done in 3.33s.
 ```
 ```bash
+yarn run v1.22.22
+$ ng build --configuration production
+❯ Building...
+✔ Building...
+Initial chunk files | Names                    |  Raw size | Estimated transfer size
+main-TTLGPCNA.js    | main                     | 485.46 kB |               119.40 kB
+styles-AX2II72J.css | styles                   |   8.05 kB |                 1.31 kB
+
+                    | Initial total            | 493.51 kB |               120.71 kB
+
+Lazy chunk files    | Names                    |  Raw size | Estimated transfer size
+chunk-DlvPNt2a.js   | browser                  |  68.45 kB |                17.89 kB
+chunk-C-OAW2VC.js   | quiz-component           |  42.27 kB |                10.06 kB
+chunk-Ctvkf_-1.js   | -                        |  23.10 kB |                 5.43 kB
+chunk-DfmBcB3z.js   | key-industries-component |   3.77 kB |                 1.15 kB
+chunk-BMYURBDy.js   | news-component           |   3.31 kB |                 1.38 kB
+chunk-Bl6V4C25.js   | home-component           |   1.15 kB |               518 bytes
+chunk-DNfkcTEf.js   | playground-component     | 460 bytes |               460 bytes
+chunk-BltflKJx.js   | loader-io-component      | 314 bytes |               314 bytes
+
+Application bundle generation complete. [9.171 seconds] - 2026-07-02T16:20:42.764Z
+
+Output location: /home/kushal/src/angular/angulareighteen.github.io/public
+
+Done in 10.81s.
+```
