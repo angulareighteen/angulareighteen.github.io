@@ -10,3 +10,9 @@ CI Status:
 [![Deploy to Firebase Hosting on merge](https://github.com/angulareighteen/angulareighteen.github.io/actions/workflows/firebase-hosting-merge.yml/badge.svg)](https://github.com/angulareighteen/angulareighteen.github.io/actions/workflows/firebase-hosting-merge.yml)
 
 ```bash
+System Memory
+               total        used        free      shared  buff/cache   available
+Mem:           3.7Gi       1.9Gi       642Mi        42Mi       1.6Gi       1.9Gi
+Swap:          975Mi       541Mi       434Mi
+System Storage
+705M	.
