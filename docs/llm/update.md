@@ -61,3 +61,30 @@ yarn install v1.22.22
 success Already up-to-date.
 Done in 0.38s.
 ```
+```bash
+Browserslist: caniuse-lite is outdated. Please run:
+  npx update-browserslist-db@latest
+  Why you should do it regularly: https://github.com/browserslist/update-db#readme
+Registry latest:         1.0.30001826
+Installed version:       1.0.30001826
+caniuse-lite is up to date
+caniuse-lite has been successfully updated
+
+No target browser changes
+yarn add v1.22.22
+[1/4] Resolving packages...
+[2/4] Fetching packages...
+[3/4] Linking dependencies...
+warning " > express-rate-limit@8.5.2" has unmet peer dependency "express@>= 4.11".
+warning "@angular/build > @oxc-parser/binding-wasm32-wasi > @napi-rs/wasm-runtime@1.2.7" has incorrect peer dependency "@emnapi/core@^1.7.1 || 2.0.0-beta.2 || 2.0.0-beta.3".
+warning "@angular/build > @oxc-parser/binding-wasm32-wasi > @napi-rs/wasm-runtime@1.2.7" has incorrect peer dependency "@emnapi/runtime@^1.7.1 || 2.0.0-beta.2 || 2.0.0-beta.3".
+warning " > vitest@4.1.9" has unmet peer dependency "vite@^6.0.0 || ^7.0.0 || ^8.0.0".
+[4/4] Building fresh packages...
+success Saved 1 new dependency.
+info Direct dependencies
+└─ baseline-browser-mapping@2.11.36
+info All dependencies
+└─ baseline-browser-mapping@2.11.36
+Done in 4.37s.
+```
+```bash
